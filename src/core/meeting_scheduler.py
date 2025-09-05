@@ -107,7 +107,7 @@ Provide exactly 3 suggestions in this JSON format:
       "reasoning": "Why this time works well for both people",
       "{user1_name.lower()}_energy": "High/Medium/Low",
       "{user2_name.lower()}_energy": "High/Medium/Low",
-      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity",
+      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity/Work meeting",
       "location": "Suggested location (optional)",
       "confidence": 0.85,
       "conflicts": [],
@@ -131,7 +131,7 @@ Each suggestion MUST include:
 - reasoning: Detailed explanation of why this time works
 - {user1_name.lower()}_energy: High/Medium/Low
 - {user2_name.lower()}_energy: High/Medium/Low
-- meeting_type: Coffee/Casual lunch/Evening drinks/Activity
+- meeting_type: Coffee/Casual lunch/Evening drinks/Activity/Work meeting
 
 ### OPTIONAL FIELDS (include when relevant)
 - location: Suggested meeting location
@@ -179,7 +179,7 @@ def validate_event_dictionary(event: Dict[str, Any]) -> Tuple[bool, List[str]]:
         errors.append(f"Invalid chris_energy: {event['chris_energy']}. Must be one of {valid_energy}")
     
     # Validate meeting types (very flexible)
-    valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "activity"]
+    valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "activity", "work meeting"]
     if "meeting_type" in event and event["meeting_type"]:
         # Check if meeting type contains any valid type (case insensitive)
         meeting_type = event["meeting_type"].lower()
