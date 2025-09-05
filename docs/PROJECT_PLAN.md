@@ -76,37 +76,22 @@ butterfly2/
 ## Technical Requirements
 
 ### Database Schema
-```sql
--- Users table
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
-    name VARCHAR(100) UNIQUE NOT NULL,
-    calendar_id VARCHAR(255) NOT NULL,
-    oauth_token TEXT,
-    refresh_token TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+See [docs/database/schema.sql](docs/database/schema.sql) for complete schema definition.
 
--- Calendar mappings
-CREATE TABLE calendar_mappings (
-    id INTEGER PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
-    calendar_name VARCHAR(255) NOT NULL,
-    calendar_id VARCHAR(255) NOT NULL,
-    is_primary BOOLEAN DEFAULT FALSE
-);
+#### Key Tables
+- **users** - User accounts with phone numbers and calendar info
+- **conversations** - Message threads between users
+- **messages** - Individual SMS/text messages
+- **meeting_suggestions** - AI-generated meeting proposals
+- **conversation_contexts** - AI context for better responses
+- **script_templates** - Structured conversation flows
 
--- Conversation context storage
-CREATE TABLE conversation_contexts (
-    id INTEGER PRIMARY KEY,
-    user1_id INTEGER REFERENCES users(id),
-    user2_id INTEGER REFERENCES users(id),
-    context_text TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    expires_at TIMESTAMP
-);
-```
+#### Messaging Integration
+See [docs/database/MESSAGING_PLAN.md](docs/database/MESSAGING_PLAN.md) for detailed messaging implementation plan.
+
+See [docs/database/schema.sql](docs/database/schema.sql) for complete schema definition.
+
+#### Key Tables
 
 ### API Endpoint Updates
 - `POST /meeting-suggestions` - Accept user names, optional time range, and conversation context
