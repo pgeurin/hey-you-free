@@ -243,13 +243,15 @@ class TestDatabaseIntegration:
         
         # Test reconnection
         self.db_manager.connect()
+        self.db_manager.initialize_database()
         assert self.db_manager.is_connected() is True
     
     def test_database_error_handling(self):
         """Test database error handling"""
-        # Ensure database is connected
+        # Ensure database is connected and initialized
         if not self.db_manager.is_connected():
             self.db_manager.connect()
+            self.db_manager.initialize_database()
             
         # Test invalid user ID
         user = self.db_manager.get_user_by_id(99999)

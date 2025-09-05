@@ -65,8 +65,8 @@ user_manager = None
 def get_db_manager():
     """Get database manager instance, initializing if needed"""
     global db_manager
-    if db_manager is None:
-        db_path = os.getenv("DATABASE_PATH", "meeting_scheduler.db")
+    db_path = os.getenv("DATABASE_PATH", "meeting_scheduler.db")
+    if db_manager is None or db_manager.db_path != db_path:
         db_manager = DatabaseManager(db_path)
         db_manager.initialize_database()
     return db_manager

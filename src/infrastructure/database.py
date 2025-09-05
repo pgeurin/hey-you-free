@@ -174,7 +174,7 @@ class DatabaseManager:
             VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (name, phone_number, email, calendar_id, oauth_token, refresh_token, timezone))
         
-        self.connection.commit()
+        # Don't commit here - let the transaction context manager handle it
         return cursor.lastrowid
     
     def get_user_by_id(self, user_id: int) -> Optional[Dict[str, Any]]:

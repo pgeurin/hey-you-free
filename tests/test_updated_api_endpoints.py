@@ -41,10 +41,7 @@ class TestUpdatedAPIEndpoints:
         self.db_manager = DatabaseManager(self.db_path)
         self.db_manager.initialize_database()
         
-        # Set up test client
-        self.client = TestClient(app)
-        
-        # Create test users
+        # Create test users in the test database
         self.phil_id = self.db_manager.create_user(
             name='phil',
             phone_number='+1234567890',
@@ -60,6 +57,12 @@ class TestUpdatedAPIEndpoints:
             calendar_id='chris@gmail.com',
             oauth_token='test_oauth_token'
         )
+        
+        # Commit the changes to the database file
+        self.db_manager.connection.commit()
+        
+        # Set up test client after creating users
+        self.client = TestClient(app)
     
     def teardown_method(self):
         """Clean up test database"""
@@ -334,6 +337,13 @@ class TestUpdatedAPIEndpoints:
         context = response.json()
         assert context['context_text'] == "We discussed meeting for coffee"
         assert context['context_type'] == "meeting_discussion"
+        
+        # Clean up the context for other tests
+        self.db_manager.connection.execute(
+            "DELETE FROM conversation_contexts WHERE user1_id = ? AND user2_id = ?",
+            (self.phil_id, self.chris_id)
+        )
+        self.db_manager.connection.commit()
     
     def test_conversation_context_not_found(self):
         """Test GET /conversation-context/{user1}/{user2} with no context"""
@@ -383,6 +393,10 @@ def test_run_updated_api_endpoints_test_suite():
         
         test_instance.test_delete_user_not_found()
         print("✅ Delete user not found test passed")
+        
+        # Re-setup for meeting suggestions tests to ensure fresh state
+        test_instance.teardown_method()
+        test_instance.setup_method()
         
         test_instance.test_meeting_suggestions_with_user_names()
         print("✅ Meeting suggestions with user names test passed")
