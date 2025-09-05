@@ -1,0 +1,229 @@
+# MEETING SCHEDULER AI ASSISTANT
+
+## ROLE & CONTEXT
+You are an expert meeting scheduler with deep understanding of human psychology, productivity patterns, and social dynamics. Your task is to analyze two people's raw calendar data and suggest 3 optimal meeting times that both would find appealing and convenient.
+
+## RAW CALENDAR DATA
+
+### PHIL'S CALENDAR EVENTS:
+Total events: 96
+
+2025-08-21 (Thursday) 21:00 - Swing at little red hen!!!
+2025-08-22 (Friday) 08:30 - breaking fast with j and p
+2025-08-22 (Friday) 10:00 - Biochem!!!
+2025-08-22 (Friday) 11:00 - Sara jo summer camp
+2025-08-23 (Saturday) 11:00 - Sara jo summer camp
+2025-08-24 (Sunday) 09:00 - Lift with friends
+2025-08-24 (Sunday) 11:00 - Level 13 | https://zoom.us/j/95047571786?pwd=WUgzODNOUUtiZHMxclI4UTFXV202QT09
+
+
+https://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit
+2025-08-24 (Sunday) 11:00 - Sara jo summer camp
+2025-08-24 (Sunday) 13:00 - Contact improv at exit space
+2025-08-24 (Sunday) 13:00 - Phil at party
+2025-08-24 (Sunday) 13:30 - Phil and Anthony: cowork/ loop music
+2025-08-24 (Sunday) 17:00 - Phil at party? Or Haley
+2025-08-24 (Sunday) 17:00 - Mollie and Evan orgy hangout
+2025-08-24 (Sunday) 19:30 - Haley and phil
+2025-08-25 (Monday) 09:00 - Lift at fitness
+2025-08-25 (Monday) 12:00 - Olivia phil lunch
+2025-08-25 (Monday) 12:30 - The Ultimate Study Challenge! @ Online in the Universe  | This time slot is held until more specific time is needed. Pomodoro check-ins will be tested.<br><br>(Note: a lunch or break will be encouraged if full duration occurs)<br><br>Yes I am a cyborg sometimes with logistics. <br><br>Jackie  (she/her) is inviting you to a scheduled Zoom meeting.<br><br>Topic: Ultimate Pomodoro Technique<br>Time: Aug 25, 2025 12:30 PM Pacific Time (US and Canada)<br>Join Zoom Meeting<br><a href="https://us06web.zoom.us/j/82327566525?pwd=Qccg1JEkqraWBVa6evW7MaeQYVRcDG.1">https://us06web.zoom.us/j/82327566525?pwd=Qccg1JEkqraWBVa6evW7MaeQYVRcDG.1</a><br><br>Meeting ID: 823 2756 6525<br>Passcode: 720165<br><br>---<br><br>One tap mobile<br>+16694449171,,82327566525#,,,,*720165# US<br>+12532050468,,82327566525#,,,,*720165# US<br><br>Join instructions<br><a href="https://us06web.zoom.us/meetings/82327566525/invitations?signature=pmWCxz42795umG2rpYcliTiOcmcqMlaUID8prFyLu7o">https://us06web.zoom.us/meetings/82327566525/invitations?signature=pmWCxz42795umG2rpYcliTiOcmcqMlaUID8prFyLu7o</a>
+2025-08-25 (Monday) 19:30 - Jet city ensemble cast
+2025-08-25 (Monday) 19:30 - Lily come over
+2025-08-25 (Monday) 22:00 - Skating $2
+2025-08-26 (Tuesday) 08:00 - lift with friends
+2025-08-26 (Tuesday) 11:30 - Phil+Sean+zach
+2025-08-26 (Tuesday) 13:00 - 🎭 Fan Friction: promotion
+2025-08-26 (Tuesday) 13:00 - Chris sprint, promotion
+2025-08-26 (Tuesday) 16:00 - Alex trip planning
+2025-08-26 (Tuesday) 17:00 - Jci zoom meeting
+2025-08-26 (Tuesday) 19:00 - Teach improv!! 201
+2025-08-26 (Tuesday) 21:00 - Haley
+2025-08-27 (Wednesday) 09:00 - Lift at fitness
+2025-08-27 (Wednesday) 09:30 - Coworking friends
+2025-08-27 (Wednesday) 17:00 - Natalie tattoo!!
+2025-08-27 (Wednesday) 18:00 - Biochem
+2025-08-27 (Wednesday) 18:30 - Bachata in the park
+2025-08-27 (Wednesday) 19:00 - Swing at little red hen
+2025-08-27 (Wednesday) 20:30 - Olivia and phil
+2025-08-28 (Thursday) 08:00 - lift with friends
+2025-08-28 (Thursday) 10:00 - Chris social media
+2025-08-28 (Thursday) 10:00 - 🎭 Fan Friction: promotion | IG post
+Intro
+Runthru?
+2025-08-28 (Thursday) 18:00 - Sarah sf w mollie
+2025-08-28 (Thursday) 21:00 - Swing at little red hen!!!
+2025-08-29 (Friday) 08:30 - breaking fast with j and p
+2025-08-29 (Friday) 12:30 - Spa days
+2025-08-29 (Friday) 15:00 - Mo pop
+2025-08-29 (Friday) 16:30 - Olivia back
+2025-08-29 (Friday) 17:00 - Breast exam
+2025-08-29 (Friday) 18:00 - Vera clown
+2025-08-29 (Friday) 19:30 - Improv show
+2025-08-30 (Saturday) 14:00 - Cypher at csz
+2025-08-30 (Saturday) 20:00 - Blood rave
+2025-08-31 (Sunday) 09:00 - Lift with friends
+2025-08-31 (Sunday) 11:00 - Level 13 | https://zoom.us/j/95047571786?pwd=WUgzODNOUUtiZHMxclI4UTFXV202QT09
+
+
+https://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit
+2025-08-31 (Sunday) 13:00 - Contact improv at exit space
+2025-08-31 (Sunday) 13:30 - Phil and Anthony: cowork/ loop music
+2025-08-31 (Sunday) 17:00 - Clown
+2025-08-31 (Sunday) 20:00 - Valerie ride cowboy
+2025-09-01 (Monday) 09:00 - Lift at fitness
+2025-09-01 (Monday) 12:00 - Olivia phil lunch
+2025-09-01 (Monday) 18:30 - Dinner club
+2025-09-01 (Monday) 19:30 - Olivia massage between 730 and 8
+2025-09-01 (Monday) 19:30 - Jet city ensemble cast
+2025-09-01 (Monday) 22:00 - Skating $2
+2025-09-02 (Tuesday) 08:00 - lift with friends
+2025-09-02 (Tuesday) 12:00 - Olivia blackberry
+2025-09-02 (Tuesday) 18:00 - Dnd with Thomas!!!
+2025-09-02 (Tuesday) 21:00 - Haley
+2025-09-03 (Wednesday) 09:00 - Lift at fitness
+2025-09-03 (Wednesday) 09:00 - MCAT IN PORTLAND
+2025-09-03 (Wednesday) 10:00 - Chris cowork
+2025-09-03 (Wednesday) 10:00 - ☕️ Co-working with Phil
+2025-09-03 (Wednesday) 12:00 - Lily Feeld
+2025-09-03 (Wednesday) 17:00 - Drive to portland
+2025-09-03 (Wednesday) 18:30 - Bachata in the park
+2025-09-03 (Wednesday) 19:00 - Swing at little red hen
+2025-09-04 (Thursday) 08:00 - lift with friends
+2025-09-04 (Thursday) 08:00 - Mcat
+2025-09-04 (Thursday) 08:00 - MCAT - Medical College Admission Test - English (ENU) @ PEARSON PROFESSIONAL CENTERS-PORTLAND OR, 805 SW BROADWAY, SUITE 420, FOX TOWER, PORTLAND, OREGON 97205, UNITED STATES | To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar
+
+This event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DPRQb2Z7jOF4DP2ZtKa9A-8OSNlOeyHJhU
+
+2025-09-04 (Thursday) 21:00 - Swing at little red hen!!!
+2025-09-05 (Friday) 08:30 - breaking fast with j and p
+2025-09-05 (Friday) 18:00 - Vera?
+2025-09-05 (Friday) 20:00 - Fresh meet CSPC
+2025-09-06 (Saturday) 10:00 - Fan friction rehearsal
+2025-09-06 (Saturday) 12:00 - Picnic w Olivia
+2025-09-07 (Sunday) 09:00 - Lift with friends
+2025-09-07 (Sunday) 11:00 - Level 13 | https://zoom.us/j/95047571786?pwd=WUgzODNOUUtiZHMxclI4UTFXV202QT09
+
+
+https://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit
+2025-09-07 (Sunday) 13:00 - Contact improv at exit space
+2025-09-07 (Sunday) 13:30 - Phil and Anthony: cowork/ loop music
+2025-09-08 (Monday) 09:00 - Lift at fitness
+2025-09-08 (Monday) 11:00 - Fan friction
+2025-09-08 (Monday) 12:00 - Olivia phil lunch
+2025-09-08 (Monday) 19:30 - Jet city ensemble cast
+2025-09-08 (Monday) 19:30 - Michelle
+2025-09-08 (Monday) 22:00 - Skating $2
+2025-09-09 (Tuesday) 08:00 - lift with friends
+2025-09-09 (Tuesday) 18:00 - Reach out to Ruben about teaching/residency in twin cities
+2025-09-09 (Tuesday) 19:00 - Teach Monique team at 10041 Mary Ave NW Seattle
+2025-09-09 (Tuesday) 21:00 - Haley
+
+
+### CHRIS'S CALENDAR EVENTS:
+Total events: 43
+
+2025-08-22 (Friday) 09:15 - Bug triage meeting
+2025-08-22 (Friday) 13:15 - Weekend brunch | Details for weekend brunch
+2025-08-22 (Friday) 13:45 - Technical architecture review | Details for technical architecture review
+2025-08-22 (Friday) 16:45 - Team standup meeting
+2025-08-23 (Saturday) 11:45 - Weekly team sync
+2025-08-23 (Saturday) 13:00 - Design system workshop
+2025-08-23 (Saturday) 15:45 - One-on-one with manager
+2025-08-23 (Saturday) 16:30 - Project planning session | Details for project planning session
+2025-08-25 (Monday) 15:00 - Bug triage meeting
+2025-08-25 (Monday) 16:15 - Cooking class | Details for cooking class
+2025-08-26 (Tuesday) 17:45 - One-on-one with manager
+2025-08-27 (Wednesday) 07:30 - Lunch break
+2025-08-27 (Wednesday) 11:15 - Morning jog | Details for morning jog
+2025-08-27 (Wednesday) 15:15 - Bug triage meeting
+2025-08-28 (Thursday) 12:15 - Weekend hiking trip
+2025-08-28 (Thursday) 15:45 - Technical architecture review @ Park
+2025-08-28 (Thursday) 16:45 - One-on-one with manager
+2025-08-29 (Friday) 08:30 - Birthday party @ Conference Room A | Details for birthday party
+2025-08-29 (Friday) 11:00 - Technical architecture review
+2025-08-31 (Sunday) 08:45 - Grocery shopping | Details for grocery shopping
+2025-08-31 (Sunday) 12:00 - Date night
+2025-09-01 (Monday) 10:15 - Date night | Details for date night
+2025-09-01 (Monday) 15:30 - Gym workout
+2025-09-01 (Monday) 17:30 - Team standup meeting
+2025-09-02 (Tuesday) 09:45 - One-on-one with manager | Details for one-on-one with manager
+2025-09-02 (Tuesday) 12:00 - Weekend hiking trip
+2025-09-02 (Tuesday) 13:30 - Project planning session
+2025-09-03 (Wednesday) 10:15 - Art gallery visit
+2025-09-03 (Wednesday) 12:00 - Product demo
+2025-09-03 (Wednesday) 13:30 - Design system workshop
+2025-09-08 (Monday) 09:00 - Project planning session @ Restaurant
+2025-09-08 (Monday) 14:00 - Weekly team sync
+2025-09-09 (Tuesday) 09:45 - Movie night @ Restaurant
+2025-09-09 (Tuesday) 14:30 - Dentist checkup @ Gym
+2025-09-09 (Tuesday) 17:15 - Weekly team sync
+2025-09-10 (Wednesday) 08:15 - Book club meeting @ Park
+2025-09-10 (Wednesday) 10:15 - Evening walk
+2025-09-10 (Wednesday) 11:15 - Sprint retrospective
+2025-09-10 (Wednesday) 19:30 - Haircut appointment
+2025-09-11 (Thursday) 10:30 - Grocery shopping
+2025-09-11 (Thursday) 19:45 - Lunch break @ Home | Details for lunch break
+2025-09-11 (Thursday) 20:45 - Concert tickets @ Gym | Details for concert tickets
+2025-09-12 (Friday) 09:15 - Meditation session
+
+
+## ANALYSIS INSTRUCTIONS
+Before suggesting meeting times, analyze the calendar data to identify:
+1. **Busy vs. free periods** for each person
+2. **Preferred meeting times** based on existing social/work events
+3. **Energy patterns** - when each person is most active/social
+4. **Work-life boundaries** - respect their schedules
+5. **Social preferences** - what types of activities they enjoy
+
+## TASK INSTRUCTIONS
+
+### PRIMARY OBJECTIVE
+Suggest 3 specific meeting times (date + time) that would work well for both Phil and Chris, considering:
+1. **Availability** - Both are free
+2. **Energy levels** - Optimal times for each person
+3. **Social preferences** - When they typically socialize
+4. **Work-life balance** - Respecting their boundaries
+5. **Practicality** - Realistic and convenient
+
+### CONSTRAINTS
+- Meeting duration: 1-2 hours
+- Time range: Next 2 weeks from today (2025-09-04)
+- Consider time zones (both appear to be in same timezone)
+- Avoid times when either person has back-to-back meetings
+- Prefer times when both have energy and are in social mode
+
+### OUTPUT FORMAT
+Provide exactly 3 suggestions in this JSON format:
+```json
+{
+  "suggestions": [
+    {
+      "date": "YYYY-MM-DD",
+      "time": "HH:MM",
+      "duration": "X hours",
+      "reasoning": "Why this time works well for both people",
+      "phil_energy": "High/Medium/Low",
+      "chris_energy": "High/Medium/Low",
+      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity"
+    }
+  ]
+}
+```
+
+### ANALYSIS FRAMEWORK
+1. **Identify free time slots** where both are available
+2. **Assess energy patterns** - when each person is most social/productive
+3. **Consider social preferences** - what types of activities they enjoy
+4. **Evaluate convenience** - travel time, preparation needed
+5. **Balance preferences** - find times that suit both personalities
+
+### QUALITY CRITERIA
+- Times should feel natural and appealing to both
+- Consider their different social styles (Phil: active/social, Chris: structured/selective)
+- Suggest varied options (different days/times)
+- Include reasoning for each suggestion
+- Be specific about why each time works
+
+## RESPONSE
+Analyze the calendar data and provide your 3 meeting suggestions following the exact JSON format above.
