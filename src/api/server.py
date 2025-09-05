@@ -95,7 +95,7 @@ app.add_middleware(
 )
 
 
-def get_meeting_suggestions_from_core(seed: int = 42) -> Optional[Dict[str, Any]]:
+def get_meeting_suggestions_from_core(seed: int = 42, **kwargs) -> Optional[Dict[str, Any]]:
     """Get meeting suggestions from core business logic"""
     try:
         # Get AI response
@@ -322,7 +322,15 @@ async def get_meeting_suggestions_with_users(request: MeetingSuggestionsRequest)
             raise HTTPException(status_code=404, detail=f"User '{request.user2_name}' not found")
         
         # Generate suggestions (simplified for now)
-        suggestions = get_meeting_suggestions_from_core(seed=request.seed)
+        suggestions = get_meeting_suggestions_from_core(
+            seed=request.seed,
+            user1_name=request.user1_name,
+            user2_name=request.user2_name,
+            time_range_days=getattr(request, 'time_range_days', None),
+            start_date=getattr(request, 'start_date', None),
+            end_date=getattr(request, 'end_date', None),
+            conversation_context=getattr(request, 'conversation_context', None)
+        )
         
         if not suggestions:
             raise HTTPException(
@@ -393,9 +401,12 @@ async def get_conversation_context(user1_name: str, user2_name: str):
         if not user2:
             raise HTTPException(status_code=404, detail=f"User '{user2_name}' not found")
         
-        # For now, return a placeholder
-        # TODO: Implement actual conversation context retrieval
-        raise HTTPException(status_code=404, detail="No conversation context found")
+        # Get conversation context from database
+        context = get_db_manager().get_conversation_context(user1['id'], user2['id'])
+        if not context:
+            raise HTTPException(status_code=404, detail="No conversation context found")
+        
+        return ConversationContextResponse(**context)
         
     except HTTPException:
         raise

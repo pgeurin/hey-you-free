@@ -32,6 +32,11 @@ class TestUpdatedAPIEndpoints:
         # Set environment variable to use the test database
         os.environ["DATABASE_PATH"] = self.db_path
         
+        # Reset global database manager
+        import api.server
+        api.server.db_manager = None
+        api.server.user_manager = None
+        
         # Initialize database
         self.db_manager = DatabaseManager(self.db_path)
         self.db_manager.initialize_database()
@@ -94,7 +99,7 @@ class TestUpdatedAPIEndpoints:
         """Test GET /users/{name} with non-existent user"""
         response = self.client.get("/users/nonexistent")
         assert response.status_code == 404
-        assert "User not found" in response.json()["detail"]
+        assert "not found" in response.json()["detail"].lower()
     
     def test_create_user_endpoint(self):
         """Test POST /users endpoint"""
@@ -131,7 +136,7 @@ class TestUpdatedAPIEndpoints:
             "email": "phil.updated@example.com"
         }
         
-        response = self.client.put(f"/users/{self.phil_id}", json=update_data)
+        response = self.client.put("/users/phil", json=update_data)
         assert response.status_code == 200
         
         updated_user = response.json()
@@ -144,23 +149,23 @@ class TestUpdatedAPIEndpoints:
         
         response = self.client.put("/users/99999", json=update_data)
         assert response.status_code == 404
-        assert "User not found" in response.json()["detail"]
+        assert "not found" in response.json()["detail"].lower()
     
     def test_delete_user_endpoint(self):
         """Test DELETE /users/{user_id} endpoint"""
-        response = self.client.delete(f"/users/{self.chris_id}")
+        response = self.client.delete("/users/chris")
         assert response.status_code == 200
         assert response.json() == {"message": "User deleted successfully"}
         
         # Verify user is deleted
-        response = self.client.get(f"/users/{self.chris_id}")
+        response = self.client.get("/users/chris")
         assert response.status_code == 404
     
     def test_delete_user_not_found(self):
         """Test DELETE /users/{user_id} with non-existent user"""
         response = self.client.delete("/users/99999")
         assert response.status_code == 404
-        assert "User not found" in response.json()["detail"]
+        assert "not found" in response.json()["detail"].lower()
     
     @patch('api.server.get_meeting_suggestions_from_core')
     def test_meeting_suggestions_with_user_names(self, mock_get_suggestions):
@@ -266,7 +271,7 @@ class TestUpdatedAPIEndpoints:
         
         response = self.client.post("/meeting-suggestions", json=request_data)
         assert response.status_code == 404
-        assert "User not found" in response.json()["detail"]
+        assert "not found" in response.json()["detail"].lower()
     
     def test_meeting_suggestions_validation_error(self):
         """Test POST /meeting-suggestions with invalid data"""
@@ -311,7 +316,7 @@ class TestUpdatedAPIEndpoints:
         
         response = self.client.post("/text-chat", json=request_data)
         assert response.status_code == 404
-        assert "User not found" in response.json()["detail"]
+        assert "not found" in response.json()["detail"].lower()
     
     def test_conversation_context_endpoint(self):
         """Test GET /conversation-context/{user1}/{user2} endpoint"""

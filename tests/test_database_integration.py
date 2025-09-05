@@ -247,6 +247,10 @@ class TestDatabaseIntegration:
     
     def test_database_error_handling(self):
         """Test database error handling"""
+        # Ensure database is connected
+        if not self.db_manager.is_connected():
+            self.db_manager.connect()
+            
         # Test invalid user ID
         user = self.db_manager.get_user_by_id(99999)
         assert user is None
