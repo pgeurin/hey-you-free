@@ -106,11 +106,37 @@ Provide exactly 3 suggestions in this JSON format:
       "reasoning": "Why this time works well for both people",
       "phil_energy": "High/Medium/Low",
       "chris_energy": "High/Medium/Low",
-      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity"
+      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity",
+      "location": "Suggested location (optional)",
+      "confidence": 0.85,
+      "conflicts": [],
+      "preparation_time": "X minutes"
     }}
-  ]
+  ],
+  "metadata": {{
+    "generated_at": "2025-01-15T10:30:00Z",
+    "total_suggestions": 3,
+    "analysis_quality": "high",
+    "time_range_analyzed": "2025-01-15 to 2025-01-29"
+  }}
 }}
 ```
+
+### REQUIRED FIELDS
+Each suggestion MUST include:
+- date: YYYY-MM-DD format
+- time: HH:MM format (24-hour)
+- duration: Human-readable (e.g., "1.5 hours", "2 hours")
+- reasoning: Detailed explanation of why this time works
+- phil_energy: High/Medium/Low
+- chris_energy: High/Medium/Low
+- meeting_type: Coffee/Casual lunch/Evening drinks/Activity
+
+### OPTIONAL FIELDS (include when relevant)
+- location: Suggested meeting location
+- confidence: 0.0-1.0 confidence score
+- conflicts: Array of potential conflicts
+- preparation_time: How much prep time needed
 
 ### ANALYSIS FRAMEWORK
 1. **Identify free time slots** where both are available
