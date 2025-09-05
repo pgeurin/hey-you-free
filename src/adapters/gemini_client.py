@@ -43,9 +43,9 @@ def get_meeting_suggestions_from_gemini(prompt: str, temperature: float = 0.1, s
         
         # Generate response with temperature control
         generation_config = genai.types.GenerationConfig(
-            temperature=temperature,
-            top_p=0.8,  # Focus on most likely tokens
-            top_k=40,   # Limit vocabulary for consistency
+            temperature=temperature,  # Use provided temperature
+            top_p=0.1,               # Very focused on most likely tokens
+            top_k=1,                 # Only most likely token
             max_output_tokens=2048
         )
         
@@ -120,7 +120,7 @@ def get_deterministic_meeting_suggestions(prompt: str, seed: int = 42) -> Option
     """Get deterministic meeting suggestions with low temperature and fixed seed"""
     return get_meeting_suggestions_from_gemini(
         prompt=prompt,
-        temperature=0.1,  # Very low temperature for consistency
+        temperature=0.0,  # Maximum determinism
         seed=seed
     )
 
