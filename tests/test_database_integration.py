@@ -36,10 +36,11 @@ class TestDatabaseIntegration:
     
     def test_database_initialization(self):
         """Test that database initializes with correct schema"""
-        # Check that all tables exist
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
+        # Check that all tables exist using the database manager's connection
+        if not self.db_manager.is_connected():
+            self.db_manager.connect()
         
+        cursor = self.db_manager.connection.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         tables = [row[0] for row in cursor.fetchall()]
         
@@ -50,8 +51,6 @@ class TestDatabaseIntegration:
         
         for table in expected_tables:
             assert table in tables, f"Table {table} should exist"
-        
-        conn.close()
     
     def test_user_creation(self):
         """Test creating a new user"""

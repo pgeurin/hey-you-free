@@ -29,6 +29,9 @@ class TestUpdatedAPIEndpoints:
         self.temp_db.close()
         self.db_path = self.temp_db.name
         
+        # Set environment variable to use the test database
+        os.environ["DATABASE_PATH"] = self.db_path
+        
         # Initialize database
         self.db_manager = DatabaseManager(self.db_path)
         self.db_manager.initialize_database()

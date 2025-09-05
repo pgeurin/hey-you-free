@@ -82,6 +82,7 @@ def test_get_meeting_suggestions_from_gemini_no_api_key(mock_load_key):
     assert result is None
 
 
+@pytest.mark.api
 @patch('src.adapters.gemini_client.load_gemini_api_key')
 @patch('google.generativeai.GenerativeModel')
 def test_get_meeting_suggestions_from_gemini_success(mock_model_class, mock_load_key):
