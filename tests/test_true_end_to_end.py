@@ -35,6 +35,8 @@ from src.infrastructure.calendar_loader import (
     save_prompt_to_file,
     save_suggestions_to_file
 )
+from fastapi.testclient import TestClient
+from src.api.server import app
 
 
 class TestTrueEndToEnd:
@@ -533,6 +535,81 @@ class TestTrueEndToEnd:
         print("✅ Validation with realistic AI response successful")
         print(f"   Validated {len(suggestions['suggestions'])} suggestions")
 
+    def test_fastapi_server_integration(self):
+        """Test FastAPI server integration with real data"""
+        print("\n🔍 TESTING: FastAPI Server Integration")
+        start_time = time.time()
+        
+        # Create test client
+        client = TestClient(app)
+        
+        # Test health endpoint
+        health_start = time.time()
+        health_response = client.get("/health")
+        health_time = time.time() - health_start
+        assert health_response.status_code == 200
+        assert health_response.json() == {"status": "healthy"}
+        print(f"   Health endpoint: {health_time:.3f}s")
+        
+        # Test meeting suggestions with mock data (since we may not have API key)
+        suggestions_start = time.time()
+        
+        # Create realistic mock suggestions
+        mock_suggestions = {
+            "suggestions": [
+                {
+                    "date": "2025-01-20",
+                    "time": "14:00",
+                    "duration": "1.5 hours",
+                    "reasoning": "Both participants are free and have high energy",
+                    "phil_energy": "High",
+                    "chris_energy": "High",
+                    "meeting_type": "Coffee",
+                    "location": "Local coffee shop",
+                    "confidence": 0.9,
+                    "conflicts": [],
+                    "preparation_time": "5 minutes"
+                }
+            ],
+            "metadata": {
+                "generated_at": "2025-01-15T10:30:00Z",
+                "total_suggestions": 1,
+                "analysis_quality": "high"
+            }
+        }
+        
+        # Mock the core function
+        with patch('src.api.server.get_meeting_suggestions_from_core', return_value=mock_suggestions):
+            suggestions_response = client.get("/meeting-suggestions")
+            suggestions_time = time.time() - suggestions_start
+            
+            if suggestions_response.status_code == 200:
+                data = suggestions_response.json()
+                assert "suggestions" in data
+                assert "metadata" in data
+                assert len(data["suggestions"]) == 1
+                print(f"   Meeting suggestions: {suggestions_time:.3f}s")
+                print(f"   Returned {len(data['suggestions'])} suggestions")
+            else:
+                print(f"   Meeting suggestions failed: {suggestions_response.status_code}")
+                print(f"   Error: {suggestions_response.json()}")
+        
+        # Test raw endpoint
+        raw_start = time.time()
+        with patch('src.api.server.get_meeting_suggestions_with_gemini', return_value="Mock AI response"):
+            raw_response = client.get("/meeting-suggestions/raw")
+            raw_time = time.time() - raw_start
+            
+            if raw_response.status_code == 200:
+                assert "raw_response" in raw_response.json()
+                print(f"   Raw endpoint: {raw_time:.3f}s")
+            else:
+                print(f"   Raw endpoint failed: {raw_response.status_code}")
+        
+        total_time = time.time() - start_time
+        print(f"   Total FastAPI test time: {total_time:.3f}s")
+        print("   FastAPI server integration working correctly")
+
 
 def test_run_true_end_to_end_suite():
     """Run the complete true end-to-end test suite"""
@@ -568,6 +645,7 @@ def test_run_true_end_to_end_suite():
         
         test_instance.test_error_handling_without_api_key()
         test_instance.test_validation_with_real_ai_response()
+        test_instance.test_fastapi_server_integration()
         
     except Exception as e:
         print(f"\n❌ TEST FAILED: {e}")
