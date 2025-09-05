@@ -74,6 +74,22 @@ def test_create_ai_prompt_structure():
     assert "suggestions" in prompt
 
 
+def test_create_ai_prompt_with_dynamic_user_names():
+    """Test AI prompt creation with dynamic user names"""
+    alice_events = [{"start": {"dateTime": "2025-01-15T10:00:00Z"}, "summary": "Alice Meeting"}]
+    bob_events = [{"start": {"dateTime": "2025-01-15T11:00:00Z"}, "summary": "Bob Meeting"}]
+    
+    prompt = create_ai_prompt(alice_events, bob_events, "Alice", "Bob")
+    
+    assert "MEETING SCHEDULER AI ASSISTANT" in prompt
+    assert "ALICE'S CALENDAR EVENTS:" in prompt
+    assert "BOB'S CALENDAR EVENTS:" in prompt
+    assert "Alice Meeting" in prompt
+    assert "Bob Meeting" in prompt
+    assert "```json" in prompt
+    assert "suggestions" in prompt
+
+
 def test_create_ai_prompt_includes_current_date():
     """Test AI prompt includes current date"""
     phil_events = []

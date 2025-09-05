@@ -49,12 +49,13 @@ def format_events_for_ai(events: List[Dict[str, Any]], name: str) -> str:
     return result
 
 
-def create_ai_prompt(phil_events: List[Dict[str, Any]], chris_events: List[Dict[str, Any]]) -> str:
+def create_ai_prompt(user1_events: List[Dict[str, Any]], user2_events: List[Dict[str, Any]], 
+                    user1_name: str = "Phil", user2_name: str = "Chris") -> str:
     """Create optimized AI prompt using modern prompt engineering techniques"""
     
     # Convert events to simple format for AI analysis
-    phil_data = format_events_for_ai(phil_events, "Phil")
-    chris_data = format_events_for_ai(chris_events, "Chris")
+    user1_data = format_events_for_ai(user1_events, user1_name)
+    user2_data = format_events_for_ai(user2_events, user2_name)
     
     prompt = f"""# MEETING SCHEDULER AI ASSISTANT
 
@@ -63,11 +64,11 @@ You are an expert meeting scheduler with deep understanding of human psychology,
 
 ## RAW CALENDAR DATA
 
-### PHIL'S CALENDAR EVENTS:
-{phil_data}
+### {user1_name.upper()}'S CALENDAR EVENTS:
+{user1_data}
 
-### CHRIS'S CALENDAR EVENTS:
-{chris_data}
+### {user2_name.upper()}'S CALENDAR EVENTS:
+{user2_data}
 
 ## ANALYSIS INSTRUCTIONS
 Before suggesting meeting times, analyze the calendar data to identify:
@@ -80,7 +81,7 @@ Before suggesting meeting times, analyze the calendar data to identify:
 ## TASK INSTRUCTIONS
 
 ### PRIMARY OBJECTIVE
-Suggest 3 specific meeting times (date + time) that would work well for both Phil and Chris, considering:
+Suggest 3 specific meeting times (date + time) that would work well for both {user1_name} and {user2_name}, considering:
 1. **Availability** - Both are free
 2. **Energy levels** - Optimal times for each person
 3. **Social preferences** - When they typically socialize
@@ -104,8 +105,8 @@ Provide exactly 3 suggestions in this JSON format:
       "time": "HH:MM",
       "duration": "X hours",
       "reasoning": "Why this time works well for both people",
-      "phil_energy": "High/Medium/Low",
-      "chris_energy": "High/Medium/Low",
+      "{user1_name.lower()}_energy": "High/Medium/Low",
+      "{user2_name.lower()}_energy": "High/Medium/Low",
       "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity",
       "location": "Suggested location (optional)",
       "confidence": 0.85,
@@ -128,8 +129,8 @@ Each suggestion MUST include:
 - time: HH:MM format (24-hour)
 - duration: Human-readable (e.g., "1.5 hours", "2 hours")
 - reasoning: Detailed explanation of why this time works
-- phil_energy: High/Medium/Low
-- chris_energy: High/Medium/Low
+- {user1_name.lower()}_energy: High/Medium/Low
+- {user2_name.lower()}_energy: High/Medium/Low
 - meeting_type: Coffee/Casual lunch/Evening drinks/Activity
 
 ### OPTIONAL FIELDS (include when relevant)

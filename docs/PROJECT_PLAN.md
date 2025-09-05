@@ -198,9 +198,9 @@ def handle_text_chat(user1_name: str, user2_name: str,
 - [x] Test validation and error handling
 
 ### �� Milestone 5: User Management & Database (IN PROGRESS)
+- [ ] Update format_events_for_ai() to accept user names
 - [ ] Database integration (SQLite/PostgreSQL)
 - [ ] User table with name, calendar_id, oauth_tokens
-- [ ] Update format_events_for_ai() to accept user names
 - [ ] Database lookup for calendar names and OAuth credentials
 - [ ] User authentication system
 - [ ] API endpoints for user management

@@ -31,6 +31,7 @@ from src.infrastructure.calendar_loader import (
     file_exists
 )
 from src.adapters.cli import generate_meeting_suggestions, get_meeting_suggestions_with_gemini
+from src.adapters.gemini_client import parse_gemini_response
 
 
 class TestEndToEnd:
@@ -351,7 +352,11 @@ These are the optimal times."""
         assert "MEETING SCHEDULER AI ASSISTANT" in prompt
         
         # Test getting suggestions (this will use our mock)
-        suggestions = get_meeting_suggestions_with_gemini()
+        response_text = get_meeting_suggestions_with_gemini()
+        assert response_text is not None
+        
+        # Parse the response
+        suggestions = parse_gemini_response(response_text)
         assert suggestions is not None
         assert "suggestions" in suggestions
         
