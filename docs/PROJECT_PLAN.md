@@ -96,20 +96,33 @@ CREATE TABLE calendar_mappings (
     calendar_id VARCHAR(255) NOT NULL,
     is_primary BOOLEAN DEFAULT FALSE
 );
+
+-- Conversation context storage
+CREATE TABLE conversation_contexts (
+    id INTEGER PRIMARY KEY,
+    user1_id INTEGER REFERENCES users(id),
+    user2_id INTEGER REFERENCES users(id),
+    context_text TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP
+);
 ```
 
 ### API Endpoint Updates
-- `POST /meeting-suggestions` - Accept user names and optional time range
+- `POST /meeting-suggestions` - Accept user names, optional time range, and conversation context
   - Parameters:
     - `user1_name`: string (required)
     - `user2_name`: string (required) 
     - `time_range_days`: integer (optional, default: 14)
     - `start_date`: string (optional, ISO format YYYY-MM-DD)
     - `end_date`: string (optional, ISO format YYYY-MM-DD)
+    - `conversation_context`: string (optional, additional context for AI)
 - `GET /users` - List all users
 - `POST /users` - Create new user
 - `PUT /users/{user_id}` - Update user calendar/oauth info
 - `DELETE /users/{user_id}` - Remove user
+- `POST /text-chat` - Text integration endpoint for AI chat
+- `GET /conversation-context/{user1}/{user2}` - Get conversation history
 
 ### Function Signature Updates
 ```python
@@ -120,14 +133,20 @@ def create_ai_prompt(user1_name: str, user1_events: List[Dict],
                     user2_name: str, user2_events: List[Dict],
                     time_range_days: int = 14,
                     start_date: Optional[str] = None,
-                    end_date: Optional[str] = None) -> str:
-    """Create AI prompt with dynamic user names and configurable time range"""
+                    end_date: Optional[str] = None,
+                    conversation_context: Optional[str] = None) -> str:
+    """Create AI prompt with dynamic user names, configurable time range, and conversation context"""
 
 def get_meeting_suggestions(user1_name: str, user2_name: str,
                            time_range_days: int = 14,
                            start_date: Optional[str] = None,
-                           end_date: Optional[str] = None) -> Dict[str, Any]:
-    """Main API function with flexible time range parameters"""
+                           end_date: Optional[str] = None,
+                           conversation_context: Optional[str] = None) -> Dict[str, Any]:
+    """Main API function with flexible time range parameters and conversation context"""
+
+def handle_text_chat(user1_name: str, user2_name: str, 
+                    message: str, script_context: Optional[str] = None) -> str:
+    """Handle text-based AI chat between users with optional script following"""
 ```
 
 ### Request/Response Examples
@@ -138,7 +157,8 @@ def get_meeting_suggestions(user1_name: str, user2_name: str,
   "user2_name": "chris",
   "time_range_days": 21,
   "start_date": "2025-01-20",
-  "end_date": "2025-02-10"
+  "end_date": "2025-02-10",
+  "conversation_context": "We discussed meeting for coffee last week and both mentioned being interested in trying the new cafe downtown"
 }
 
 // Response
@@ -147,8 +167,17 @@ def get_meeting_suggestions(user1_name: str, user2_name: str,
   "metadata": {
     "time_range_analyzed": "2025-01-20 to 2025-02-10",
     "user1": "phil",
-    "user2": "chris"
+    "user2": "chris",
+    "conversation_context_used": true
   }
+}
+
+// POST /text-chat
+{
+  "user1_name": "phil",
+  "user2_name": "chris",
+  "message": "Hey, want to grab coffee sometime this week?",
+  "script_context": "casual_coffee_invitation"
 }
 ```
 
@@ -183,7 +212,7 @@ def get_meeting_suggestions(user1_name: str, user2_name: str,
 - [x] Create environment setup tests
 - [x] Test validation and error handling
 
-### 🔄 Milestone 5: User Management & Database (IN PROGRESS)
+### �� Milestone 5: User Management & Database (IN PROGRESS)
 - [ ] Database integration (SQLite/PostgreSQL)
 - [ ] User table with name, calendar_id, oauth_tokens
 - [ ] Update format_events_for_ai() to accept user names
@@ -191,14 +220,25 @@ def get_meeting_suggestions(user1_name: str, user2_name: str,
 - [ ] User authentication system
 - [ ] API endpoints for user management
 - [ ] Optional time range parameters for meeting suggestions
+- [ ] Conversation context storage and retrieval
 
-### 📋 Milestone 6: Production Readiness (PLANNED)
+### 📋 Milestone 6: Text Integration (PLANNED)
+- [ ] SMS/Text messaging integration (Twilio or similar)
+- [ ] AI chat interface for meeting coordination
+- [ ] Script-based conversation flows
+- [ ] Text-to-meeting-scheduler integration
+- [ ] Conversation history storage
+- [ ] Multi-user text chat capabilities
+- [ ] Natural language processing for meeting requests
+- [ ] Automated meeting suggestion responses via text
+
+### 📋 Milestone 7: Production Readiness (PLANNED)
 - [ ] Rate limiting and security
 - [ ] Production deployment
 - [ ] Monitoring and logging
 - [ ] Error handling and recovery
 
-### 📋 Milestone 7: Advanced Features (PLANNED)
+### 📋 Milestone 8: Advanced Features (PLANNED)
 - [ ] Multi-user support
 - [ ] Recurring meeting suggestions
 - [ ] Calendar event creation
@@ -221,8 +261,9 @@ def get_meeting_suggestions(user1_name: str, user2_name: str,
 3. ✅ FastAPI backend with endpoints
 4. ✅ Comprehensive test suite
 5. 🔄 Database integration
-6. 📋 Production deployment
-7. 📋 Advanced features
+6. 📋 Text integration and chat capabilities
+7. 📋 Production deployment
+8. 📋 Advanced features
 
 ---
 
