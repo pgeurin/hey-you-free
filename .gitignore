@@ -1,2 +1,5 @@
 .cursor/
 *.json
+__pycache__/
+*.pyc
+*.pyo

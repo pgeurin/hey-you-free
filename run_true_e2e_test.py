@@ -12,18 +12,24 @@ from pathlib import Path
 
 def load_env_file():
     """Load environment variables from .env file if it exists"""
-    env_file = Path(".env")
-    if env_file.exists():
-        print("📄 Loading .env file...")
-        with open(env_file, 'r') as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith('#') and '=' in line:
-                    key, value = line.split('=', 1)
-                    os.environ[key] = value
-        print("✅ .env file loaded")
-    else:
-        print("📄 No .env file found")
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+        print("✅ .env file loaded with python-dotenv")
+    except ImportError:
+        # Fallback to manual loading if dotenv not available
+        env_file = Path(".env")
+        if env_file.exists():
+            print("📄 Loading .env file manually...")
+            with open(env_file, 'r') as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith('#') and '=' in line:
+                        key, value = line.split('=', 1)
+                        os.environ[key] = value
+            print("✅ .env file loaded manually")
+        else:
+            print("📄 No .env file found")
 
 
 def check_environment():
