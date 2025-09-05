@@ -9,6 +9,24 @@ import os
 from typing import Optional, Dict, Any
 from src.core.meeting_scheduler import validate_meeting_suggestions
 
+# Global cache for imported modules to avoid repeated heavy imports
+_genai_module = None
+_genai_configured = False
+
+
+def _get_genai_module():
+    """Get the google.generativeai module, importing it only once"""
+    global _genai_module
+    if _genai_module is None:
+        try:
+            import google.generativeai as genai
+            _genai_module = genai
+        except ImportError as e:
+            print(f"ERROR: Failed to import google.generativeai: {e}")
+            print("Please install: pip install google-generativeai")
+            return None
+    return _genai_module
+
 
 def load_gemini_api_key() -> Optional[str]:
     """Load Gemini API key from environment"""
@@ -28,11 +46,18 @@ def get_meeting_suggestions_from_gemini(prompt: str, temperature: float = 0.1, s
     if not api_key:
         return None
     
+    # Get the genai module (imported only once)
+    genai = _get_genai_module()
+    if genai is None:
+        return None
+    
     try:
-        import google.generativeai as genai
+        # Configure Gemini (only once per session)
+        global _genai_configured
+        if not _genai_configured:
+            genai.configure(api_key=api_key)
+            _genai_configured = True
         
-        # Configure Gemini
-        genai.configure(api_key=api_key)
         model = genai.GenerativeModel('gemini-1.5-flash')
         
         print("🤖 Sending request to Gemini AI...")
@@ -49,9 +74,9 @@ def get_meeting_suggestions_from_gemini(prompt: str, temperature: float = 0.1, s
             max_output_tokens=2048
         )
         
-        # Add seed to prompt for reproducibility (Gemini doesn't have direct seed support)
-        if seed:
-            seeded_prompt = f"SEED: {seed}\n\n{prompt}"
+        # Add seed to prompt for reproducibility
+        if seed is not None:
+            seeded_prompt = f"Use seed {seed} for consistent results.\n\n{prompt}"
         else:
             seeded_prompt = prompt
         
@@ -60,16 +85,15 @@ def get_meeting_suggestions_from_gemini(prompt: str, temperature: float = 0.1, s
             generation_config=generation_config
         )
         
-        print("✅ Response received from Gemini!")
-        return response.text
-        
-    except ImportError:
-        print("ERROR: google-generativeai package not installed")
-        print("Run: pip install google-generativeai")
-        return None
-        
+        if response and response.text:
+            print("✅ Response received from Gemini!")
+            return response.text
+        else:
+            print("❌ No response received from Gemini")
+            return None
+            
     except Exception as e:
-        print(f"ERROR: {e}")
+        print(f"❌ Error calling Gemini API: {e}")
         return None
 
 
