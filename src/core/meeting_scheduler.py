@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AI-powered meeting scheduler using Gemini
-Analyzes both calendars and suggests optimal meeting times
+Core meeting scheduler business logic
+Clean Architecture: No I/O dependencies
 """
-import json
-import os
-from datetime import datetime, timedelta
-from pathlib import Path
+from datetime import datetime
+from typing import List, Dict, Any
 
-def load_calendar_data(filename):
-    """Load calendar data from JSON file"""
-    with open(filename, 'r') as f:
-        return json.load(f)
 
-def format_events_for_ai(events, name):
+def format_events_for_ai(events: List[Dict[str, Any]], name: str) -> str:
     """Format calendar events for AI analysis"""
     formatted_events = []
     
@@ -54,7 +48,8 @@ def format_events_for_ai(events, name):
     
     return result
 
-def create_ai_prompt(phil_events, chris_events):
+
+def create_ai_prompt(phil_events: List[Dict[str, Any]], chris_events: List[Dict[str, Any]]) -> str:
     """Create optimized AI prompt using modern prompt engineering techniques"""
     
     # Convert events to simple format for AI analysis
@@ -135,35 +130,3 @@ Provide exactly 3 suggestions in this JSON format:
 Analyze the calendar data and provide your 3 meeting suggestions following the exact JSON format above."""
 
     return prompt
-
-
-def generate_meeting_suggestions():
-    """Generate AI prompt for meeting suggestions"""
-    
-    # Load calendar data
-    phil_events = load_calendar_data("calendar_events_raw.json")
-    chris_events = load_calendar_data("chris_calendar_events_raw.json")
-    
-    # Create optimized prompt
-    prompt = create_ai_prompt(phil_events, chris_events)
-    
-    # Save prompt to file
-    with open("meeting_scheduler_prompt.txt", 'w') as f:
-        f.write(prompt)
-    
-    print("🤖 AI MEETING SCHEDULER PROMPT GENERATED")
-    print("=" * 50)
-    print("📄 Prompt saved to: meeting_scheduler_prompt.txt")
-    print("\n🔍 PROMPT PREVIEW:")
-    print("-" * 30)
-    print(prompt[:500] + "...")
-    print("\n" + "=" * 50)
-    print("📋 NEXT STEPS:")
-    print("1. Copy the prompt from meeting_scheduler_prompt.txt")
-    print("2. Paste into Gemini AI")
-    print("3. Get 3 optimal meeting suggestions!")
-    
-    return prompt
-
-if __name__ == "__main__":
-    generate_meeting_suggestions()
