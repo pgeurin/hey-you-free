@@ -40,3 +40,77 @@ class ErrorResponse(BaseModel):
     """Error response model"""
     error: str = Field(..., description="Error message")
     detail: Optional[str] = Field(None, description="Additional error details")
+
+
+# User Management Models
+class UserCreate(BaseModel):
+    """User creation request model"""
+    name: str = Field(..., description="User name", min_length=1, max_length=100)
+    phone_number: Optional[str] = Field(None, description="Phone number")
+    email: Optional[str] = Field(None, description="Email address")
+    calendar_id: str = Field(..., description="Google Calendar ID", min_length=1)
+    oauth_token: Optional[str] = Field(None, description="OAuth access token")
+    refresh_token: Optional[str] = Field(None, description="OAuth refresh token")
+    timezone: Optional[str] = Field("America/Los_Angeles", description="User timezone")
+
+
+class UserUpdate(BaseModel):
+    """User update request model"""
+    name: Optional[str] = Field(None, description="User name", min_length=1, max_length=100)
+    phone_number: Optional[str] = Field(None, description="Phone number")
+    email: Optional[str] = Field(None, description="Email address")
+    calendar_id: Optional[str] = Field(None, description="Google Calendar ID", min_length=1)
+    oauth_token: Optional[str] = Field(None, description="OAuth access token")
+    refresh_token: Optional[str] = Field(None, description="OAuth refresh token")
+    timezone: Optional[str] = Field(None, description="User timezone")
+    is_active: Optional[bool] = Field(None, description="User active status")
+
+
+class UserResponse(BaseModel):
+    """User response model"""
+    id: int = Field(..., description="User ID")
+    name: str = Field(..., description="User name")
+    phone_number: Optional[str] = Field(None, description="Phone number")
+    email: Optional[str] = Field(None, description="Email address")
+    calendar_id: str = Field(..., description="Google Calendar ID")
+    timezone: str = Field(..., description="User timezone")
+    is_active: bool = Field(..., description="User active status")
+    created_at: str = Field(..., description="Creation timestamp")
+    updated_at: str = Field(..., description="Last update timestamp")
+
+
+# Meeting Suggestions with User Names
+class MeetingSuggestionsRequest(BaseModel):
+    """Meeting suggestions request with user names"""
+    user1_name: str = Field(..., description="Name of first user")
+    user2_name: str = Field(..., description="Name of second user")
+    time_range_days: Optional[int] = Field(14, description="Number of days to analyze", ge=1, le=90)
+    start_date: Optional[str] = Field(None, description="Start date in YYYY-MM-DD format")
+    end_date: Optional[str] = Field(None, description="End date in YYYY-MM-DD format")
+    conversation_context: Optional[str] = Field(None, description="Additional context for AI")
+    seed: Optional[int] = Field(42, description="Seed for deterministic results")
+
+
+# Text Chat Models
+class TextChatRequest(BaseModel):
+    """Text chat request model"""
+    user1_name: str = Field(..., description="Name of first user")
+    user2_name: str = Field(..., description="Name of second user")
+    message: str = Field(..., description="Message text", min_length=1)
+    script_context: Optional[str] = Field(None, description="Script context for AI")
+
+
+class TextChatResponse(BaseModel):
+    """Text chat response model"""
+    response: str = Field(..., description="AI response text")
+    suggestions_generated: bool = Field(..., description="Whether meeting suggestions were generated")
+    conversation_id: Optional[int] = Field(None, description="Conversation ID if created")
+
+
+# Conversation Context Models
+class ConversationContextResponse(BaseModel):
+    """Conversation context response model"""
+    context_text: str = Field(..., description="Context text")
+    context_type: str = Field(..., description="Type of context")
+    created_at: str = Field(..., description="Creation timestamp")
+    expires_at: Optional[str] = Field(None, description="Expiration timestamp")

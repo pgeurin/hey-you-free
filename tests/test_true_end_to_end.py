@@ -616,6 +616,7 @@ class TestTrueEndToEnd:
         print("   FastAPI server integration working correctly")
 
 
+@pytest.mark.api
 def test_run_true_end_to_end_suite():
     """Run the complete true end-to-end test suite"""
     print("\n" + "="*80)
