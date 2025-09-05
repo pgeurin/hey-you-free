@@ -177,10 +177,14 @@ def validate_event_dictionary(event: Dict[str, Any]) -> Tuple[bool, List[str]]:
     if "chris_energy" in event and event["chris_energy"] not in valid_energy:
         errors.append(f"Invalid chris_energy: {event['chris_energy']}. Must be one of {valid_energy}")
     
-    # Validate meeting types
-    valid_meeting_types = ["Coffee", "Casual lunch", "Evening drinks", "Activity"]
-    if "meeting_type" in event and event["meeting_type"] not in valid_meeting_types:
-        errors.append(f"Invalid meeting_type: {event['meeting_type']}. Must be one of {valid_meeting_types}")
+    # Validate meeting types (very flexible)
+    valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "activity"]
+    if "meeting_type" in event and event["meeting_type"]:
+        # Check if meeting type contains any valid type (case insensitive)
+        meeting_type = event["meeting_type"].lower()
+        is_valid_type = any(valid_type in meeting_type for valid_type in valid_meeting_types)
+        if not is_valid_type:
+            errors.append(f"Invalid meeting_type: {event['meeting_type']}. Must contain one of {[t.title() for t in valid_meeting_types]}")
     
     # Validate date format (basic check)
     if "date" in event and event["date"]:
