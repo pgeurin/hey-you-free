@@ -37,8 +37,10 @@ def test_parse_gemini_response_json_block():
           "time": "10:00",
           "duration": "1 hour",
           "reasoning": "Good time for both",
-          "phil_energy": "High",
-          "chris_energy": "High",
+          "user_energies": {
+            "phil": "High",
+            "chris": "High"
+          },
           "meeting_type": "Coffee"
         }
       ]
@@ -55,7 +57,7 @@ def test_parse_gemini_response_json_block():
 
 def test_parse_gemini_response_direct_json():
     """Test parsing direct JSON response"""
-    response = '{"suggestions": [{"date": "2025-01-20", "time": "10:00", "duration": "1 hour", "reasoning": "Good time", "phil_energy": "High", "chris_energy": "High", "meeting_type": "Coffee"}]}'
+    response = '{"suggestions": [{"date": "2025-01-20", "time": "10:00", "duration": "1 hour", "reasoning": "Good time", "user_energies": {"phil": "High", "chris": "High"}, "meeting_type": "Coffee"}]}'
     
     result = parse_gemini_response(response)
     

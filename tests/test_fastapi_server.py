@@ -41,8 +41,10 @@ class TestFastAPIServer:
                     "time": "14:00",
                     "duration": "1.5 hours",
                     "reasoning": "Both are free and have high energy",
-                    "phil_energy": "High",
-                    "chris_energy": "High",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "High"
+                    },
                     "meeting_type": "Coffee",
                     "location": "Local coffee shop",
                     "confidence": 0.9,
@@ -72,8 +74,8 @@ class TestFastAPIServer:
         suggestion = data["suggestions"][0]
         assert suggestion["date"] == "2025-01-20"
         assert suggestion["time"] == "14:00"
-        assert suggestion["phil_energy"] == "High"
-        assert suggestion["chris_energy"] == "High"
+        assert suggestion["user_energies"]["phil"] == "High"
+        assert suggestion["user_energies"]["chris"] == "High"
     
     @patch('api.server.get_meeting_suggestions_from_core')
     def test_get_meeting_suggestions_with_seed(self, mock_get_suggestions):
@@ -107,8 +109,10 @@ class TestFastAPIServer:
                         "time": "14:00",
                         "duration": "1.5 hours",
                         "reasoning": "Test reasoning",
-                        "phil_energy": "High",
-                        "chris_energy": "Medium",
+                        "user_energies": {
+                            "phil": "High",
+                            "chris": "Medium"
+                        },
                         "meeting_type": "Coffee"
                     }
                 ],

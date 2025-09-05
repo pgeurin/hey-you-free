@@ -95,11 +95,11 @@ app.add_middleware(
 )
 
 
-def get_meeting_suggestions_from_core(seed: int = 42, **kwargs) -> Optional[Dict[str, Any]]:
+def get_meeting_suggestions_from_core(seed: int = 42, user1_name: str = "phil", user2_name: str = "chris", **kwargs) -> Optional[Dict[str, Any]]:
     """Get meeting suggestions from core business logic"""
     try:
         # Get AI response
-        response_text = get_meeting_suggestions_with_gemini()
+        response_text = get_meeting_suggestions_with_gemini(user1_name, user2_name)
         if not response_text:
             return None
         
@@ -108,8 +108,8 @@ def get_meeting_suggestions_from_core(seed: int = 42, **kwargs) -> Optional[Dict
         if not suggestions:
             return None
         
-        # Validate the suggestions
-        is_valid, errors = validate_meeting_suggestions(suggestions)
+        # Validate the suggestions with user names
+        is_valid, errors = validate_meeting_suggestions(suggestions, user1_name, user2_name)
         if not is_valid:
             print(f"Validation errors: {errors}")
             return None

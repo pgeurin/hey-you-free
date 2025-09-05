@@ -14,13 +14,18 @@ class MeetingSuggestion(BaseModel):
     time: str = Field(..., description="Time in HH:MM format")
     duration: str = Field(..., description="Duration in human-readable format")
     reasoning: str = Field(..., description="Why this time works well")
-    phil_energy: str = Field(..., description="Phil's energy level")
-    chris_energy: str = Field(..., description="Chris's energy level")
     meeting_type: str = Field(..., description="Type of meeting")
+    user_energies: Dict[str, str] = Field(..., description="Energy levels for each user (e.g., {'phil': 'High', 'chris': 'Medium'})")
     location: Optional[str] = Field(None, description="Suggested location")
     confidence: Optional[float] = Field(None, description="Confidence score 0.0-1.0")
     conflicts: Optional[List[str]] = Field(default_factory=list, description="Potential conflicts")
     preparation_time: Optional[str] = Field(None, description="Preparation time needed")
+    
+    class Config:
+        extra = "allow"  # Allow additional fields
+
+
+# MeetingSuggestion model is now defined above with user_energies dictionary
 
 
 class MeetingSuggestionsResponse(BaseModel):

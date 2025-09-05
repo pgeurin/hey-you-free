@@ -131,7 +131,7 @@ All API responses are validated against a strict schema:
 
 ```python
 required_fields = ["date", "time", "duration", "reasoning", 
-                  "phil_energy", "chris_energy", "meeting_type"]
+                  "user_energies", "meeting_type"]
 ```
 
 ## Test Scenarios

@@ -36,8 +36,10 @@ def demo_condensed():
       "time": "14:00",
       "duration": "1.5 hours",
       "reasoning": "Both participants are free and have high energy",
-      "phil_energy": "High",
-      "chris_energy": "High",
+      "user_energies": {
+        "phil": "High",
+        "chris": "High"
+      },
       "meeting_type": "Coffee",
       "location": "Local coffee shop",
       "confidence": 0.9,

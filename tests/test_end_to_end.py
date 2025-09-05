@@ -174,8 +174,10 @@ class TestEndToEnd:
                     "time": "15:30",
                     "duration": "1.5 hours",
                     "reasoning": "Both free after lunch, good energy",
-                    "phil_energy": "High",
-                    "chris_energy": "Medium",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "Medium"
+                    },
                     "meeting_type": "Coffee"
                 }
             ]
@@ -198,8 +200,10 @@ class TestEndToEnd:
             "time": "10:00",
             "duration": "1 hour",
             "reasoning": "Morning energy",
-            "phil_energy": "High",
-            "chris_energy": "High",
+            "user_energies": {
+                "phil": "High",
+                "chris": "High"
+            },
             "meeting_type": "Coffee"
         }
     ]
@@ -227,8 +231,10 @@ These are the optimal times."""
                     "time": "15:30",
                     "duration": "1.5 hours",
                     "reasoning": "Good time",
-                    "phil_energy": "High",
-                    "chris_energy": "Medium",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "Medium"
+                    },
                     "meeting_type": "Coffee"
                 }
             ]
@@ -245,7 +251,10 @@ These are the optimal times."""
                     "date": "2025-09-04",
                     "time": "15:30",
                     # Missing required fields - this should fail
-                    "phil_energy": "Super High",  # Invalid energy level
+                    "user_energies": {
+                        "phil": "Super High",  # Invalid energy level
+                        "chris": "High"
+                    },
                     "meeting_type": "Invalid Type"  # Invalid meeting type
                 }
             ]
@@ -255,7 +264,7 @@ These are the optimal times."""
         assert not is_valid
         assert len(errors) > 0
         assert any("Missing required field" in error for error in errors)
-        assert any("Invalid phil_energy" in error for error in errors)
+        assert any("Invalid energy level for phil" in error for error in errors)
         assert any("Invalid meeting_type" in error for error in errors)
         
         print("✅ Response validation successful")
@@ -276,8 +285,10 @@ These are the optimal times."""
                     "time": "15:30",
                     "duration": "1.5 hours",
                     "reasoning": "Test",
-                    "phil_energy": "High",
-                    "chris_energy": "Medium",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "Medium"
+                    },
                     "meeting_type": "Coffee"
                 }
             ]
@@ -318,8 +329,10 @@ These are the optimal times."""
                     "time": "15:30",
                     "duration": "1.5 hours",
                     "reasoning": "Both free after lunch, good energy",
-                    "phil_energy": "High",
-                    "chris_energy": "Medium",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "Medium"
+                    },
                     "meeting_type": "Coffee",
                     "location": "Downtown Cafe",
                     "confidence": 0.85,
@@ -331,8 +344,10 @@ These are the optimal times."""
                     "time": "10:00",
                     "duration": "1 hour",
                     "reasoning": "Morning energy, both available",
-                    "phil_energy": "High",
-                    "chris_energy": "High",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "High"
+                    },
                     "meeting_type": "Coffee"
                 }
             ],
@@ -393,8 +408,10 @@ These are the optimal times."""
             "time": "15:30",
             "duration": "1 hour",
             "reasoning": "Test",
-            "phil_energy": "High",
-            "chris_energy": "High",
+            "user_energies": {
+                "phil": "High",
+                "chris": "High"
+            },
             "meeting_type": "Coffee"
         }
         is_valid, errors = validate_event_dictionary(invalid_event)

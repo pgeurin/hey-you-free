@@ -97,7 +97,7 @@ def get_meeting_suggestions_from_gemini(prompt: str, temperature: float = 0.1, s
         return None
 
 
-def parse_gemini_response(response_text: str) -> Optional[Dict[str, Any]]:
+def parse_gemini_response(response_text: str, user1_name: str = "phil", user2_name: str = "chris") -> Optional[Dict[str, Any]]:
     """Parse JSON response from Gemini"""
     try:
         # Try to find JSON in the response
@@ -115,8 +115,8 @@ def parse_gemini_response(response_text: str) -> Optional[Dict[str, Any]]:
         # Parse JSON
         suggestions = json.loads(json_text)
         
-        # Validate the response format
-        is_valid, errors = validate_meeting_suggestions(suggestions)
+        # Validate the response format with user names
+        is_valid, errors = validate_meeting_suggestions(suggestions, user1_name, user2_name)
         if not is_valid:
             print("⚠️  AI response format validation failed:")
             for error in errors:

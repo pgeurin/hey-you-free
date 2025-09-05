@@ -74,8 +74,10 @@ def mock_gemini_response_seed_42():
                 "time": "15:30",
                 "duration": "1.5 hours",
                 "reasoning": "Both Phil and Chris have free time after lunch, perfect for coffee",
-                "phil_energy": "High",
-                "chris_energy": "Medium",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "Medium"
+                },
                 "meeting_type": "Coffee",
                 "location": "Downtown Cafe",
                 "confidence": 0.85,
@@ -87,8 +89,10 @@ def mock_gemini_response_seed_42():
                 "time": "10:00",
                 "duration": "1 hour",
                 "reasoning": "Morning energy, both available before work commitments",
-                "phil_energy": "High",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "High"
+                },
                 "meeting_type": "Coffee"
             },
             {
@@ -96,8 +100,10 @@ def mock_gemini_response_seed_42():
                 "time": "17:00",
                 "duration": "2 hours",
                 "reasoning": "End of day social time, both winding down",
-                "phil_energy": "Medium",
-                "chris_energy": "Medium",
+                "user_energies": {
+                    "phil": "Medium",
+                    "chris": "Medium"
+                },
                 "meeting_type": "Evening drinks",
                 "location": "Local Bar"
             }
@@ -120,8 +126,10 @@ def mock_gemini_response_seed_123():
                 "time": "14:00",
                 "duration": "1 hour",
                 "reasoning": "Afternoon break, both have energy and availability",
-                "phil_energy": "Medium",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "Medium",
+                    "chris": "High"
+                },
                 "meeting_type": "Coffee",
                 "location": "Central Park Cafe"
             },
@@ -130,8 +138,10 @@ def mock_gemini_response_seed_123():
                 "time": "11:30",
                 "duration": "1.5 hours",
                 "reasoning": "Late morning, good energy levels for both",
-                "phil_energy": "High",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "High"
+                },
                 "meeting_type": "Casual lunch",
                 "location": "Restaurant District"
             },
@@ -140,8 +150,10 @@ def mock_gemini_response_seed_123():
                 "time": "18:30",
                 "duration": "2 hours",
                 "reasoning": "Evening social time, both free after work",
-                "phil_energy": "Medium",
-                "chris_energy": "Medium",
+                "user_energies": {
+                    "phil": "Medium",
+                    "chris": "Medium"
+                },
                 "meeting_type": "Evening drinks",
                 "location": "Rooftop Bar"
             }
@@ -246,7 +258,7 @@ def test_api_response_validation():
     
     # Validate each suggestion
     for i, suggestion in enumerate(suggestions["suggestions"]):
-        required_fields = ["date", "time", "duration", "reasoning", "phil_energy", "chris_energy", "meeting_type"]
+        required_fields = ["date", "time", "duration", "reasoning", "user_energies", "meeting_type"]
         for field in required_fields:
             assert field in suggestion, f"Missing field {field} in suggestion {i+1}"
             assert suggestion[field] is not None, f"Field {field} is None in suggestion {i+1}"
@@ -285,15 +297,15 @@ def test_complete_seeded_workflow():
         assert first_suggestion["date"] == "2025-01-20"
         assert first_suggestion["time"] == "15:30"
         assert first_suggestion["meeting_type"] == "Coffee"
-        assert first_suggestion["phil_energy"] == "High"
-        assert first_suggestion["chris_energy"] == "Medium"
+        assert first_suggestion["user_energies"]["phil"] == "High"
+        assert first_suggestion["user_energies"]["chris"] == "Medium"
         
         print("✅ Complete seeded workflow successful")
         print(f"   Generated {len(suggestions['suggestions'])} suggestions")
         print(f"   First suggestion: {first_suggestion['date']} at {first_suggestion['time']}")
         print(f"   Meeting type: {first_suggestion['meeting_type']}")
-        print(f"   Phil energy: {first_suggestion['phil_energy']}")
-        print(f"   Chris energy: {first_suggestion['chris_energy']}")
+        print(f"   Phil energy: {first_suggestion['user_energies']['phil']}")
+        print(f"   Chris energy: {first_suggestion['user_energies']['chris']}")
 
 
 def run_seeded_api_demo():

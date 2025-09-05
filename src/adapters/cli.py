@@ -48,18 +48,15 @@ def generate_meeting_suggestions() -> str:
     return prompt
 
 
-def get_meeting_suggestions_with_gemini() -> Optional[str]:
-    """Use Gemini API to get meeting suggestions"""
+def get_meeting_suggestions_with_gemini(user1_name: str = "phil", user2_name: str = "chris") -> Optional[str]:
+    """Use Gemini API to get meeting suggestions with dynamic user names"""
     
-    # Check if prompt file exists
-    if not file_exists("output/meeting_scheduler_prompt.txt"):
-        print("ERROR: output/meeting_scheduler_prompt.txt not found")
-        print("Please run: python3 -m src.adapters.cli generate first")
-        return None
+    # Load calendar data
+    phil_events = load_calendar_data("data/calendar_events_raw.json")
+    chris_events = load_calendar_data("data/chris_calendar_events_raw.json")
     
-    # Load the prompt
-    with open("output/meeting_scheduler_prompt.txt", 'r') as f:
-        prompt = f.read()
+    # Create fresh prompt with user names
+    prompt = create_ai_prompt(phil_events, chris_events, user1_name, user2_name)
     
     # Get suggestions from Gemini (deterministic)
     response_text = get_deterministic_meeting_suggestions(prompt)
@@ -73,7 +70,7 @@ def get_meeting_suggestions_with_gemini() -> Optional[str]:
     print(response_text)
     
     # Try to parse JSON response
-    suggestions = parse_gemini_response(response_text)
+    suggestions = parse_gemini_response(response_text, user1_name, user2_name)
     
     if suggestions:
         print("\n📅 FORMATTED SUGGESTIONS:")
@@ -83,8 +80,12 @@ def get_meeting_suggestions_with_gemini() -> Optional[str]:
             print(f"\n{i}. {suggestion.get('date', 'N/A')} at {suggestion.get('time', 'N/A')}")
             print(f"   Duration: {suggestion.get('duration', 'N/A')}")
             print(f"   Type: {suggestion.get('meeting_type', 'N/A')}")
-            print(f"   Phil's Energy: {suggestion.get('phil_energy', 'N/A')}")
-            print(f"   Chris's Energy: {suggestion.get('chris_energy', 'N/A')}")
+            
+            # Display energy levels from user_energies dictionary
+            user_energies = suggestion.get('user_energies', {})
+            for user_key, energy_level in user_energies.items():
+                print(f"   {user_key.title()}'s Energy: {energy_level}")
+            
             print(f"   Reasoning: {suggestion.get('reasoning', 'N/A')}")
         
         # Save results

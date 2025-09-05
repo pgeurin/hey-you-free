@@ -110,8 +110,10 @@ def test_parse_gemini_response_valid_format():
                 "time": "14:30",
                 "duration": "1.5 hours",
                 "reasoning": "Both have energy after lunch, no conflicts",
-                "phil_energy": "High",
-                "chris_energy": "Medium",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "Medium"
+                },
                 "meeting_type": "Coffee",
                 "location": "Downtown Cafe",
                 "confidence": 0.85,
@@ -138,8 +140,8 @@ def test_parse_gemini_response_valid_format():
     assert suggestion["date"] == "2025-01-20"
     assert suggestion["time"] == "14:30"
     assert suggestion["duration"] == "1.5 hours"
-    assert suggestion["phil_energy"] == "High"
-    assert suggestion["chris_energy"] == "Medium"
+    assert suggestion["user_energies"]["phil"] == "High"
+    assert suggestion["user_energies"]["chris"] == "Medium"
     assert suggestion["meeting_type"] == "Coffee"
     assert suggestion["confidence"] == 0.85
 
@@ -156,8 +158,10 @@ def test_parse_gemini_response_with_code_blocks():
             "time": "14:30",
             "duration": "1 hour",
             "reasoning": "Good time for both",
-            "phil_energy": "High",
-            "chris_energy": "High",
+            "user_energies": {
+                "phil": "High",
+                "chris": "High"
+            },
             "meeting_type": "Coffee"
         }
     ]
@@ -183,8 +187,10 @@ def test_parse_gemini_response_minimal_format():
                 "time": "14:30",
                 "duration": "1 hour",
                 "reasoning": "Good time",
-                "phil_energy": "High",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "High"
+                },
                 "meeting_type": "Coffee"
             }
         ]
@@ -222,17 +228,24 @@ def test_event_dictionary_structure_validation():
         "time": "14:30", 
         "duration": "1.5 hours",
         "reasoning": "Good time for both",
-        "phil_energy": "High",
-        "chris_energy": "Medium",
+        "user_energies": {
+            "phil": "High",
+            "chris": "Medium"
+        },
         "meeting_type": "Coffee"
     }
     
     # Test required fields
-    required_fields = ["date", "time", "duration", "reasoning", "phil_energy", "chris_energy", "meeting_type"]
+    required_fields = ["date", "time", "duration", "reasoning", "user_energies", "meeting_type"]
     for field in required_fields:
         assert field in valid_event
         assert valid_event[field] is not None
         assert valid_event[field] != ""
+    
+    # Test user_energies structure
+    assert isinstance(valid_event["user_energies"], dict)
+    assert "phil" in valid_event["user_energies"]
+    assert "chris" in valid_event["user_energies"]
 
 
 def test_event_dictionary_optional_fields():
@@ -242,8 +255,10 @@ def test_event_dictionary_optional_fields():
         "time": "14:30",
         "duration": "1.5 hours", 
         "reasoning": "Good time",
-        "phil_energy": "High",
-        "chris_energy": "High",
+        "user_energies": {
+            "phil": "High",
+            "chris": "High"
+        },
         "meeting_type": "Coffee",
         "location": "Downtown Cafe",
         "confidence": 0.85,
@@ -267,13 +282,15 @@ def test_energy_levels_validation():
             "time": "14:30",
             "duration": "1 hour",
             "reasoning": "Test",
-            "phil_energy": energy,
-            "chris_energy": energy,
+            "user_energies": {
+                "phil": energy,
+                "chris": energy
+            },
             "meeting_type": "Coffee"
         }
         
-        assert event["phil_energy"] in valid_energy_levels
-        assert event["chris_energy"] in valid_energy_levels
+        assert event["user_energies"]["phil"] in valid_energy_levels
+        assert event["user_energies"]["chris"] in valid_energy_levels
 
 
 def test_meeting_types_validation():
@@ -286,8 +303,10 @@ def test_meeting_types_validation():
             "time": "14:30", 
             "duration": "1 hour",
             "reasoning": "Test",
-            "phil_energy": "High",
-            "chris_energy": "High",
+            "user_energies": {
+                "phil": "High",
+                "chris": "High"
+            },
             "meeting_type": meeting_type
         }
         
@@ -301,8 +320,10 @@ def test_validate_event_dictionary_valid():
         "time": "14:30",
         "duration": "1.5 hours",
         "reasoning": "Good time for both",
-        "phil_energy": "High",
-        "chris_energy": "Medium",
+        "user_energies": {
+            "phil": "High",
+            "chris": "Medium"
+        },
         "meeting_type": "Coffee"
     }
     
@@ -334,15 +355,17 @@ def test_validate_event_dictionary_invalid_energy():
         "time": "14:30",
         "duration": "1 hour",
         "reasoning": "Test",
-        "phil_energy": "Super High",  # Invalid
-        "chris_energy": "Low",
+        "user_energies": {
+            "phil": "Super High",  # Invalid
+            "chris": "Low"
+        },
         "meeting_type": "Coffee"
     }
     
     is_valid, errors = validate_event_dictionary(invalid_event)
     
     assert not is_valid
-    assert any("Invalid phil_energy" in error for error in errors)
+    assert any("Invalid energy level for phil" in error for error in errors)
 
 
 def test_validate_event_dictionary_invalid_date_format():
@@ -352,8 +375,10 @@ def test_validate_event_dictionary_invalid_date_format():
         "time": "14:30",
         "duration": "1 hour",
         "reasoning": "Test",
-        "phil_energy": "High",
-        "chris_energy": "High",
+        "user_energies": {
+            "phil": "High",
+            "chris": "High"
+        },
         "meeting_type": "Coffee"
     }
     
@@ -372,8 +397,10 @@ def test_validate_meeting_suggestions_valid():
                 "time": "14:30",
                 "duration": "1 hour",
                 "reasoning": "Good time",
-                "phil_energy": "High",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "High"
+                },
                 "meeting_type": "Coffee"
             }
         ]
@@ -420,8 +447,10 @@ def test_parse_gemini_response_with_validation():
                 "time": "14:30",
                 "duration": "1 hour",
                 "reasoning": "Good time",
-                "phil_energy": "High",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "High"
+                },
                 "meeting_type": "Coffee"
             }
         ]

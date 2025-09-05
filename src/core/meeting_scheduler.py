@@ -105,8 +105,10 @@ Provide exactly 3 suggestions in this JSON format:
       "time": "HH:MM",
       "duration": "X hours",
       "reasoning": "Why this time works well for both people",
-      "{user1_name.lower()}_energy": "High/Medium/Low",
-      "{user2_name.lower()}_energy": "High/Medium/Low",
+      "user_energies": {{
+        "{user1_name.lower()}": "High/Medium/Low",
+        "{user2_name.lower()}": "High/Medium/Low"
+      }},
       "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity/Work meeting",
       "location": "Suggested location (optional)",
       "confidence": 0.85,
@@ -129,8 +131,7 @@ Each suggestion MUST include:
 - time: HH:MM format (24-hour)
 - duration: Human-readable (e.g., "1.5 hours", "2 hours")
 - reasoning: Detailed explanation of why this time works
-- {user1_name.lower()}_energy: High/Medium/Low
-- {user2_name.lower()}_energy: High/Medium/Low
+    - user_energies: Dictionary with energy levels for each user (e.g., {{"phil": "High", "chris": "Medium"}})
 - meeting_type: Coffee/Casual lunch/Evening drinks/Activity/Work meeting
 
 ### OPTIONAL FIELDS (include when relevant)
@@ -159,24 +160,38 @@ Analyze the calendar data and provide your 3 meeting suggestions following the e
     return prompt
 
 
-def validate_event_dictionary(event: Dict[str, Any]) -> Tuple[bool, List[str]]:
+def validate_event_dictionary(event: Dict[str, Any], user1_name: str = "phil", user2_name: str = "chris") -> Tuple[bool, List[str]]:
     """Validate event dictionary has correct shape and format"""
     errors = []
     
     # Required fields
-    required_fields = ["date", "time", "duration", "reasoning", "phil_energy", "chris_energy", "meeting_type"]
+    required_fields = ["date", "time", "duration", "reasoning", "user_energies", "meeting_type"]
     for field in required_fields:
         if field not in event:
             errors.append(f"Missing required field: {field}")
         elif not event[field] or event[field] == "":
             errors.append(f"Empty required field: {field}")
     
-    # Validate energy levels
-    valid_energy = ["High", "Medium", "Low"]
-    if "phil_energy" in event and event["phil_energy"] not in valid_energy:
-        errors.append(f"Invalid phil_energy: {event['phil_energy']}. Must be one of {valid_energy}")
-    if "chris_energy" in event and event["chris_energy"] not in valid_energy:
-        errors.append(f"Invalid chris_energy: {event['chris_energy']}. Must be one of {valid_energy}")
+    # Validate user_energies dictionary
+    if "user_energies" in event:
+        user_energies = event["user_energies"]
+        if not isinstance(user_energies, dict):
+            errors.append("user_energies must be a dictionary")
+        else:
+            # Check that both users have energy levels
+            user1_key = user1_name.lower()
+            user2_key = user2_name.lower()
+            
+            if user1_key not in user_energies:
+                errors.append(f"Missing energy level for {user1_name} in user_energies")
+            if user2_key not in user_energies:
+                errors.append(f"Missing energy level for {user2_name} in user_energies")
+            
+            # Validate energy levels
+            valid_energy = ["High", "Medium", "Low"]
+            for user_key, energy_level in user_energies.items():
+                if energy_level not in valid_energy:
+                    errors.append(f"Invalid energy level for {user_key}: {energy_level}. Must be one of {valid_energy}")
     
     # Validate meeting types (very flexible)
     valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "casual drinks", "activity", "work meeting"]
@@ -209,7 +224,7 @@ def validate_event_dictionary(event: Dict[str, Any]) -> Tuple[bool, List[str]]:
     return len(errors) == 0, errors
 
 
-def validate_meeting_suggestions(suggestions: Dict[str, Any]) -> Tuple[bool, List[str]]:
+def validate_meeting_suggestions(suggestions: Dict[str, Any], user1_name: str = "phil", user2_name: str = "chris") -> Tuple[bool, List[str]]:
     """Validate complete meeting suggestions response"""
     errors = []
     
@@ -230,7 +245,7 @@ def validate_meeting_suggestions(suggestions: Dict[str, Any]) -> Tuple[bool, Lis
     
     # Validate each suggestion
     for i, suggestion in enumerate(suggestions["suggestions"]):
-        is_valid, suggestion_errors = validate_event_dictionary(suggestion)
+        is_valid, suggestion_errors = validate_event_dictionary(suggestion, user1_name, user2_name)
         if not is_valid:
             for error in suggestion_errors:
                 errors.append(f"Suggestion {i+1}: {error}")

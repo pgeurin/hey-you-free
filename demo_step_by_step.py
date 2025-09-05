@@ -94,8 +94,10 @@ def demo_step_by_step():
       "time": "14:00",
       "duration": "1.5 hours",
       "reasoning": "Both participants are free and have high energy levels",
-      "phil_energy": "High",
-      "chris_energy": "High",
+      "user_energies": {
+        "phil": "High",
+        "chris": "High"
+      },
       "meeting_type": "Coffee",
       "location": "Local coffee shop",
       "confidence": 0.9,
@@ -107,8 +109,10 @@ def demo_step_by_step():
       "time": "10:00",
       "duration": "2 hours",
       "reasoning": "Morning energy is optimal for both participants",
-      "phil_energy": "High",
-      "chris_energy": "Medium",
+      "user_energies": {
+        "phil": "High",
+        "chris": "Medium"
+      },
       "meeting_type": "Casual lunch",
       "location": "Downtown restaurant",
       "confidence": 0.8,

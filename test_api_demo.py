@@ -39,8 +39,10 @@ def demo_fastapi_server():
                 "time": "14:00",
                 "duration": "1.5 hours",
                 "reasoning": "Both Phil and Chris are free and have high energy levels",
-                "phil_energy": "High",
-                "chris_energy": "High",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "High"
+                },
                 "meeting_type": "Coffee",
                 "location": "Local coffee shop",
                 "confidence": 0.9,
@@ -52,8 +54,10 @@ def demo_fastapi_server():
                 "time": "10:00",
                 "duration": "2 hours",
                 "reasoning": "Morning energy is optimal for both participants",
-                "phil_energy": "High",
-                "chris_energy": "Medium",
+                "user_energies": {
+                    "phil": "High",
+                    "chris": "Medium"
+                },
                 "meeting_type": "Casual lunch",
                 "location": "Downtown restaurant",
                 "confidence": 0.8,
@@ -78,7 +82,9 @@ def demo_fastapi_server():
             for i, suggestion in enumerate(data['suggestions'], 1):
                 print(f"   Suggestion {i}: {suggestion['date']} at {suggestion['time']} - {suggestion['meeting_type']}")
                 print(f"      Reasoning: {suggestion['reasoning']}")
-                print(f"      Energy levels: Phil={suggestion['phil_energy']}, Chris={suggestion['chris_energy']}")
+                user_energies = suggestion.get('user_energies', {})
+                energy_text = ", ".join([f"{user.title()}={energy}" for user, energy in user_energies.items()])
+                print(f"      Energy levels: {energy_text}")
         else:
             print(f"   Error: {response.json()}")
     

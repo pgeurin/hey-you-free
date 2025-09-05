@@ -125,8 +125,10 @@ Provide exactly 3 suggestions in this JSON format:
       "time": "HH:MM",
       "duration": "X hours",
       "reasoning": "Why this time works well for both people",
-      "phil_energy": "High/Medium/Low",
-      "chris_energy": "High/Medium/Low",
+      "user_energies": {
+        "phil": "High/Medium/Low",
+        "chris": "High/Medium/Low"
+      },
       "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity",
       "location": "Suggested location (optional)",
       "confidence": 0.85,
@@ -149,8 +151,7 @@ Each suggestion MUST include:
 - time: HH:MM format (24-hour)
 - duration: Human-readable (e.g., "1.5 hours", "2 hours")
 - reasoning: Detailed explanation of why this time works
-- phil_energy: High/Medium/Low
-- chris_energy: High/Medium/Low
+- user_energies: Dictionary with energy levels for each user (e.g., {"phil": "High", "chris": "Medium"})
 - meeting_type: Coffee/Casual lunch/Evening drinks/Activity
 
 ### OPTIONAL FIELDS (include when relevant)

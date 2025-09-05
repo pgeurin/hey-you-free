@@ -245,8 +245,10 @@ class TestTrueEndToEnd:
             assert "time" in suggestion
             assert "duration" in suggestion
             assert "reasoning" in suggestion
-            assert "phil_energy" in suggestion
-            assert "chris_energy" in suggestion
+            assert "user_energies" in suggestion
+            assert isinstance(suggestion["user_energies"], dict)
+            assert "phil" in suggestion["user_energies"]
+            assert "chris" in suggestion["user_energies"]
             assert "meeting_type" in suggestion
             
             # Validate date format
@@ -258,8 +260,8 @@ class TestTrueEndToEnd:
             assert suggestion["time"].count(":") == 1
             
             # Validate energy levels
-            assert suggestion["phil_energy"] in ["High", "Medium", "Low"]
-            assert suggestion["chris_energy"] in ["High", "Medium", "Low"]
+            assert suggestion["user_energies"]["phil"] in ["High", "Medium", "Low"]
+            assert suggestion["user_energies"]["chris"] in ["High", "Medium", "Low"]
         
         print("✅ Real Gemini API call successful")
         print(f"   Generated {len(suggestions['suggestions'])} suggestions")
@@ -405,8 +407,8 @@ class TestTrueEndToEnd:
                 assert "date" in suggestion
                 assert "time" in suggestion
                 assert "meeting_type" in suggestion
-                assert "phil_energy" in suggestion
-                assert "chris_energy" in suggestion
+                assert "user_energies" in suggestion
+                assert isinstance(suggestion["user_energies"], dict)
         
         # Note: Gemini AI doesn't guarantee perfect determinism even with temperature 0
         # So we test for structural consistency rather than exact matching
@@ -445,7 +447,7 @@ class TestTrueEndToEnd:
             first1 = suggestions1["suggestions"][0]
             first2 = suggestions2["suggestions"][0]
             
-            for field in ["date", "time", "reasoning", "phil_energy", "chris_energy"]:
+            for field in ["date", "time", "reasoning", "user_energies"]:
                 if first1.get(field) != first2.get(field):
                     different_fields.append(field)
         
@@ -490,8 +492,10 @@ class TestTrueEndToEnd:
                     "time": "15:30",
                     "duration": "1.5 hours",
                     "reasoning": "Both Phil and Chris have free time after lunch, good energy levels",
-                    "phil_energy": "High",
-                    "chris_energy": "Medium",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "Medium"
+                    },
                     "meeting_type": "Coffee",
                     "location": "Downtown Cafe",
                     "confidence": 0.85,
@@ -503,8 +507,10 @@ class TestTrueEndToEnd:
                     "time": "10:00",
                     "duration": "1 hour",
                     "reasoning": "Morning energy, both available before work commitments",
-                    "phil_energy": "High",
-                    "chris_energy": "High",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "High"
+                    },
                     "meeting_type": "Coffee"
                 },
                 {
@@ -512,8 +518,10 @@ class TestTrueEndToEnd:
                     "time": "17:00",
                     "duration": "2 hours",
                     "reasoning": "End of day, both winding down, good for social time",
-                    "phil_energy": "Medium",
-                    "chris_energy": "Medium",
+                    "user_energies": {
+                        "phil": "Medium",
+                        "chris": "Medium"
+                    },
                     "meeting_type": "Evening drinks",
                     "location": "Local Bar"
                 }
@@ -567,8 +575,10 @@ class TestTrueEndToEnd:
                     "time": "14:00",
                     "duration": "1.5 hours",
                     "reasoning": "Both participants are free and have high energy",
-                    "phil_energy": "High",
-                    "chris_energy": "High",
+                    "user_energies": {
+                        "phil": "High",
+                        "chris": "High"
+                    },
                     "meeting_type": "Coffee",
                     "location": "Local coffee shop",
                     "confidence": 0.9,
