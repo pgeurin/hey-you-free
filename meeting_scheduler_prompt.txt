@@ -6,77 +6,8 @@ You are an expert meeting scheduler with deep understanding of human psychology,
 ## RAW CALENDAR DATA
 
 ### PHIL'S CALENDAR EVENTS:
-Total events: 96
+Total events: 26
 
-2025-08-21 (Thursday) 21:00 - Swing at little red hen!!!
-2025-08-22 (Friday) 08:30 - breaking fast with j and p
-2025-08-22 (Friday) 10:00 - Biochem!!!
-2025-08-22 (Friday) 11:00 - Sara jo summer camp
-2025-08-23 (Saturday) 11:00 - Sara jo summer camp
-2025-08-24 (Sunday) 09:00 - Lift with friends
-2025-08-24 (Sunday) 11:00 - Level 13 | https://zoom.us/j/95047571786?pwd=WUgzODNOUUtiZHMxclI4UTFXV202QT09
-
-
-https://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit
-2025-08-24 (Sunday) 11:00 - Sara jo summer camp
-2025-08-24 (Sunday) 13:00 - Contact improv at exit space
-2025-08-24 (Sunday) 13:00 - Phil at party
-2025-08-24 (Sunday) 13:30 - Phil and Anthony: cowork/ loop music
-2025-08-24 (Sunday) 17:00 - Phil at party? Or Haley
-2025-08-24 (Sunday) 17:00 - Mollie and Evan orgy hangout
-2025-08-24 (Sunday) 19:30 - Haley and phil
-2025-08-25 (Monday) 09:00 - Lift at fitness
-2025-08-25 (Monday) 12:00 - Olivia phil lunch
-2025-08-25 (Monday) 12:30 - The Ultimate Study Challenge! @ Online in the Universe  | This time slot is held until more specific time is needed. Pomodoro check-ins will be tested.<br><br>(Note: a lunch or break will be encouraged if full duration occurs)<br><br>Yes I am a cyborg sometimes with logistics. <br><br>Jackie  (she/her) is inviting you to a scheduled Zoom meeting.<br><br>Topic: Ultimate Pomodoro Technique<br>Time: Aug 25, 2025 12:30 PM Pacific Time (US and Canada)<br>Join Zoom Meeting<br><a href="https://us06web.zoom.us/j/82327566525?pwd=Qccg1JEkqraWBVa6evW7MaeQYVRcDG.1">https://us06web.zoom.us/j/82327566525?pwd=Qccg1JEkqraWBVa6evW7MaeQYVRcDG.1</a><br><br>Meeting ID: 823 2756 6525<br>Passcode: 720165<br><br>---<br><br>One tap mobile<br>+16694449171,,82327566525#,,,,*720165# US<br>+12532050468,,82327566525#,,,,*720165# US<br><br>Join instructions<br><a href="https://us06web.zoom.us/meetings/82327566525/invitations?signature=pmWCxz42795umG2rpYcliTiOcmcqMlaUID8prFyLu7o">https://us06web.zoom.us/meetings/82327566525/invitations?signature=pmWCxz42795umG2rpYcliTiOcmcqMlaUID8prFyLu7o</a>
-2025-08-25 (Monday) 19:30 - Jet city ensemble cast
-2025-08-25 (Monday) 19:30 - Lily come over
-2025-08-25 (Monday) 22:00 - Skating $2
-2025-08-26 (Tuesday) 08:00 - lift with friends
-2025-08-26 (Tuesday) 11:30 - Phil+Sean+zach
-2025-08-26 (Tuesday) 13:00 - 🎭 Fan Friction: promotion
-2025-08-26 (Tuesday) 13:00 - Chris sprint, promotion
-2025-08-26 (Tuesday) 16:00 - Alex trip planning
-2025-08-26 (Tuesday) 17:00 - Jci zoom meeting
-2025-08-26 (Tuesday) 19:00 - Teach improv!! 201
-2025-08-26 (Tuesday) 21:00 - Haley
-2025-08-27 (Wednesday) 09:00 - Lift at fitness
-2025-08-27 (Wednesday) 09:30 - Coworking friends
-2025-08-27 (Wednesday) 17:00 - Natalie tattoo!!
-2025-08-27 (Wednesday) 18:00 - Biochem
-2025-08-27 (Wednesday) 18:30 - Bachata in the park
-2025-08-27 (Wednesday) 19:00 - Swing at little red hen
-2025-08-27 (Wednesday) 20:30 - Olivia and phil
-2025-08-28 (Thursday) 08:00 - lift with friends
-2025-08-28 (Thursday) 10:00 - Chris social media
-2025-08-28 (Thursday) 10:00 - 🎭 Fan Friction: promotion | IG post
-Intro
-Runthru?
-2025-08-28 (Thursday) 18:00 - Sarah sf w mollie
-2025-08-28 (Thursday) 21:00 - Swing at little red hen!!!
-2025-08-29 (Friday) 08:30 - breaking fast with j and p
-2025-08-29 (Friday) 12:30 - Spa days
-2025-08-29 (Friday) 15:00 - Mo pop
-2025-08-29 (Friday) 16:30 - Olivia back
-2025-08-29 (Friday) 17:00 - Breast exam
-2025-08-29 (Friday) 18:00 - Vera clown
-2025-08-29 (Friday) 19:30 - Improv show
-2025-08-30 (Saturday) 14:00 - Cypher at csz
-2025-08-30 (Saturday) 20:00 - Blood rave
-2025-08-31 (Sunday) 09:00 - Lift with friends
-2025-08-31 (Sunday) 11:00 - Level 13 | https://zoom.us/j/95047571786?pwd=WUgzODNOUUtiZHMxclI4UTFXV202QT09
-
-
-https://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit
-2025-08-31 (Sunday) 13:00 - Contact improv at exit space
-2025-08-31 (Sunday) 13:30 - Phil and Anthony: cowork/ loop music
-2025-08-31 (Sunday) 17:00 - Clown
-2025-08-31 (Sunday) 20:00 - Valerie ride cowboy
-2025-09-01 (Monday) 09:00 - Lift at fitness
-2025-09-01 (Monday) 12:00 - Olivia phil lunch
-2025-09-01 (Monday) 18:30 - Dinner club
-2025-09-01 (Monday) 19:30 - Olivia massage between 730 and 8
-2025-09-01 (Monday) 19:30 - Jet city ensemble cast
-2025-09-01 (Monday) 22:00 - Skating $2
 2025-09-02 (Tuesday) 08:00 - lift with friends
 2025-09-02 (Tuesday) 12:00 - Olivia blackberry
 2025-09-02 (Tuesday) 18:00 - Dnd with Thomas!!!
@@ -98,6 +29,7 @@ This event was created from an email you received in Gmail. https://mail.google.
 2025-09-04 (Thursday) 21:00 - Swing at little red hen!!!
 2025-09-05 (Friday) 08:30 - breaking fast with j and p
 2025-09-05 (Friday) 18:00 - Vera?
+2025-09-05 (Friday) 19:00 - Olivia big faris wheel!
 2025-09-05 (Friday) 20:00 - Fresh meet CSPC
 2025-09-06 (Saturday) 10:00 - Fan friction rehearsal
 2025-09-06 (Saturday) 12:00 - Picnic w Olivia
@@ -108,16 +40,6 @@ This event was created from an email you received in Gmail. https://mail.google.
 https://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit
 2025-09-07 (Sunday) 13:00 - Contact improv at exit space
 2025-09-07 (Sunday) 13:30 - Phil and Anthony: cowork/ loop music
-2025-09-08 (Monday) 09:00 - Lift at fitness
-2025-09-08 (Monday) 11:00 - Fan friction
-2025-09-08 (Monday) 12:00 - Olivia phil lunch
-2025-09-08 (Monday) 19:30 - Jet city ensemble cast
-2025-09-08 (Monday) 19:30 - Michelle
-2025-09-08 (Monday) 22:00 - Skating $2
-2025-09-09 (Tuesday) 08:00 - lift with friends
-2025-09-09 (Tuesday) 18:00 - Reach out to Ruben about teaching/residency in twin cities
-2025-09-09 (Tuesday) 19:00 - Teach Monique team at 10041 Mary Ave NW Seattle
-2025-09-09 (Tuesday) 21:00 - Haley
 
 
 ### CHRIS'S CALENDAR EVENTS:
