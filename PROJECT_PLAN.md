@@ -46,7 +46,7 @@ An AI-powered backend service that analyzes two Google calendars and suggests op
 - **AI/ML**: Gemini AI API
 - **Calendar**: Google Calendar API v3
 - **Testing**: pytest
-- **Environment**: conda (butterfly)
+- **Environment**: mamba (butterfly)
 - **Time Zone**: Seattle (PST/PDT)
 
 ## Project Structure
