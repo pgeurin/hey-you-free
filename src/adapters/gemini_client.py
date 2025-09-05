@@ -7,6 +7,7 @@ Handles external API communication
 import json
 import os
 from typing import Optional, Dict, Any
+from src.core.meeting_scheduler import validate_meeting_suggestions
 
 
 def load_gemini_api_key() -> Optional[str]:
@@ -19,7 +20,7 @@ def load_gemini_api_key() -> Optional[str]:
     return api_key
 
 
-def get_meeting_suggestions_from_gemini(prompt: str) -> Optional[str]:
+def get_meeting_suggestions_from_gemini(prompt: str, temperature: float = 0.1, seed: Optional[int] = None) -> Optional[str]:
     """Use Gemini API to get meeting suggestions"""
     
     # Load API key
@@ -35,10 +36,29 @@ def get_meeting_suggestions_from_gemini(prompt: str) -> Optional[str]:
         model = genai.GenerativeModel('gemini-1.5-flash')
         
         print("🤖 Sending request to Gemini AI...")
+        print(f"🌡️  Temperature: {temperature} (lower = more deterministic)")
+        if seed:
+            print(f"🎲 Seed: {seed} (for reproducibility)")
         print("⏳ Analyzing calendars and generating suggestions...")
         
-        # Generate response
-        response = model.generate_content(prompt)
+        # Generate response with temperature control
+        generation_config = genai.types.GenerationConfig(
+            temperature=temperature,
+            top_p=0.8,  # Focus on most likely tokens
+            top_k=40,   # Limit vocabulary for consistency
+            max_output_tokens=2048
+        )
+        
+        # Add seed to prompt for reproducibility (Gemini doesn't have direct seed support)
+        if seed:
+            seeded_prompt = f"SEED: {seed}\n\n{prompt}"
+        else:
+            seeded_prompt = prompt
+        
+        response = model.generate_content(
+            seeded_prompt,
+            generation_config=generation_config
+        )
         
         print("✅ Response received from Gemini!")
         return response.text
@@ -70,6 +90,18 @@ def parse_gemini_response(response_text: str) -> Optional[Dict[str, Any]]:
         
         # Parse JSON
         suggestions = json.loads(json_text)
+        
+        # Validate the response format
+        is_valid, errors = validate_meeting_suggestions(suggestions)
+        if not is_valid:
+            print("⚠️  AI response format validation failed:")
+            for error in errors:
+                print(f"   - {error}")
+            print("Raw response:")
+            print(response_text)
+            return None
+        
+        print("✅ AI response format validated successfully")
         return suggestions
         
     except json.JSONDecodeError as e:
@@ -82,3 +114,21 @@ def parse_gemini_response(response_text: str) -> Optional[Dict[str, Any]]:
         print("Raw response:")
         print(response_text)
         return None
+
+
+def get_deterministic_meeting_suggestions(prompt: str, seed: int = 42) -> Optional[str]:
+    """Get deterministic meeting suggestions with low temperature and fixed seed"""
+    return get_meeting_suggestions_from_gemini(
+        prompt=prompt,
+        temperature=0.1,  # Very low temperature for consistency
+        seed=seed
+    )
+
+
+def get_creative_meeting_suggestions(prompt: str) -> Optional[str]:
+    """Get creative meeting suggestions with higher temperature"""
+    return get_meeting_suggestions_from_gemini(
+        prompt=prompt,
+        temperature=0.7,  # Higher temperature for creativity
+        seed=None
+    )

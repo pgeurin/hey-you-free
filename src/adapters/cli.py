@@ -7,7 +7,11 @@ Handles user interface and orchestrates the workflow
 import sys
 from typing import Optional, Dict, Any
 from src.core.meeting_scheduler import create_ai_prompt
-from src.adapters.gemini_client import get_meeting_suggestions_from_gemini, parse_gemini_response
+from src.adapters.gemini_client import (
+    get_meeting_suggestions_from_gemini, 
+    get_deterministic_meeting_suggestions,
+    parse_gemini_response
+)
 from src.infrastructure.calendar_loader import (
     load_calendar_data, 
     save_prompt_to_file, 
@@ -57,8 +61,8 @@ def get_meeting_suggestions_with_gemini() -> Optional[str]:
     with open("output/meeting_scheduler_prompt.txt", 'r') as f:
         prompt = f.read()
     
-    # Get suggestions from Gemini
-    response_text = get_meeting_suggestions_from_gemini(prompt)
+    # Get suggestions from Gemini (deterministic)
+    response_text = get_deterministic_meeting_suggestions(prompt)
     
     if not response_text:
         return None

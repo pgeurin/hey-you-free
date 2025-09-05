@@ -5,7 +5,7 @@ Core meeting scheduler business logic
 Clean Architecture: No I/O dependencies
 """
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional, Tuple
 
 
 def format_events_for_ai(events: List[Dict[str, Any]], name: str) -> str:
@@ -156,3 +156,78 @@ Each suggestion MUST include:
 Analyze the calendar data and provide your 3 meeting suggestions following the exact JSON format above."""
 
     return prompt
+
+
+def validate_event_dictionary(event: Dict[str, Any]) -> Tuple[bool, List[str]]:
+    """Validate event dictionary has correct shape and format"""
+    errors = []
+    
+    # Required fields
+    required_fields = ["date", "time", "duration", "reasoning", "phil_energy", "chris_energy", "meeting_type"]
+    for field in required_fields:
+        if field not in event:
+            errors.append(f"Missing required field: {field}")
+        elif not event[field] or event[field] == "":
+            errors.append(f"Empty required field: {field}")
+    
+    # Validate energy levels
+    valid_energy = ["High", "Medium", "Low"]
+    if "phil_energy" in event and event["phil_energy"] not in valid_energy:
+        errors.append(f"Invalid phil_energy: {event['phil_energy']}. Must be one of {valid_energy}")
+    if "chris_energy" in event and event["chris_energy"] not in valid_energy:
+        errors.append(f"Invalid chris_energy: {event['chris_energy']}. Must be one of {valid_energy}")
+    
+    # Validate meeting types
+    valid_meeting_types = ["Coffee", "Casual lunch", "Evening drinks", "Activity"]
+    if "meeting_type" in event and event["meeting_type"] not in valid_meeting_types:
+        errors.append(f"Invalid meeting_type: {event['meeting_type']}. Must be one of {valid_meeting_types}")
+    
+    # Validate date format (basic check)
+    if "date" in event and event["date"]:
+        try:
+            datetime.strptime(event["date"], "%Y-%m-%d")
+        except ValueError:
+            errors.append(f"Invalid date format: {event['date']}. Must be YYYY-MM-DD")
+    
+    # Validate time format (basic check)
+    if "time" in event and event["time"]:
+        try:
+            datetime.strptime(event["time"], "%H:%M")
+        except ValueError:
+            errors.append(f"Invalid time format: {event['time']}. Must be HH:MM")
+    
+    # Validate confidence if present
+    if "confidence" in event and event["confidence"] is not None:
+        if not isinstance(event["confidence"], (int, float)) or not (0.0 <= event["confidence"] <= 1.0):
+            errors.append(f"Invalid confidence: {event['confidence']}. Must be 0.0-1.0")
+    
+    return len(errors) == 0, errors
+
+
+def validate_meeting_suggestions(suggestions: Dict[str, Any]) -> Tuple[bool, List[str]]:
+    """Validate complete meeting suggestions response"""
+    errors = []
+    
+    if not isinstance(suggestions, dict):
+        return False, ["Response must be a dictionary"]
+    
+    if "suggestions" not in suggestions:
+        errors.append("Missing 'suggestions' key")
+        return False, errors
+    
+    if not isinstance(suggestions["suggestions"], list):
+        errors.append("'suggestions' must be a list")
+        return False, errors
+    
+    if len(suggestions["suggestions"]) == 0:
+        errors.append("No suggestions provided")
+        return False, errors
+    
+    # Validate each suggestion
+    for i, suggestion in enumerate(suggestions["suggestions"]):
+        is_valid, suggestion_errors = validate_event_dictionary(suggestion)
+        if not is_valid:
+            for error in suggestion_errors:
+                errors.append(f"Suggestion {i+1}: {error}")
+    
+    return len(errors) == 0, errors
