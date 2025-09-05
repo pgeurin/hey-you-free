@@ -20,24 +20,24 @@ def generate_meeting_suggestions() -> str:
     """Generate AI prompt for meeting suggestions"""
     
     # Load calendar data
-    phil_events = load_calendar_data("calendar_events_raw.json")
-    chris_events = load_calendar_data("chris_calendar_events_raw.json")
+    phil_events = load_calendar_data("data/calendar_events_raw.json")
+    chris_events = load_calendar_data("data/chris_calendar_events_raw.json")
     
     # Create optimized prompt
     prompt = create_ai_prompt(phil_events, chris_events)
     
     # Save prompt to file
-    save_prompt_to_file(prompt, "meeting_scheduler_prompt.txt")
+    save_prompt_to_file(prompt, "output/meeting_scheduler_prompt.txt")
     
     print("🤖 AI MEETING SCHEDULER PROMPT GENERATED")
     print("=" * 50)
-    print("📄 Prompt saved to: meeting_scheduler_prompt.txt")
+    print("📄 Prompt saved to: output/meeting_scheduler_prompt.txt")
     print("\n🔍 PROMPT PREVIEW:")
     print("-" * 30)
     print(prompt[:500] + "...")
     print("\n" + "=" * 50)
     print("📋 NEXT STEPS:")
-    print("1. Copy the prompt from meeting_scheduler_prompt.txt")
+    print("1. Copy the prompt from output/meeting_scheduler_prompt.txt")
     print("2. Paste into Gemini AI")
     print("3. Get 3 optimal meeting suggestions!")
     
@@ -48,13 +48,13 @@ def get_meeting_suggestions_with_gemini() -> Optional[str]:
     """Use Gemini API to get meeting suggestions"""
     
     # Check if prompt file exists
-    if not file_exists("meeting_scheduler_prompt.txt"):
-        print("ERROR: meeting_scheduler_prompt.txt not found")
+    if not file_exists("output/meeting_scheduler_prompt.txt"):
+        print("ERROR: output/meeting_scheduler_prompt.txt not found")
         print("Please run: python3 -m src.adapters.cli generate first")
         return None
     
     # Load the prompt
-    with open("meeting_scheduler_prompt.txt", 'r') as f:
+    with open("output/meeting_scheduler_prompt.txt", 'r') as f:
         prompt = f.read()
     
     # Get suggestions from Gemini
@@ -84,8 +84,8 @@ def get_meeting_suggestions_with_gemini() -> Optional[str]:
             print(f"   Reasoning: {suggestion.get('reasoning', 'N/A')}")
         
         # Save results
-        save_suggestions_to_file(suggestions, "meeting_suggestions.json")
-        print(f"\n💾 Results saved to: meeting_suggestions.json")
+        save_suggestions_to_file(suggestions, "data/meeting_suggestions.json")
+        print(f"\n💾 Results saved to: data/meeting_suggestions.json")
     
     return response_text
 
