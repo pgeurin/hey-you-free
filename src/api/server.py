@@ -17,7 +17,40 @@ from api.models import MeetingSuggestionsResponse, ErrorResponse
 from adapters.cli import get_meeting_suggestions_with_gemini
 from core.meeting_scheduler import validate_meeting_suggestions
 from adapters.gemini_client import parse_gemini_response
+from infrastructure.environment import (
+    validate_environment,
+    get_api_key_status,
+    load_environment_config
+)
 
+
+# Validate environment on startup
+def check_startup_requirements():
+    """Check if all startup requirements are met"""
+    is_valid, errors = validate_environment()
+    api_status = get_api_key_status()
+    
+    if not is_valid:
+        print("❌ Environment validation failed:")
+        for error in errors:
+            print(f"   • {error}")
+        print("\n💡 Run 'python setup_environment.py' to fix these issues")
+        return False
+    
+    if not api_status['available']:
+        print(f"❌ API Key issue: {api_status['message']}")
+        print("💡 Get your API key from: https://makersuite.google.com/app/apikey")
+        print("💡 Run 'python setup_environment.py' to configure it")
+        return False
+    
+    print("✅ Environment validation passed")
+    print(f"🔑 API Key: {api_status['status']} ({api_status['key_length']} chars)")
+    return True
+
+# Check startup requirements
+if not check_startup_requirements():
+    print("\n⚠️  Server will start but some features may not work properly")
+    print("💡 Run 'python setup_environment.py' to fix environment issues")
 
 # Create FastAPI app
 app = FastAPI(
@@ -72,12 +105,28 @@ async def health_check():
 async def get_meeting_suggestions(seed: int = 42):
     """Get AI-generated meeting suggestions"""
     try:
+        # Check API key availability first
+        api_status = get_api_key_status()
+        if not api_status['available']:
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "API key not configured",
+                    "message": api_status['message'],
+                    "help": "Run 'python setup_environment.py' to configure your API key"
+                }
+            )
+        
         suggestions = get_meeting_suggestions_from_core(seed=seed)
         
         if not suggestions:
             raise HTTPException(
                 status_code=500,
-                detail="Failed to generate meeting suggestions"
+                detail={
+                    "error": "Failed to generate meeting suggestions",
+                    "message": "AI service returned no suggestions",
+                    "help": "Check your API key and try again"
+                }
             )
         
         return MeetingSuggestionsResponse(**suggestions)
@@ -87,7 +136,11 @@ async def get_meeting_suggestions(seed: int = 42):
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Internal server error: {str(e)}"
+            detail={
+                "error": "Internal server error",
+                "message": str(e),
+                "help": "Check server logs for more details"
+            }
         )
 
 

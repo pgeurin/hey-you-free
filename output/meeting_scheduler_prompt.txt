@@ -110,7 +110,7 @@ Suggest 3 specific meeting times (date + time) that would work well for both Phi
 
 ### CONSTRAINTS
 - Meeting duration: 1-2 hours
-- Time range: Next 2 weeks from today (2025-09-04)
+- Time range: Next 2 weeks from today (2025-09-05)
 - Consider time zones (both appear to be in same timezone)
 - Avoid times when either person has back-to-back meetings
 - Prefer times when both have energy and are in social mode
@@ -127,11 +127,37 @@ Provide exactly 3 suggestions in this JSON format:
       "reasoning": "Why this time works well for both people",
       "phil_energy": "High/Medium/Low",
       "chris_energy": "High/Medium/Low",
-      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity"
+      "meeting_type": "Coffee/Casual lunch/Evening drinks/Activity",
+      "location": "Suggested location (optional)",
+      "confidence": 0.85,
+      "conflicts": [],
+      "preparation_time": "X minutes"
     }
-  ]
+  ],
+  "metadata": {
+    "generated_at": "2025-01-15T10:30:00Z",
+    "total_suggestions": 3,
+    "analysis_quality": "high",
+    "time_range_analyzed": "2025-01-15 to 2025-01-29"
+  }
 }
 ```
+
+### REQUIRED FIELDS
+Each suggestion MUST include:
+- date: YYYY-MM-DD format
+- time: HH:MM format (24-hour)
+- duration: Human-readable (e.g., "1.5 hours", "2 hours")
+- reasoning: Detailed explanation of why this time works
+- phil_energy: High/Medium/Low
+- chris_energy: High/Medium/Low
+- meeting_type: Coffee/Casual lunch/Evening drinks/Activity
+
+### OPTIONAL FIELDS (include when relevant)
+- location: Suggested meeting location
+- confidence: 0.0-1.0 confidence score
+- conflicts: Array of potential conflicts
+- preparation_time: How much prep time needed
 
 ### ANALYSIS FRAMEWORK
 1. **Identify free time slots** where both are available
