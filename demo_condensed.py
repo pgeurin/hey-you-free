@@ -22,21 +22,14 @@ def demo_condensed():
     print("🚀 CONDENSED MEETING SCHEDULER DEMO")
     print("="*50)
     
-    # Load data
     phil_events = load_calendar_data('data/calendar_events_raw.json')
-    print(f"phil_events = load_calendar_data('data/calendar_events_raw.json')")
-    print(f"# {len(phil_events)} events loaded")
+    print(f"phil_events=load_calendar_data('data/calendar_events_raw.json')  # {len(phil_events)} events loaded")
     
     chris_events = load_calendar_data('data/chris_calendar_events_raw.json')
-    print(f"chris_events = load_calendar_data('data/chris_calendar_events_raw.json')")
-    print(f"# {len(chris_events)} events loaded")
+    print(f"chris_events=load_calendar_data('data/chris_calendar_events_raw.json')  # {len(chris_events)} events loaded")
     
-    # Create prompt
     ai_prompt = create_ai_prompt(phil_events, chris_events)
-    print(f"ai_prompt = create_ai_prompt(phil_events, chris_events)")
-    print(f"# {len(ai_prompt)} characters")
-    
-    # Get AI response (mocked)
+    print(f"ai_prompt=create_ai_prompt(phil_events,chris_events)  # {len(ai_prompt)} characters")
     mock_response = """```json
 {
   "suggestions": [
@@ -64,32 +57,23 @@ def demo_condensed():
     
     with patch('src.adapters.gemini_client.get_meeting_suggestions_from_gemini', return_value=mock_response):
         ai_response = get_deterministic_meeting_suggestions(ai_prompt, seed=42)
-    print(f"ai_response = get_deterministic_meeting_suggestions(ai_prompt, seed=42)")
-    print(f"# {len(ai_response)} characters")
+    print(f"ai_response=get_deterministic_meeting_suggestions(ai_prompt,seed=42)  # {len(ai_response)} characters")
     
-    # Parse response
     suggestions = parse_gemini_response(ai_response)
-    print(f"suggestions = parse_gemini_response(ai_response)")
-    print(f"# {len(suggestions['suggestions'])} suggestions")
+    print(f"suggestions=parse_gemini_response(ai_response)  # {len(suggestions['suggestions'])} suggestions")
     
-    # Validate
     is_valid, errors = validate_meeting_suggestions(suggestions)
-    print(f"is_valid, errors = validate_meeting_suggestions(suggestions)")
-    print(f"# {is_valid}")
+    print(f"is_valid,errors=validate_meeting_suggestions(suggestions)  # {is_valid}")
     
-    # Test API
     client = TestClient(app)
-    print(f"client = TestClient(app)")
-    print(f"# FastAPI client created")
+    print(f"client=TestClient(app)  # FastAPI client created")
     
     health_response = client.get('/health')
-    print(f"health_response = client.get('/health')")
-    print(f"# Status: {health_response.status_code}")
+    print(f"health_response=client.get('/health')  # Status: {health_response.status_code}")
     
     with patch('src.api.server.get_meeting_suggestions_from_core', return_value=suggestions):
         api_response = client.get('/meeting-suggestions')
-    print(f"api_response = client.get('/meeting-suggestions')")
-    print(f"# Status: {api_response.status_code}, {len(api_response.json()['suggestions'])} suggestions")
+    print(f"api_response=client.get('/meeting-suggestions')  # Status: {api_response.status_code}, {len(api_response.json()['suggestions'])} suggestions")
     
     print("\n✅ All functions executed successfully!")
     print("✅ FastAPI server returns meeting events!")
