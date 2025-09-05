@@ -211,6 +211,7 @@ class TestTrueEndToEnd:
         print(f"   Contains current date: {current_date}")
         print(f"   ⏱️  Prompt generation time: {prompt_time:.3f}s")
     
+    @pytest.mark.api
     @pytest.mark.skipif(not os.getenv('GOOGLE_API_KEY'), reason="GOOGLE_API_KEY not set")
     def test_real_gemini_api_call_deterministic(self):
         """Test real Gemini API call with deterministic settings"""
@@ -268,6 +269,7 @@ class TestTrueEndToEnd:
         print(f"   ⏱️  Response parsing: {parse_time:.3f}s")
         print(f"   ⏱️  Total time: {prompt_time + api_time + parse_time:.3f}s")
     
+    @pytest.mark.api
     @pytest.mark.skipif(not os.getenv('GOOGLE_API_KEY'), reason="GOOGLE_API_KEY not set")
     def test_real_gemini_api_call_creative(self):
         """Test real Gemini API call with creative settings"""
@@ -305,6 +307,7 @@ class TestTrueEndToEnd:
             print(f"   ⏱️  API call time: {api_time:.3f}s")
             # Don't fail the test, just note the issue
     
+    @pytest.mark.api
     @pytest.mark.skipif(not os.getenv('GOOGLE_API_KEY'), reason="GOOGLE_API_KEY not set")
     def test_complete_workflow_with_real_apis(self):
         """Test complete workflow with real API calls"""
@@ -370,6 +373,7 @@ class TestTrueEndToEnd:
         print(f"   ⏱️  Step 7 (Save suggestions): {step7_time:.3f}s")
         print(f"   ⏱️  Total workflow time: {total_time:.3f}s")
     
+    @pytest.mark.api
     @pytest.mark.skipif(not os.getenv('GOOGLE_API_KEY'), reason="GOOGLE_API_KEY not set")
     def test_deterministic_reproducibility(self):
         """Test that deterministic calls produce consistent results"""
@@ -409,6 +413,7 @@ class TestTrueEndToEnd:
         print("✅ Deterministic reproducibility confirmed")
         print("   Same seed produces consistent structure")
     
+    @pytest.mark.api
     @pytest.mark.skipif(not os.getenv('GOOGLE_API_KEY'), reason="GOOGLE_API_KEY not set")
     def test_different_seeds_produce_different_results(self):
         """Test that different seeds produce different results"""

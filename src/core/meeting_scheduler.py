@@ -179,7 +179,7 @@ def validate_event_dictionary(event: Dict[str, Any]) -> Tuple[bool, List[str]]:
         errors.append(f"Invalid chris_energy: {event['chris_energy']}. Must be one of {valid_energy}")
     
     # Validate meeting types (very flexible)
-    valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "activity", "work meeting"]
+    valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "casual drinks", "activity", "work meeting"]
     if "meeting_type" in event and event["meeting_type"]:
         # Check if meeting type contains any valid type (case insensitive)
         meeting_type = event["meeting_type"].lower()
