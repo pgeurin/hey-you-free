@@ -118,7 +118,14 @@ butterfly2/
 - [x] User authentication system
 - [x] API endpoints for user management
 
-### 📋 Milestone 6: Simple Web Interface (PLANNED)
+
+### 📋 Milestone 6: testing (PLANNED)
+- [ ] Make two new user calendars in testing env (a json file)
+   - give each different personalities and preferences
+- [ ] Make sure the event planner is typical
+
+
+### 📋 Milestone 6.01: Simple Web Interface (PLANNED)
 **Minimal Frontend Approach:**
 - [ ] Static HTML page with form
 - [ ] Google OAuth integration (server-side)
@@ -132,6 +139,14 @@ butterfly2/
 - [ ] Command-line OAuth flow
 - [ ] Terminal-based suggestion display
 - [ ] Keyboard navigation for selections
+
+### 📋 Milestone Calendar Event Creation (PLANNED)
+- [ ] Google Calendar API event creation
+- [ ] Automatic event addition to both users' calendars
+- [ ] Event details population (location, description, attendees)
+- [ ] Calendar conflict detection
+- [ ] Event modification and cancellation
+- [ ] Reminder and notification settings
 
 ### 📋 Milestone 6.1: User Invitation System (PLANNED)
 - [ ] Email invitation system for new users
@@ -167,13 +182,7 @@ butterfly2/
 - [ ] Activity type preferences (coffee, outdoor, dinner)
 - [ ] Historical pattern analysis
 
-### 📋 Milestone 6.5: Calendar Event Creation (PLANNED)
-- [ ] Google Calendar API event creation
-- [ ] Automatic event addition to both users' calendars
-- [ ] Event details population (location, description, attendees)
-- [ ] Calendar conflict detection
-- [ ] Event modification and cancellation
-- [ ] Reminder and notification settings
+
 
 ### 📋 Milestone 7: Production Readiness (PLANNED)
 - [ ] Rate limiting and security
