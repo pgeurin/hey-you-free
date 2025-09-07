@@ -337,7 +337,7 @@
                                 <button class="create-event-btn" onclick="createCalendarEvent(${index})">
                                     📅 Create Calendar Event
                                 </button>
-                                <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}')">
+                                <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}', ${index})">
                                     📤 Share Event
                                 </button>
                                 
@@ -440,20 +440,37 @@
         }
         
         // Function to share event
-        async function shareEvent(shareLink) {
+        async function shareEvent(shareLink, suggestionIndex = null) {
             try {
-                const response = await fetch(`${API_BASE}${shareLink}`);
-                const result = await response.json();
+                let eventDetails;
                 
-                if (result.event_details) {
+                // If we have a suggestion index, use the current suggestion data
+                if (suggestionIndex !== null && window.currentSuggestions && window.currentSuggestions[suggestionIndex]) {
+                    const suggestion = window.currentSuggestions[suggestionIndex];
+                    eventDetails = {
+                        date: suggestion.date,
+                        time: suggestion.time,
+                        duration: suggestion.duration,
+                        meeting_type: suggestion.meeting_type,
+                        location: suggestion.location || 'TBD',
+                        reasoning: suggestion.reasoning,
+                        user_energies: suggestion.user_energies
+                    };
+                } else {
+                    // Fallback: try to fetch from server
+                    const response = await fetch(`${API_BASE}${shareLink}`);
+                    const result = await response.json();
+                    eventDetails = result.event_details;
+                }
+                
+                if (eventDetails) {
                     // Create shareable text
-                    const event = result.event_details;
                     const shareText = `📅 Meeting Suggestion\n\n` +
-                        `Date: ${event.date} at ${event.time}\n` +
-                        `Duration: ${event.duration}\n` +
-                        `Type: ${event.meeting_type}\n` +
-                        `Location: ${event.location || 'TBD'}\n` +
-                        `Reasoning: ${event.reasoning}\n\n` +
+                        `Date: ${eventDetails.date} at ${eventDetails.time}\n` +
+                        `Duration: ${eventDetails.duration}\n` +
+                        `Type: ${eventDetails.meeting_type}\n` +
+                        `Location: ${eventDetails.location || 'TBD'}\n` +
+                        `Reasoning: ${eventDetails.reasoning}\n\n` +
                         `Share Link: ${window.location.origin}${shareLink}`;
                     
                     // Copy to clipboard

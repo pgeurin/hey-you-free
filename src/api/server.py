@@ -1261,15 +1261,15 @@ async def share_event_suggestion(suggestion_id: str):
         # Handle hash-based suggestion IDs (like suggestion_97af7d80)
         if suggestion_id.startswith('suggestion_'):
             # For hash-based IDs, we can't look up in database directly
-            # Instead, return a generic response that explains the limitation
+            # Return a helpful response that explains how to get the actual event details
             return {
                 "event_details": {
-                    "date": "TBD",
-                    "time": "TBD", 
-                    "duration": "TBD",
-                    "meeting_type": "Meeting",
-                    "location": "TBD",
-                    "reasoning": "This is a shareable event link. The actual event details are generated dynamically.",
+                    "date": "Dynamic",
+                    "time": "Dynamic", 
+                    "duration": "Dynamic",
+                    "meeting_type": "Meeting Suggestion",
+                    "location": "To be determined",
+                    "reasoning": "This is a shareable event link. To see the actual event details, please visit the meeting scheduler and generate new suggestions, or ask the person who shared this link for the specific meeting details.",
                     "user_energies": {},
                     "confidence": 0.8
                 },
@@ -1278,7 +1278,8 @@ async def share_event_suggestion(suggestion_id: str):
                     "created_at": "Dynamic",
                     "share_url": f"/share/event/{suggestion_id}",
                     "create_event_url": f"/calendar/events/create-from-suggestion/{suggestion_id}",
-                    "note": "This is a dynamic event link. Event details are generated when the link is created."
+                    "note": "This is a dynamic event link. The actual event details are generated when suggestions are created. Please visit the meeting scheduler to see current suggestions.",
+                    "instructions": "To see actual event details: 1) Visit the meeting scheduler, 2) Generate new suggestions, 3) Use the 'Create Calendar Event' button from the suggestions page"
                 }
             }
         
