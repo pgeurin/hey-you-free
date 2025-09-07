@@ -36,8 +36,9 @@ def format_events_for_ai(events: List[Dict[str, Any]], name: str) -> str:
     # Sort by date and time
     formatted_events.sort(key=lambda x: (x['date'], x['time']))
     
-    # Format as readable text
-    result = f"Total events: {len(formatted_events)}\n\n"
+    # Format as readable text with user name
+    result = f"{name}'s Calendar Events:\n"
+    result += f"Total events: {len(formatted_events)}\n\n"
     for event in formatted_events:
         result += f"{event['date']} ({event['day_of_week']}) {event['time']} - {event['summary']}"
         if event['location']:
