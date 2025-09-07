@@ -101,34 +101,6 @@ Calendar Event Creation
 - X Calendar conflict detection (just notify)
 - X User clicks on suggested events to create calendar entries
 
-TECHNICAL STACK
-- Language: Python 3.11+
-- Framework: FastAPI
-- Database: SQLite (development) / PostgreSQL (production)
-- AI/ML: Gemini AI API
-- Calendar: Google Calendar API v3
-- Testing: pytest
-- Environment: mamba (butterfly)
-- Time Zone: Seattle (PST/PDT)
-
-ENVIRONMENT CONFIGURATION
-- Environment File: .env in project root directory
-- Template File: env.template (copy to .env and fill values)
-- Auto-loading: load_env.py automatically loads .env if present
-- Required Variables: GOOGLE_API_KEY, SERVER_HOST, SERVER_PORT
-
-PROJECT STRUCTURE
-butterfly2/
-├── src/
-│   ├── core/           # Business logic (no I/O)
-│   ├── adapters/       # External integrations
-│   ├── infrastructure/ # Database, config
-│   └── api/           # FastAPI routes
-├── tests/              # 198 test functions
-├── requirements.txt
-└── data/              # Sample calendar data
-
-PLANNED FEATURES
 
 - calendar event types don't need to be strictly enforced for the AI. remove that from testing and code.
 - make each user have suggested friends
@@ -183,6 +155,33 @@ Advanced Features
 - Recurring meeting suggestions
 - Email notifications
 - Mobile app integration
+
+TECHNICAL STACK
+- Language: Python 3.11+
+- Framework: FastAPI
+- Database: SQLite (development) / PostgreSQL (production)
+- AI/ML: Gemini AI API
+- Calendar: Google Calendar API v3
+- Testing: pytest
+- Environment: mamba (butterfly)
+- Time Zone: Seattle (PST/PDT)
+
+ENVIRONMENT CONFIGURATION
+- Environment File: .env in project root directory
+- Template File: env.template (copy to .env and fill values)
+- Auto-loading: load_env.py automatically loads .env if present
+- Required Variables: GOOGLE_API_KEY, SERVER_HOST, SERVER_PORT
+
+PROJECT STRUCTURE
+butterfly2/
+├── src/
+│   ├── core/           # Business logic (no I/O)
+│   ├── adapters/       # External integrations
+│   ├── infrastructure/ # Database, config
+│   └── api/           # FastAPI routes
+├── tests/              # 198 test functions
+├── requirements.txt
+└── data/              # Sample calendar data
 
 CURRENT STATUS
 - Core Functionality: Complete and tested
