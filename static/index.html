@@ -158,6 +158,28 @@
             cursor: not-allowed;
         }
         
+        .suggestion .copy-link-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 8px;
+            transition: background 0.3s ease;
+        }
+        
+        .suggestion .copy-link-btn:hover {
+            background: #5a6268;
+        }
+        
+        .suggestion .copy-link-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
         .suggestion .share-event-btn {
             background: #17a2b8;
             color: white;
@@ -337,13 +359,16 @@
                                 <button class="create-event-btn" onclick="createCalendarEvent(${index})">
                                     📅 Create Calendar Event
                                 </button>
+                                <button class="copy-link-btn" onclick="copyEventLink('${suggestion.share_link}', ${index})">
+                                    📋 Copy Link
+                                </button>
                                 <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}', ${index})">
-                                    📤 Share Event
+                                    📤 Share
                                 </button>
                                 
                                 <div class="event-links">
                                     <h5>🔗 Direct Links:</h5>
-                                    <a href="${API_BASE}${suggestion.share_link}" target="_blank">Share Event</a>
+                                    <a href="${API_BASE}${suggestion.share_link}" target="_blank">View Event</a>
                                     <span style="color: #666; font-size: 11px;">(Create Event uses original data)</span>
                                 </div>
                             ` : `
@@ -439,7 +464,32 @@
             }
         }
         
-        // Function to share event
+        // Function to copy event link to clipboard
+        async function copyEventLink(shareLink, suggestionIndex = null) {
+            try {
+                const fullUrl = `${window.location.origin}${shareLink}`;
+                
+                // Copy just the URL to clipboard
+                await navigator.clipboard.writeText(fullUrl);
+                
+                // Show success message
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = `📋 Event link copied to clipboard!`;
+                errorDiv.style.display = 'block';
+                errorDiv.style.background = '#d1ecf1';
+                errorDiv.style.color = '#0c5460';
+                
+            } catch (err) {
+                console.error('Error copying link:', err);
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = `❌ Failed to copy link: ${err.message}`;
+                errorDiv.style.display = 'block';
+                errorDiv.style.background = '#f8d7da';
+                errorDiv.style.color = '#721c24';
+            }
+        }
+        
+        // Function to share event using Web Share API or fallback
         async function shareEvent(shareLink, suggestionIndex = null) {
             try {
                 let eventDetails;
@@ -471,17 +521,35 @@
                         `Type: ${eventDetails.meeting_type}\n` +
                         `Location: ${eventDetails.location || 'TBD'}\n` +
                         `Reasoning: ${eventDetails.reasoning}\n\n` +
-                        `Share Link: ${window.location.origin}${shareLink}`;
+                        `View details: ${window.location.origin}${shareLink}`;
                     
-                    // Copy to clipboard
-                    await navigator.clipboard.writeText(shareText);
+                    const shareUrl = `${window.location.origin}${shareLink}`;
                     
-                    // Show success message
-                    const errorDiv = document.getElementById('error');
-                    errorDiv.textContent = `📤 Event details copied to clipboard! Share this with others.`;
-                    errorDiv.style.display = 'block';
-                    errorDiv.style.background = '#d1ecf1';
-                    errorDiv.style.color = '#0c5460';
+                    // Try Web Share API first (mobile/modern browsers)
+                    if (navigator.share) {
+                        await navigator.share({
+                            title: 'Meeting Suggestion',
+                            text: shareText,
+                            url: shareUrl
+                        });
+                        
+                        // Show success message
+                        const errorDiv = document.getElementById('error');
+                        errorDiv.textContent = `📤 Event shared successfully!`;
+                        errorDiv.style.display = 'block';
+                        errorDiv.style.background = '#d1ecf1';
+                        errorDiv.style.color = '#0c5460';
+                    } else {
+                        // Fallback: copy to clipboard
+                        await navigator.clipboard.writeText(shareText);
+                        
+                        // Show success message
+                        const errorDiv = document.getElementById('error');
+                        errorDiv.textContent = `📤 Event details copied to clipboard! (Web Share not available)`;
+                        errorDiv.style.display = 'block';
+                        errorDiv.style.background = '#d1ecf1';
+                        errorDiv.style.color = '#0c5460';
+                    }
                 } else {
                     throw new Error('No event details found');
                 }
