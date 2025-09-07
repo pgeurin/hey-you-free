@@ -105,15 +105,9 @@ def get_meeting_suggestions_from_core(seed: int = 42, user1_name: str = "phil", 
         if not response_text:
             return None
         
-        # Parse the response
-        suggestions = parse_gemini_response(response_text)
+        # Parse the response with user names
+        suggestions = parse_gemini_response(response_text, user1_name, user2_name)
         if not suggestions:
-            return None
-        
-        # Validate the suggestions with user names
-        is_valid, errors = validate_meeting_suggestions(suggestions, user1_name, user2_name)
-        if not is_valid:
-            print(f"Validation errors: {errors}")
             return None
         
         return suggestions
