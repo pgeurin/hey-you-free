@@ -316,7 +316,7 @@ These are the optimal times."""
         print("✅ File operations successful")
         print("   Files saved and loaded correctly")
     
-    @patch('src.adapters.gemini_client.get_meeting_suggestions_from_gemini')
+    @patch('src.adapters.cli.get_deterministic_meeting_suggestions')
     def test_complete_workflow_step(self, mock_gemini):
         """Test Step 7: Complete workflow with mocked API"""
         print("\n🔍 TESTING STEP 7: Complete Workflow")

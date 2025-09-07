@@ -4,7 +4,7 @@
 Core meeting scheduler business logic
 Clean Architecture: No I/O dependencies
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Tuple
 
 
@@ -51,8 +51,19 @@ def format_events_for_ai(events: List[Dict[str, Any]], name: str) -> str:
 
 
 def create_ai_prompt(user1_events: List[Dict[str, Any]], user2_events: List[Dict[str, Any]], 
-                    user1_name: str = "Phil", user2_name: str = "Chris") -> str:
+                    user1_name: str = "Phil", user2_name: str = "Chris",
+                    start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> str:
     """Create optimized AI prompt using modern prompt engineering techniques"""
+    
+    # Handle time range parameters
+    if start_date is None:
+        start_date = datetime.now()
+    if end_date is None:
+        end_date = start_date + timedelta(days=14)  # Default 2 weeks
+    
+    # Validate time range
+    if end_date <= start_date:
+        raise ValueError("end_date must be after start_date")
     
     # Convert events to simple format for AI analysis
     user1_data = format_events_for_ai(user1_events, user1_name)
@@ -91,7 +102,7 @@ Suggest 3 specific meeting times (date + time) that would work well for both {us
 
 ### CONSTRAINTS
 - Meeting duration: 1-2 hours
-- Time range: Next 2 weeks from today ({datetime.now().strftime('%Y-%m-%d')})
+- Time range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}
 - Consider time zones (both appear to be in same timezone)
 - Avoid times when either person has back-to-back meetings
 - Prefer times when both have energy and are in social mode
@@ -121,7 +132,7 @@ Provide exactly 3 suggestions in this JSON format:
     "generated_at": "2025-01-15T10:30:00Z",
     "total_suggestions": 3,
     "analysis_quality": "high",
-    "time_range_analyzed": "2025-01-15 to 2025-01-29"
+    "time_range_analyzed": "{start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}"
   }}
 }}
 ```
