@@ -526,10 +526,14 @@ def update_event(
 ) -> Optional[Dict[str, Any]]:
     """Update an existing calendar event"""
     try:
-        service = get_google_calendar_service()
-        if not service:
-            print("❌ Failed to get Google Calendar service")
+        # Load credentials
+        creds = load_google_credentials()
+        if not creds:
+            print("ERROR: No Google credentials available")
             return None
+        
+        from googleapiclient.discovery import build
+        service = build('calendar', 'v3', credentials=creds)
         
         # Get the existing event first
         existing_event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
@@ -560,10 +564,14 @@ def cancel_event(
 ) -> bool:
     """Cancel an existing calendar event"""
     try:
-        service = get_google_calendar_service()
-        if not service:
-            print("❌ Failed to get Google Calendar service")
+        # Load credentials
+        creds = load_google_credentials()
+        if not creds:
+            print("ERROR: No Google credentials available")
             return False
+        
+        from googleapiclient.discovery import build
+        service = build('calendar', 'v3', credentials=creds)
         
         # Get the existing event
         existing_event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
@@ -595,10 +603,14 @@ def modify_event_time(
 ) -> Optional[Dict[str, Any]]:
     """Modify the time of an existing calendar event"""
     try:
-        service = get_google_calendar_service()
-        if not service:
-            print("❌ Failed to get Google Calendar service")
+        # Load credentials
+        creds = load_google_credentials()
+        if not creds:
+            print("ERROR: No Google credentials available")
             return None
+        
+        from googleapiclient.discovery import build
+        service = build('calendar', 'v3', credentials=creds)
         
         # Get the existing event
         existing_event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
@@ -628,10 +640,14 @@ def delete_event(
 ) -> bool:
     """Permanently delete a calendar event"""
     try:
-        service = get_google_calendar_service()
-        if not service:
-            print("❌ Failed to get Google Calendar service")
+        # Load credentials
+        creds = load_google_credentials()
+        if not creds:
+            print("ERROR: No Google credentials available")
             return False
+        
+        from googleapiclient.discovery import build
+        service = build('calendar', 'v3', credentials=creds)
         
         # Delete the event
         service.events().delete(calendarId=calendar_id, eventId=event_id).execute()

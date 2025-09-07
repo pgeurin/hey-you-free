@@ -168,3 +168,32 @@ class CalendarConflictResponse(BaseModel):
     has_conflicts: bool
     conflicts: List[Dict[str, Any]]
     message: str
+
+
+class CalendarEventUpdateRequest(BaseModel):
+    """Request model for updating calendar events"""
+    summary: Optional[str] = None
+    start: Optional[str] = None  # ISO datetime string
+    end: Optional[str] = None    # ISO datetime string
+    description: Optional[str] = None
+    location: Optional[str] = None
+    attendees: Optional[List[str]] = None
+
+
+class CalendarEventModifyTimeRequest(BaseModel):
+    """Request model for modifying event time"""
+    new_start_time: str  # ISO datetime string
+    new_end_time: str    # ISO datetime string
+
+
+class CalendarEventCancelRequest(BaseModel):
+    """Request model for cancelling events"""
+    cancellation_reason: str = "Event cancelled"
+
+
+class CalendarEventUpdateResponse(BaseModel):
+    """Response model for calendar event updates"""
+    success: bool
+    event_id: Optional[str] = None
+    message: str
+    updated_event: Optional[Dict[str, Any]] = None

@@ -53,23 +53,25 @@ class TestEventModificationAPI:
     
     def test_modify_event_endpoint(self):
         """Test API endpoint for modifying events"""
-        # This will test the FastAPI endpoint
         from fastapi.testclient import TestClient
         from src.api.server import app
         
         client = TestClient(app)
         
-        # This endpoint doesn't exist yet - will fail
+        # Test with a dummy event ID
         response = client.put(
-            "/calendar/events/{event_id}",
+            "/calendar/events/test_event_id",
             json={
                 "summary": "Updated Meeting Title",
                 "description": "Updated description"
             }
         )
         
-        # Should return 404 since endpoint doesn't exist yet
-        assert response.status_code == 404
+        # Should return 200 with success=False (event not found)
+        assert response.status_code == 200
+        response_data = response.json()
+        assert response_data["success"] == False
+        assert "Failed to update event" in response_data["message"]
     
     def test_cancel_event_endpoint(self):
         """Test API endpoint for cancelling events"""
@@ -78,11 +80,17 @@ class TestEventModificationAPI:
         
         client = TestClient(app)
         
-        # This endpoint doesn't exist yet - will fail
-        response = client.delete("/calendar/events/{event_id}")
+        # Test with a dummy event ID
+        response = client.put(
+            "/calendar/events/test_event_id/cancel",
+            json={"cancellation_reason": "Test cancellation"}
+        )
         
-        # Should return 404 since endpoint doesn't exist yet
-        assert response.status_code == 404
+        # Should return 200 with success=False (event not found)
+        assert response.status_code == 200
+        response_data = response.json()
+        assert response_data["success"] == False
+        assert "Failed to cancel event" in response_data["message"]
 
 
 def test_run_calendar_event_modification_tests():

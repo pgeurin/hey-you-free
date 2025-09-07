@@ -20,7 +20,9 @@ from api.models import (
     MeetingSuggestionsResponse, ErrorResponse, UserCreate, UserUpdate, 
     UserResponse, MeetingSuggestionsRequest, TextChatRequest, TextChatResponse,
     ConversationContextResponse, CalendarEventRequest, CalendarEventFromSuggestionRequest,
-    CalendarEventResponse, CalendarConflictRequest, CalendarConflictResponse
+    CalendarEventResponse, CalendarConflictRequest, CalendarConflictResponse,
+    CalendarEventUpdateRequest, CalendarEventModifyTimeRequest, CalendarEventCancelRequest,
+    CalendarEventUpdateResponse
 )
 from adapters.cli import get_meeting_suggestions_with_gemini
 from core.meeting_scheduler import validate_meeting_suggestions, create_ai_prompt, format_events_for_ai
@@ -865,6 +867,144 @@ async def check_calendar_conflicts_endpoint(
             message=f"Found {len(conflicts)} potential conflicts" if conflicts else "No conflicts found"
         )
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# Calendar Event Modification Endpoints
+@app.put("/calendar/events/{event_id}", response_model=CalendarEventUpdateResponse)
+async def update_calendar_event(
+    event_id: str,
+    request: CalendarEventUpdateRequest,
+    calendar_id: str = "primary"
+):
+    """Update an existing calendar event"""
+    try:
+        from adapters.google_calendar_client import update_event
+        
+        # Prepare event data for update
+        event_data = {}
+        if request.summary is not None:
+            event_data['summary'] = request.summary
+        if request.start is not None:
+            event_data['start'] = {'dateTime': request.start, 'timeZone': 'UTC'}
+        if request.end is not None:
+            event_data['end'] = {'dateTime': request.end, 'timeZone': 'UTC'}
+        if request.description is not None:
+            event_data['description'] = request.description
+        if request.location is not None:
+            event_data['location'] = request.location
+        if request.attendees is not None:
+            event_data['attendees'] = [{'email': email} for email in request.attendees]
+        
+        # Update the event
+        updated_event = update_event(calendar_id, event_id, event_data)
+        
+        if updated_event:
+            return CalendarEventUpdateResponse(
+                success=True,
+                event_id=updated_event.get('id'),
+                message="Event updated successfully",
+                updated_event=updated_event
+            )
+        else:
+            return CalendarEventUpdateResponse(
+                success=False,
+                message="Failed to update event - check OAuth configuration"
+            )
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.put("/calendar/events/{event_id}/time", response_model=CalendarEventUpdateResponse)
+async def modify_event_time(
+    event_id: str,
+    request: CalendarEventModifyTimeRequest,
+    calendar_id: str = "primary"
+):
+    """Modify the time of an existing calendar event"""
+    try:
+        from adapters.google_calendar_client import modify_event_time
+        
+        # Modify the event time
+        updated_event = modify_event_time(
+            calendar_id, 
+            event_id, 
+            request.new_start_time, 
+            request.new_end_time
+        )
+        
+        if updated_event:
+            return CalendarEventUpdateResponse(
+                success=True,
+                event_id=updated_event.get('id'),
+                message="Event time modified successfully",
+                updated_event=updated_event
+            )
+        else:
+            return CalendarEventUpdateResponse(
+                success=False,
+                message="Failed to modify event time - check OAuth configuration"
+            )
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.put("/calendar/events/{event_id}/cancel", response_model=CalendarEventUpdateResponse)
+async def cancel_calendar_event(
+    event_id: str,
+    request: CalendarEventCancelRequest,
+    calendar_id: str = "primary"
+):
+    """Cancel an existing calendar event"""
+    try:
+        from adapters.google_calendar_client import cancel_event
+        
+        # Cancel the event
+        success = cancel_event(calendar_id, event_id, request.cancellation_reason)
+        
+        if success:
+            return CalendarEventUpdateResponse(
+                success=True,
+                event_id=event_id,
+                message="Event cancelled successfully"
+            )
+        else:
+            return CalendarEventUpdateResponse(
+                success=False,
+                message="Failed to cancel event - check OAuth configuration"
+            )
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/calendar/events/{event_id}", response_model=CalendarEventUpdateResponse)
+async def delete_calendar_event(
+    event_id: str,
+    calendar_id: str = "primary"
+):
+    """Permanently delete a calendar event"""
+    try:
+        from adapters.google_calendar_client import delete_event
+        
+        # Delete the event
+        success = delete_event(calendar_id, event_id)
+        
+        if success:
+            return CalendarEventUpdateResponse(
+                success=True,
+                event_id=event_id,
+                message="Event deleted successfully"
+            )
+        else:
+            return CalendarEventUpdateResponse(
+                success=False,
+                message="Failed to delete event - check OAuth configuration"
+            )
+            
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
