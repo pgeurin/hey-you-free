@@ -20,6 +20,8 @@ class MeetingSuggestion(BaseModel):
     confidence: Optional[float] = Field(None, description="Confidence score 0.0-1.0")
     conflicts: Optional[List[str]] = Field(default_factory=list, description="Potential conflicts")
     preparation_time: Optional[str] = Field(None, description="Preparation time needed")
+    event_id: Optional[str] = Field(None, description="Unique identifier for this suggestion")
+    event_link: Optional[str] = Field(None, description="Direct link to create this event")
     
     class Config:
         extra = "allow"  # Allow additional fields

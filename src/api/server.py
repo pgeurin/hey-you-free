@@ -117,6 +117,16 @@ def get_meeting_suggestions_from_core(seed: int = 42, user1_name: str = "phil", 
         if not suggestions:
             return None
         
+        # Add event links to suggestions
+        from core.event_link_generator import add_event_links_to_suggestions
+        base_url = ""  # Could be enhanced to get from environment
+        enhanced_suggestions = add_event_links_to_suggestions(
+            suggestions['suggestions'], user1_name, user2_name, base_url
+        )
+        
+        # Update the suggestions with enhanced data
+        suggestions['suggestions'] = enhanced_suggestions
+        
         return suggestions
         
     except Exception as e:
@@ -378,6 +388,16 @@ async def get_meeting_suggestions_with_database(request: MeetingSuggestionsReque
         suggestions = parse_gemini_response(ai_response, request.user1_name, request.user2_name)
         if not suggestions:
             raise HTTPException(status_code=500, detail="Failed to parse AI response")
+        
+        # Add event links to suggestions
+        from core.event_link_generator import add_event_links_to_suggestions
+        base_url = ""  # Could be enhanced to get from environment
+        enhanced_suggestions = add_event_links_to_suggestions(
+            suggestions['suggestions'], request.user1_name, request.user2_name, base_url
+        )
+        
+        # Update the suggestions with enhanced data
+        suggestions['suggestions'] = enhanced_suggestions
         
         # Store meeting suggestions in database
         # Check if conversation already exists
@@ -867,6 +887,93 @@ async def check_calendar_conflicts_endpoint(
             message=f"Found {len(conflicts)} potential conflicts" if conflicts else "No conflicts found"
         )
         
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/calendar/events/create-from-suggestion/{suggestion_id}", response_model=CalendarEventResponse)
+async def create_event_from_suggestion_link(suggestion_id: str):
+    """Create calendar event from suggestion link"""
+    try:
+        # Get the suggestion from database
+        suggestion = get_db_manager().get_meeting_suggestion(int(suggestion_id))
+        if not suggestion:
+            raise HTTPException(status_code=404, detail="Suggestion not found")
+        
+        # Extract suggestion data
+        suggestion_data = suggestion['suggestion_data']
+        suggestions = suggestion_data.get('suggestions', [])
+        
+        if not suggestions:
+            raise HTTPException(status_code=400, detail="No suggestions found in stored data")
+        
+        # Use the first suggestion (or could be enhanced to select specific one)
+        first_suggestion = suggestions[0]
+        
+        # Create calendar event from suggestion
+        from adapters.google_calendar_client import create_calendar_event, check_calendar_conflicts
+        from datetime import datetime, timedelta
+        
+        # Parse date and time
+        date_obj = datetime.strptime(first_suggestion['date'], "%Y-%m-%d")
+        time_obj = datetime.strptime(first_suggestion['time'], "%H:%M")
+        
+        # Combine date and time
+        start_datetime = date_obj.replace(
+            hour=time_obj.hour,
+            minute=time_obj.minute,
+            second=0,
+            microsecond=0
+        )
+        
+        # Parse duration
+        duration_str = first_suggestion['duration'].lower()
+        if "hour" in duration_str:
+            hours = float(duration_str.split()[0])
+            duration_minutes = int(hours * 60)
+        elif "minute" in duration_str:
+            duration_minutes = int(duration_str.split()[0])
+        else:
+            duration_minutes = 60  # Default to 1 hour
+        
+        end_datetime = start_datetime + timedelta(minutes=duration_minutes)
+        
+        # Format for Google Calendar API
+        start_iso = start_datetime.isoformat() + "Z"
+        end_iso = end_datetime.isoformat() + "Z"
+        
+        # Check for conflicts
+        conflicts = check_calendar_conflicts(start_iso, end_iso)
+        
+        # Create the event
+        created_event = create_calendar_event(
+            summary=f"{first_suggestion['meeting_type'].title()} Meeting",
+            start_time=start_iso,
+            end_time=end_iso,
+            description=first_suggestion.get('reasoning', ''),
+            location=first_suggestion.get('location', ''),
+            attendees=None  # Could be enhanced to include user emails
+        )
+        
+        if created_event:
+            return CalendarEventResponse(
+                success=True,
+                event_id=created_event.get('id'),
+                event_url=created_event.get('htmlLink'),
+                message="Event created successfully from suggestion link",
+                conflicts=conflicts if conflicts else None
+            )
+        else:
+            return CalendarEventResponse(
+                success=False,
+                message="Failed to create event from suggestion link - check OAuth configuration",
+                conflicts=conflicts if conflicts else None
+            )
+            
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid suggestion ID format")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
