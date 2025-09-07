@@ -127,6 +127,7 @@ class TestNewUserPersonalities:
             assert alex_late >= 0, "Alex should have some late events"
             assert sam_early >= 0, "Sam should have some early events"
     
+    @pytest.mark.slow
     def test_ai_response_with_personalities(self):
         """Test AI response generation with different personalities"""
         prompt = create_ai_prompt(self.alex_events, self.sam_events, "Alex", "Sam", self.start_date, self.end_date)

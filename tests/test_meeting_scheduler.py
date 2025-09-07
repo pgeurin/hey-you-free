@@ -480,6 +480,7 @@ def test_parse_gemini_response_invalid_format():
     assert result is None
 
 
+@pytest.mark.slow
 def test_deterministic_vs_creative_parameters():
     """Test that deterministic and creative functions use different parameters"""
     # This test verifies the functions exist and can be called
@@ -503,6 +504,7 @@ def test_deterministic_vs_creative_parameters():
         assert "GOOGLE_API_KEY" in str(e) or "api_key" in str(e).lower()
 
 
+@pytest.mark.slow
 def test_temperature_parameter_validation():
     """Test temperature parameter validation"""
     from src.adapters.gemini_client import get_meeting_suggestions_from_gemini

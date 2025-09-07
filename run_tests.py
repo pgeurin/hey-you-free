@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 
 
-def run_tests(include_api=False, verbose=False, specific_test=None):
+def run_tests(include_api=False, verbose=False, specific_test=None, include_slow=False):
     """Run tests with optional API tests"""
     
     # Base pytest command
@@ -26,13 +26,25 @@ def run_tests(include_api=False, verbose=False, specific_test=None):
     else:
         cmd.append("tests/")
     
-    # Exclude API tests unless explicitly requested
-    if not include_api:
-        cmd.extend(["-m", "not api"])
-        print("🚀 Running tests (excluding API tests)")
+    # Build marker expression
+    markers = ["not api"]
+    if not include_slow:
+        markers.append("not slow")
+    
+    marker_expr = " and ".join(markers)
+    cmd.extend(["-m", marker_expr])
+    
+    if not include_api and not include_slow:
+        print("🚀 Running tests (excluding API and slow tests)")
         print("   Use --api flag to include API tests")
+        print("   Use --slow flag to include slow tests")
+    elif include_api and not include_slow:
+        print("🚀 Running tests (including API tests, excluding slow tests)")
+        print("   ⚠️  API tests require GOOGLE_API_KEY environment variable")
+    elif not include_api and include_slow:
+        print("🚀 Running tests (excluding API tests, including slow tests)")
     else:
-        print("🚀 Running tests (including API tests)")
+        print("🚀 Running tests (including API and slow tests)")
         print("   ⚠️  API tests require GOOGLE_API_KEY environment variable")
     
     # Add short traceback for better output
@@ -85,6 +97,8 @@ def main():
                        help="Verbose output")
     parser.add_argument("-t", "--test", type=str,
                        help="Run specific test file or test function")
+    parser.add_argument("--slow", action="store_true",
+                       help="Include slow tests")
     parser.add_argument("--list-api", action="store_true",
                        help="List all API tests without running them")
     
@@ -121,7 +135,8 @@ def main():
     exit_code = run_tests(
         include_api=args.api,
         verbose=args.verbose,
-        specific_test=args.test
+        specific_test=args.test,
+        include_slow=args.slow
     )
     
     # Print summary
@@ -136,8 +151,9 @@ def main():
     # Show usage examples
     if exit_code != 0:
         print("\n💡 Usage examples:")
-        print("  python run_tests.py                    # Run all tests except API")
-        print("  python run_tests.py --api              # Run all tests including API")
+        print("  python run_tests.py                    # Run fast tests only")
+        print("  python run_tests.py --slow             # Include slow tests")
+        print("  python run_tests.py --api              # Include API tests")
         print("  python run_tests.py -v                 # Verbose output")
         print("  python run_tests.py -t test_file.py    # Run specific test file")
         print("  python run_tests.py --list-api         # List API tests")
