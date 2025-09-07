@@ -4,8 +4,10 @@
 FastAPI server implementation
 Clean Architecture: API layer delegates to core business logic
 """
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from typing import Optional, Dict, Any, List
 import sys
 import os
@@ -95,7 +97,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 def get_meeting_suggestions_from_core(seed: int = 42, user1_name: str = "phil", user2_name: str = "chris", **kwargs) -> Optional[Dict[str, Any]]:
     """Get meeting suggestions from core business logic"""
     try:
@@ -144,6 +145,19 @@ def handle_text_chat_from_core(user1_name: str, user2_name: str, message: str, s
         }
 
 
+@app.get("/")
+async def serve_web_interface():
+    """Serve the web interface"""
+    try:
+        static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "static"))
+        html_path = os.path.join(static_path, "index.html")
+        print(f"Looking for HTML file at: {html_path}")
+        print(f"File exists: {os.path.exists(html_path)}")
+        return FileResponse(html_path)
+    except Exception as e:
+        print(f"Error serving web interface: {e}")
+        return {"error": str(e)}
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
@@ -151,8 +165,13 @@ async def health_check():
 
 
 @app.get("/meeting-suggestions", response_model=MeetingSuggestionsResponse)
-async def get_meeting_suggestions(seed: int = 42):
-    """Get AI-generated meeting suggestions"""
+async def get_meeting_suggestions(
+    seed: int = 42,
+    user1: str = Query("phil", description="First user name"),
+    user2: str = Query("chris", description="Second user name"),
+    meeting_type: str = Query("coffee", description="Type of meeting")
+):
+    """Get AI-generated meeting suggestions with query parameters"""
     try:
         # Check API key availability first
         api_status = get_api_key_status()
@@ -166,7 +185,12 @@ async def get_meeting_suggestions(seed: int = 42):
                 }
             )
         
-        suggestions = get_meeting_suggestions_from_core(seed=seed)
+        suggestions = get_meeting_suggestions_from_core(
+            seed=seed, 
+            user1_name=user1, 
+            user2_name=user2,
+            meeting_type=meeting_type
+        )
         
         if not suggestions:
             raise HTTPException(
@@ -496,6 +520,10 @@ async def get_conversation_context(user1_name: str, user2_name: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# Mount static files after all routes are defined
+static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "static"))
+app.mount("/static", StaticFiles(directory=static_path), name="static")
 
 if __name__ == "__main__":
     import uvicorn

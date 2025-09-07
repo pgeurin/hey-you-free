@@ -88,7 +88,7 @@ class TestFastAPIServer:
         
         response = self.client.get("/meeting-suggestions?seed=123")
         assert response.status_code == 200
-        mock_get_suggestions.assert_called_once_with(seed=123)
+        mock_get_suggestions.assert_called_once_with(seed=123, user1_name='phil', user2_name='chris', meeting_type='coffee')
     
     @patch('api.server.get_meeting_suggestions_from_core')
     def test_get_meeting_suggestions_error(self, mock_get_suggestions):
