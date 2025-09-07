@@ -114,7 +114,10 @@ Make event link for each of the 3 events
 - X Write comprehensive tests for event links functionality
 
 Make add a share button to each event
-- ?
+- X Add share_link field to MeetingSuggestion model
+- X Create API endpoint /share/event/{suggestion_id} for sharing events
+- X Update event_link_generator to include share links
+- X Write comprehensive tests for share button functionality
 
 User Invitation System
 - Make url 

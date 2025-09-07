@@ -21,6 +21,11 @@ def generate_event_creation_link(suggestion_id: str, base_url: str = "") -> str:
     return f"{base_url}/calendar/events/create-from-suggestion/{suggestion_id}"
 
 
+def generate_share_link(suggestion_id: str, base_url: str = "") -> str:
+    """Generate a unique link for sharing an event suggestion"""
+    return f"{base_url}/share/event/{suggestion_id}"
+
+
 def add_event_links_to_suggestions(suggestions: List[Dict[str, Any]], 
                                  user1_name: str, 
                                  user2_name: str, 
@@ -40,9 +45,10 @@ def add_event_links_to_suggestions(suggestions: List[Dict[str, Any]],
             user2_name
         )
         
-        # Add event_id and event_link
+        # Add event_id, event_link, and share_link
         enhanced_suggestion['event_id'] = suggestion_id
         enhanced_suggestion['event_link'] = generate_event_creation_link(suggestion_id, base_url)
+        enhanced_suggestion['share_link'] = generate_share_link(suggestion_id, base_url)
         
         enhanced_suggestions.append(enhanced_suggestion)
     

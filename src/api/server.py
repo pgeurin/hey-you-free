@@ -1240,6 +1240,55 @@ async def send_sms_message(
         )
 
 
+@app.get("/share/event/{suggestion_id}")
+async def share_event_suggestion(suggestion_id: str):
+    """Share event suggestion - returns event details for sharing"""
+    try:
+        # Get the suggestion from database
+        suggestion = get_db_manager().get_meeting_suggestion(int(suggestion_id))
+        if not suggestion:
+            raise HTTPException(status_code=404, detail="Event suggestion not found")
+        
+        # Extract suggestion data
+        suggestion_data = suggestion['suggestion_data']
+        suggestions = suggestion_data.get('suggestions', [])
+        
+        if not suggestions:
+            raise HTTPException(status_code=400, detail="No suggestions found in stored data")
+        
+        # Use the first suggestion (or could be enhanced to select specific one)
+        first_suggestion = suggestions[0]
+        
+        # Create shareable event details
+        share_data = {
+            "event_details": {
+                "date": first_suggestion['date'],
+                "time": first_suggestion['time'],
+                "duration": first_suggestion['duration'],
+                "meeting_type": first_suggestion['meeting_type'],
+                "location": first_suggestion.get('location', ''),
+                "reasoning": first_suggestion.get('reasoning', ''),
+                "user_energies": first_suggestion.get('user_energies', {}),
+                "confidence": first_suggestion.get('confidence', 0.0)
+            },
+            "share_info": {
+                "suggestion_id": suggestion_id,
+                "created_at": suggestion['created_at'],
+                "share_url": f"/share/event/{suggestion_id}",
+                "create_event_url": f"/calendar/events/create-from-suggestion/{suggestion_id}"
+            }
+        }
+        
+        return share_data
+            
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid suggestion ID format")
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

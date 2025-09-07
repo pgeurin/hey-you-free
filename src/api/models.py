@@ -22,6 +22,7 @@ class MeetingSuggestion(BaseModel):
     preparation_time: Optional[str] = Field(None, description="Preparation time needed")
     event_id: Optional[str] = Field(None, description="Unique identifier for this suggestion")
     event_link: Optional[str] = Field(None, description="Direct link to create this event")
+    share_link: Optional[str] = Field(None, description="Link to share this event with others")
     
     class Config:
         extra = "allow"  # Allow additional fields
