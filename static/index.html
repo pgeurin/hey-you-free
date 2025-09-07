@@ -183,18 +183,18 @@
         <form id="meetingForm">
             <div class="form-group">
                 <label for="user1">First Person:</label>
-                <input type="text" id="user1" name="user1" placeholder="Enter name (e.g., Phil)" required>
+                <input type="text" id="user1" name="user1" placeholder="Enter name (e.g., Phil)" value="Phil" required>
             </div>
             
             <div class="form-group">
                 <label for="user2">Second Person:</label>
-                <input type="text" id="user2" name="user2" placeholder="Enter name (e.g., Chris)" required>
+                <input type="text" id="user2" name="user2" placeholder="Enter name (e.g., Chris)" value="Chris" required>
             </div>
             
             <div class="form-group">
                 <label for="meetingType">Meeting Type:</label>
                 <select id="meetingType" name="meetingType">
-                    <option value="coffee">☕ Coffee Chat</option>
+                    <option value="coffee" selected>☕ Coffee Chat</option>
                     <option value="lunch">🍽️ Lunch</option>
                     <option value="dinner">🍽️ Dinner</option>
                     <option value="walk">🚶 Walk & Talk</option>
@@ -205,7 +205,17 @@
             
             <div class="form-group">
                 <label for="description">Description (Optional):</label>
-                <input type="text" id="description" name="description" placeholder="e.g., Weekly sync, Project discussion, etc.">
+                <input type="text" id="description" name="description" placeholder="e.g., Weekly sync, Project discussion, etc." value="Quick coffee catch-up">
+            </div>
+            
+            <!-- Quick Fill Buttons for Testing -->
+            <div class="form-group">
+                <label>Quick Fill (Testing):</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button type="button" onclick="fillForm('phil', 'chris', 'coffee', 'Coffee chat')" style="padding: 8px 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; font-size: 12px;">Phil & Chris</button>
+                    <button type="button" onclick="fillForm('alex', 'sam', 'lunch', 'Lunch meeting')" style="padding: 8px 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; font-size: 12px;">Alex & Sam</button>
+                    <button type="button" onclick="fillForm('user1', 'user2', 'work', 'Work sync')" style="padding: 8px 12px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; font-size: 12px;">Generic</button>
+                </div>
             </div>
             
             <button type="submit" class="btn" id="submitBtn">
@@ -420,6 +430,14 @@
                 document.getElementById('error').textContent = '⚠️ Server not running. Please start the server with: python -m src.api.server';
                 document.getElementById('error').style.display = 'block';
             });
+        
+        // Quick fill function for testing
+        function fillForm(user1, user2, meetingType, description) {
+            document.getElementById('user1').value = user1;
+            document.getElementById('user2').value = user2;
+            document.getElementById('meetingType').value = meetingType;
+            document.getElementById('description').value = description;
+        }
     </script>
 </body>
 </html>

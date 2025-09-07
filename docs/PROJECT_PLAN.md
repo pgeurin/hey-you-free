@@ -154,17 +154,17 @@ Event Enhancement:
 
 ## Planned Features
 
-- make website text/buttons autofilled
+- make website text/buttons autofilled (for testing only?)
 - calendar event types don't need to be strictly enforced for the AI. remove that from testing and code. 
 
-### Calendar Event Creation
-- Google Calendar API event creation
-- Automatic event addition to both users' calendars
-- Event details population (location, description, attendees)
-- Calendar conflict detection (just notify)
+### Calendar Event Creation ✅
+- Google Calendar API event creation ✅
+- Automatic event addition to both users' calendars ✅
+- Event details population (location, description, attendees) ✅
+- Calendar conflict detection (just notify) ✅
 - Event modification and cancellation
 - Reminder and notification settings
-- User clicks on suggested events to create calendar entries
+- User clicks on suggested events to create calendar entries ✅
 
 make each user have suggested friends
 - 
@@ -220,24 +220,25 @@ make each use have autoform filling
 ## Current Status
 - Core Functionality: Complete and tested
 - API Backend: Complete and tested  
-- Testing Coverage: Comprehensive (156 tests)
+- Testing Coverage: Comprehensive (198 tests)
 - Database Infrastructure: Complete
 - User Management: Complete and tested
 - Personality Testing: Complete and tested
 - Web Interface: Complete and tested
 - OAuth Integration: Complete and tested
 - Event Description: Complete and tested
-- Text Integration: Planned
+- Calendar Event Creation: Complete and tested
+- Text Integration: In progress
 - Production Ready: In progress
 - Advanced Features: Planned
 
 ## Next Steps
-- Implement calendar event creation
-- Add text/SMS integration
+- Make website text/buttons autofilled
+- Complete text/SMS integration
 - Production deployment
 - Advanced features
 
 ---
 
 *Last Updated: 2025-01-15*
-*Status: Event Description Complete - Next: Calendar Event Creation*
+*Status: Calendar Event Creation Complete - Next: Website Autofill*
