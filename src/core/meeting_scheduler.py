@@ -206,13 +206,13 @@ def validate_event_dictionary(event: Dict[str, Any], user1_name: str = "phil", u
                     errors.append(f"Invalid energy level for {user_key}: {energy_level}. Must be one of {valid_energy}")
     
     # Validate meeting types (very flexible - allow any reasonable meeting type)
-    valid_meeting_types = ["coffee", "casual lunch", "evening drinks", "casual drinks", "activity", "work meeting", "brunch", "lunch", "dinner", "social", "party", "meeting", "call", "chat"]
+    # Relaxed meeting type validation - AI can suggest creative types
     if "meeting_type" in event and event["meeting_type"]:
-        # Check if meeting type contains any valid type (case insensitive)
-        meeting_type = event["meeting_type"].lower()
-        is_valid_type = any(valid_type in meeting_type for valid_type in valid_meeting_types)
-        if not is_valid_type:
-            errors.append(f"Invalid meeting_type: {event['meeting_type']}. Must contain one of {[t.title() for t in valid_meeting_types]}")
+        meeting_type = event["meeting_type"].strip()
+        # Only reject if it's clearly not a meeting type (too short, empty, or obviously invalid)
+        if len(meeting_type) < 2:
+            errors.append(f"Meeting type too short: {event['meeting_type']}")
+        # Allow any reasonable meeting type - AI should have flexibility
     
     # Validate date format (basic check)
     if "date" in event and event["date"]:
