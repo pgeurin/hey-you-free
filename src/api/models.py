@@ -93,6 +93,7 @@ class MeetingSuggestionsRequest(BaseModel):
     start_date: Optional[str] = Field(None, description="Start date in YYYY-MM-DD format")
     end_date: Optional[str] = Field(None, description="End date in YYYY-MM-DD format")
     conversation_context: Optional[str] = Field(None, description="Additional context for AI")
+    description: Optional[str] = Field(None, description="Custom description for the meeting")
     seed: Optional[int] = Field(42, description="Seed for deterministic results")
 
 

@@ -100,11 +100,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def get_meeting_suggestions_from_core(seed: int = 42, user1_name: str = "phil", user2_name: str = "chris", **kwargs) -> Optional[Dict[str, Any]]:
+def get_meeting_suggestions_from_core(seed: int = 42, user1_name: str = "phil", user2_name: str = "chris", description: Optional[str] = None, **kwargs) -> Optional[Dict[str, Any]]:
     """Get meeting suggestions from core business logic"""
     try:
         # Get AI response
-        response_text = get_meeting_suggestions_with_gemini(user1_name, user2_name)
+        response_text = get_meeting_suggestions_with_gemini(user1_name, user2_name, description)
         if not response_text:
             return None
         
@@ -166,7 +166,8 @@ async def get_meeting_suggestions(
     seed: int = 42,
     user1: str = Query("phil", description="First user name"),
     user2: str = Query("chris", description="Second user name"),
-    meeting_type: str = Query("coffee", description="Type of meeting")
+    meeting_type: str = Query("coffee", description="Type of meeting"),
+    description: Optional[str] = Query(None, description="Custom description for the meeting")
 ):
     """Get AI-generated meeting suggestions with query parameters"""
     try:
@@ -186,7 +187,8 @@ async def get_meeting_suggestions(
             seed=seed, 
             user1_name=user1, 
             user2_name=user2,
-            meeting_type=meeting_type
+            meeting_type=meeting_type,
+            description=description
         )
         
         if not suggestions:

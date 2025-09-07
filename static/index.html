@@ -182,6 +182,11 @@
                 </select>
             </div>
             
+            <div class="form-group">
+                <label for="description">Description (Optional):</label>
+                <input type="text" id="description" name="description" placeholder="e.g., Weekly sync, Project discussion, etc.">
+            </div>
+            
             <button type="submit" class="btn" id="submitBtn">
                 🎯 Get AI Suggestions
             </button>
@@ -214,6 +219,7 @@
             const user1 = document.getElementById('user1').value;
             const user2 = document.getElementById('user2').value;
             const meetingType = document.getElementById('meetingType').value;
+            const description = document.getElementById('description').value;
             
             const submitBtn = document.getElementById('submitBtn');
             const results = document.getElementById('results');
@@ -228,7 +234,11 @@
             error.style.display = 'none';
             
             try {
-                const response = await fetch(`${API_BASE}/meeting-suggestions?user1=${encodeURIComponent(user1)}&user2=${encodeURIComponent(user2)}&meeting_type=${meetingType}`);
+                let url = `${API_BASE}/meeting-suggestions?user1=${encodeURIComponent(user1)}&user2=${encodeURIComponent(user2)}&meeting_type=${meetingType}`;
+                if (description.trim()) {
+                    url += `&description=${encodeURIComponent(description)}`;
+                }
+                const response = await fetch(url);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

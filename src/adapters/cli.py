@@ -48,15 +48,19 @@ def generate_meeting_suggestions() -> str:
     return prompt
 
 
-def get_meeting_suggestions_with_gemini(user1_name: str = "phil", user2_name: str = "chris") -> Optional[str]:
+def get_meeting_suggestions_with_gemini(user1_name: str = "phil", user2_name: str = "chris", description: Optional[str] = None) -> Optional[str]:
     """Use Gemini API to get meeting suggestions with dynamic user names"""
     
     # Load calendar data
     phil_events = load_calendar_data("data/calendar_events_raw.json")
     chris_events = load_calendar_data("data/chris_calendar_events_raw.json")
     
-    # Create fresh prompt with user names
+    # Create fresh prompt with user names and description
     prompt = create_ai_prompt(phil_events, chris_events, user1_name, user2_name)
+    
+    # Add description to prompt if provided
+    if description and description.strip():
+        prompt += f"\n\nIMPORTANT: The user has specified this custom description for the meeting: '{description.strip()}'. Please incorporate this description into your meeting suggestions and reasoning."
     
     # Get suggestions from Gemini (deterministic)
     response_text = get_deterministic_meeting_suggestions(prompt)

@@ -145,8 +145,11 @@ butterfly2/
 - [ ] Add OAuth state management and security
 - [ ] Test complete OAuth flow end-to-end
 
-### Milestone: add text interface to client on webpage. A text box descrition that feeds into the AI safely.
-- []
+### Milestone: add text box to website that adds description
+- [ ] add to event fuction
+- [ ] add to api
+- [ ] add to website
+- [ ] check for others
 
 <!-- **Alternative: CLI Interface:**
 - [ ] Interactive CLI event planner
@@ -161,6 +164,9 @@ butterfly2/
 - [ ] Calendar conflict detection
 - [ ] Event modification and cancellation
 - [ ] Reminder and notification settings
+
+### Milestone 
+- [ ] User clicks on one of the planned events to activate event creation. 
 
 ### 📋 Milestone 6.1: User Invitation System (PLANNED)
 - [ ] Email invitation system for new users
