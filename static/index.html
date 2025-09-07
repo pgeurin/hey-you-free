@@ -262,8 +262,23 @@
         });
         
         function connectGoogleCalendar() {
-            // Redirect to OAuth start endpoint
-            window.location.href = '/oauth/google/start';
+            // Check OAuth status first
+            fetch('/oauth/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available && data.configured) {
+                        // Use real OAuth
+                        window.location.href = '/oauth/google/start';
+                    } else {
+                        // Use development OAuth
+                        window.location.href = '/oauth/dev/start';
+                    }
+                })
+                .catch(err => {
+                    console.warn('OAuth status check failed, using dev mode:', err);
+                    // Fallback to dev OAuth
+                    window.location.href = '/oauth/dev/start';
+                });
         }
         
         // Check for OAuth success

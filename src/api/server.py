@@ -33,6 +33,7 @@ from infrastructure.environment import (
 from infrastructure.database import DatabaseManager
 from api.user_management import UserManager
 from adapters.oauth_service import get_oauth_service, is_oauth_available
+from adapters.oauth_dev_service import get_dev_oauth_service, is_dev_oauth_available
 
 
 # Validate environment on startup
@@ -639,8 +640,75 @@ async def oauth_status():
     return {
         "available": is_oauth_available(),
         "configured": get_oauth_service().is_configured() if is_oauth_available() else False,
-        "message": "OAuth is properly configured" if is_oauth_available() else "OAuth not available or configured"
+        "dev_mode": not is_oauth_available(),
+        "message": "OAuth is properly configured" if is_oauth_available() else "OAuth not available - using dev mode"
     }
+
+
+# Development OAuth Endpoints (for testing without Google verification)
+@app.get("/oauth/dev/simulate")
+async def dev_oauth_simulate(state: Optional[str] = None):
+    """Simulate OAuth authorization for development"""
+    if not state:
+        return {"error": "Missing state parameter"}
+    
+    # Simulate user authorization
+    from fastapi.responses import HTMLResponse
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Dev OAuth Simulation</title>
+        <style>
+            body {{ font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }}
+            .container {{ background: #f5f5f5; padding: 30px; border-radius: 10px; text-align: center; }}
+            .btn {{ background: #4285f4; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }}
+            .btn:hover {{ background: #3367d6; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>🔧 Development OAuth Simulation</h2>
+            <p>This simulates Google OAuth authorization for development testing.</p>
+            <p><strong>State:</strong> {state}</p>
+            <button class="btn" onclick="authorize()">✅ Authorize Access</button>
+            <button class="btn" onclick="deny()" style="background: #ea4335; margin-left: 10px;">❌ Deny Access</button>
+        </div>
+        
+        <script>
+            function authorize() {{
+                window.location.href = '/oauth/google/callback?code=dev_code_123&state={state}';
+            }}
+            
+            function deny() {{
+                window.location.href = '/oauth/google/callback?error=access_denied&state={state}';
+            }}
+        </script>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
+
+
+@app.get("/oauth/dev/start")
+async def dev_oauth_start(user_id: Optional[str] = None):
+    """Start development OAuth flow"""
+    try:
+        dev_oauth_service = get_dev_oauth_service()
+        auth_url, state = dev_oauth_service.get_authorization_url(user_id)
+        
+        # Redirect to dev simulation
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url=auth_url)
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "Dev OAuth start failed",
+                "message": str(e)
+            }
+        )
 
 
 # Mount static files after all routes are defined
