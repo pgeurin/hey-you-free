@@ -274,7 +274,7 @@
                             <p><strong>Duration:</strong> ${suggestion.duration}</p>
                             <p><strong>Type:</strong> ${suggestion.meeting_type}</p>
                             <p><strong>Reasoning:</strong> ${suggestion.reasoning}</p>
-                            <p><strong>Energy Levels:</strong> ${suggestion.user_energies}</p>
+                            <p><strong>Energy Levels:</strong> ${Object.entries(suggestion.user_energies).map(([name, energy]) => `${name}: ${energy}`).join(', ')}</p>
                             <button class="create-event-btn" onclick="createCalendarEvent(${index})">
                                 📅 Create Calendar Event
                             </button>
@@ -355,7 +355,7 @@
                     summary: suggestion.meeting_type || 'Meeting',
                     description: suggestion.reasoning || '',
                     location: suggestion.location || '',
-                    attendees: [user1, user2].map(name => `${name.toLowerCase()}@example.com`),
+                    attendees: [user1, user2].map(name => `${String(name).toLowerCase()}@example.com`),
                     meeting_type: suggestion.meeting_type
                 };
                 
