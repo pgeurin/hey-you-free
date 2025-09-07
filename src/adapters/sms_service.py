@@ -164,7 +164,7 @@ def get_sms_service() -> SMSService:
 
 def is_sms_available() -> bool:
     """Check if SMS service is available and configured"""
-    return TWILIO_AVAILABLE and sms_service.is_configured()
+    return bool(TWILIO_AVAILABLE and sms_service.is_configured())
 
 
 if __name__ == "__main__":
