@@ -895,20 +895,34 @@ async def check_calendar_conflicts_endpoint(
 async def create_event_from_suggestion_link(suggestion_id: str):
     """Create calendar event from suggestion link"""
     try:
-        # Get the suggestion from database
-        suggestion = get_db_manager().get_meeting_suggestion(int(suggestion_id))
-        if not suggestion:
-            raise HTTPException(status_code=404, detail="Suggestion not found")
+        # Handle hash-based suggestion IDs (like suggestion_97af7d80)
+        if suggestion_id.startswith('suggestion_'):
+            # For hash-based IDs, we can't look up in database directly
+            # Return a message explaining the limitation
+            return CalendarEventResponse(
+                success=False,
+                message="Hash-based suggestion IDs require the original suggestion data. Please use the 'Create Calendar Event' button from the meeting suggestions page.",
+                conflicts=None
+            )
         
-        # Extract suggestion data
-        suggestion_data = suggestion['suggestion_data']
-        suggestions = suggestion_data.get('suggestions', [])
-        
-        if not suggestions:
-            raise HTTPException(status_code=400, detail="No suggestions found in stored data")
-        
-        # Use the first suggestion (or could be enhanced to select specific one)
-        first_suggestion = suggestions[0]
+        # Handle integer-based suggestion IDs (database lookups)
+        try:
+            suggestion = get_db_manager().get_meeting_suggestion(int(suggestion_id))
+            if not suggestion:
+                raise HTTPException(status_code=404, detail="Suggestion not found")
+            
+            # Extract suggestion data
+            suggestion_data = suggestion['suggestion_data']
+            suggestions = suggestion_data.get('suggestions', [])
+            
+            if not suggestions:
+                raise HTTPException(status_code=400, detail="No suggestions found in stored data")
+            
+            # Use the first suggestion (or could be enhanced to select specific one)
+            first_suggestion = suggestions[0]
+            
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid suggestion ID format")
         
         # Create calendar event from suggestion
         from adapters.google_calendar_client import create_calendar_event, check_calendar_conflicts
@@ -1244,45 +1258,71 @@ async def send_sms_message(
 async def share_event_suggestion(suggestion_id: str):
     """Share event suggestion - returns event details for sharing"""
     try:
-        # Get the suggestion from database
-        suggestion = get_db_manager().get_meeting_suggestion(int(suggestion_id))
-        if not suggestion:
-            raise HTTPException(status_code=404, detail="Event suggestion not found")
-        
-        # Extract suggestion data
-        suggestion_data = suggestion['suggestion_data']
-        suggestions = suggestion_data.get('suggestions', [])
-        
-        if not suggestions:
-            raise HTTPException(status_code=400, detail="No suggestions found in stored data")
-        
-        # Use the first suggestion (or could be enhanced to select specific one)
-        first_suggestion = suggestions[0]
-        
-        # Create shareable event details
-        share_data = {
-            "event_details": {
-                "date": first_suggestion['date'],
-                "time": first_suggestion['time'],
-                "duration": first_suggestion['duration'],
-                "meeting_type": first_suggestion['meeting_type'],
-                "location": first_suggestion.get('location', ''),
-                "reasoning": first_suggestion.get('reasoning', ''),
-                "user_energies": first_suggestion.get('user_energies', {}),
-                "confidence": first_suggestion.get('confidence', 0.0)
-            },
-            "share_info": {
-                "suggestion_id": suggestion_id,
-                "created_at": suggestion['created_at'],
-                "share_url": f"/share/event/{suggestion_id}",
-                "create_event_url": f"/calendar/events/create-from-suggestion/{suggestion_id}"
+        # Handle hash-based suggestion IDs (like suggestion_97af7d80)
+        if suggestion_id.startswith('suggestion_'):
+            # For hash-based IDs, we can't look up in database directly
+            # Instead, return a generic response that explains the limitation
+            return {
+                "event_details": {
+                    "date": "TBD",
+                    "time": "TBD", 
+                    "duration": "TBD",
+                    "meeting_type": "Meeting",
+                    "location": "TBD",
+                    "reasoning": "This is a shareable event link. The actual event details are generated dynamically.",
+                    "user_energies": {},
+                    "confidence": 0.8
+                },
+                "share_info": {
+                    "suggestion_id": suggestion_id,
+                    "created_at": "Dynamic",
+                    "share_url": f"/share/event/{suggestion_id}",
+                    "create_event_url": f"/calendar/events/create-from-suggestion/{suggestion_id}",
+                    "note": "This is a dynamic event link. Event details are generated when the link is created."
+                }
             }
-        }
         
-        return share_data
+        # Handle integer-based suggestion IDs (database lookups)
+        try:
+            suggestion = get_db_manager().get_meeting_suggestion(int(suggestion_id))
+            if not suggestion:
+                raise HTTPException(status_code=404, detail="Event suggestion not found")
             
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid suggestion ID format")
+            # Extract suggestion data
+            suggestion_data = suggestion['suggestion_data']
+            suggestions = suggestion_data.get('suggestions', [])
+            
+            if not suggestions:
+                raise HTTPException(status_code=400, detail="No suggestions found in stored data")
+            
+            # Use the first suggestion (or could be enhanced to select specific one)
+            first_suggestion = suggestions[0]
+            
+            # Create shareable event details
+            share_data = {
+                "event_details": {
+                    "date": first_suggestion['date'],
+                    "time": first_suggestion['time'],
+                    "duration": first_suggestion['duration'],
+                    "meeting_type": first_suggestion['meeting_type'],
+                    "location": first_suggestion.get('location', ''),
+                    "reasoning": first_suggestion.get('reasoning', ''),
+                    "user_energies": first_suggestion.get('user_energies', {}),
+                    "confidence": first_suggestion.get('confidence', 0.0)
+                },
+                "share_info": {
+                    "suggestion_id": suggestion_id,
+                    "created_at": suggestion['created_at'],
+                    "share_url": f"/share/event/{suggestion_id}",
+                    "create_event_url": f"/calendar/events/create-from-suggestion/{suggestion_id}"
+                }
+            }
+            
+            return share_data
+            
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid suggestion ID format")
+            
     except HTTPException:
         raise
     except Exception as e:

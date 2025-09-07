@@ -334,7 +334,7 @@
                             <p><strong>Energy Levels:</strong> ${Object.entries(suggestion.user_energies).map(([name, energy]) => `${name}: ${energy}`).join(', ')}</p>
                             
                             ${suggestion.event_link ? `
-                                <button class="create-event-btn" onclick="createCalendarEventFromLink('${suggestion.event_link}')">
+                                <button class="create-event-btn" onclick="createCalendarEvent(${index})">
                                     📅 Create Calendar Event
                                 </button>
                                 <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}')">
@@ -343,8 +343,8 @@
                                 
                                 <div class="event-links">
                                     <h5>🔗 Direct Links:</h5>
-                                    <a href="${API_BASE}${suggestion.event_link}" target="_blank">Create Event</a>
                                     <a href="${API_BASE}${suggestion.share_link}" target="_blank">Share Event</a>
+                                    <span style="color: #666; font-size: 11px;">(Create Event uses original data)</span>
                                 </div>
                             ` : `
                                 <button class="create-event-btn" onclick="createCalendarEvent(${index})">
