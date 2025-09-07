@@ -25,7 +25,7 @@ class TestOAuthIntegration:
     
     def test_oauth_start_endpoint_exists(self):
         """Test that OAuth start endpoint exists"""
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         # Should redirect (302/307) or return error, not 404
         assert response.status_code in [302, 307, 500, 503]
     
@@ -40,7 +40,7 @@ class TestOAuthIntegration:
         """Test that OAuth start redirects to Google"""
         mock_creds.return_value = None
         
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         
         # Should redirect to Google OAuth
         assert response.status_code in [302, 307]
@@ -70,12 +70,12 @@ class TestOAuthIntegration:
         
         # This test will be expanded when we implement token storage
         # For now, just ensure the endpoint exists
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         assert response.status_code in [302, 307, 500, 503]
     
     def test_oauth_state_parameter_security(self):
         """Test that OAuth state parameter is used for security"""
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         
         # Should include state parameter in redirect
         location = response.headers.get("location", "")
@@ -83,7 +83,7 @@ class TestOAuthIntegration:
     
     def test_oauth_scopes_are_correct(self):
         """Test that OAuth requests correct scopes"""
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         
         # Should request calendar read scope
         location = response.headers.get("location", "")

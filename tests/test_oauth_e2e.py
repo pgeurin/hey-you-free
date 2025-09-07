@@ -41,7 +41,7 @@ class TestOAuthEndToEnd:
     
     def test_oauth_start_redirects_correctly(self):
         """Test that OAuth start redirects to Google"""
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         
         # Should redirect (302/307) or return error, not 404
         assert response.status_code in [302, 307, 500, 503]
@@ -133,7 +133,7 @@ class TestOAuthEndToEnd:
         print(f"OAuth Status: {oauth_status}")
         
         # Step 2: Start OAuth flow
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         assert response.status_code in [302, 307]
         
         auth_url = response.headers.get("location", "")
@@ -253,7 +253,7 @@ class TestOAuthProductionReadiness:
         print("\n🔒 Testing OAuth security features...")
         
         # Test state parameter generation
-        response = self.client.get("/oauth/google/start")
+        response = self.client.get("/oauth/google/start", follow_redirects=False)
         if response.status_code in [302, 307]:
             location = response.headers.get("location", "")
             assert "state=" in location
