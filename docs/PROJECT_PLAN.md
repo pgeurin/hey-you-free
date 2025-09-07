@@ -154,6 +154,9 @@ Event Enhancement:
 
 ## Planned Features
 
+- make website text/buttons autofilled
+- calendar event types don't need to be strictly enforced for the AI. remove that from testing and code. 
+
 ### Calendar Event Creation
 - Google Calendar API event creation
 - Automatic event addition to both users' calendars
@@ -162,6 +165,11 @@ Event Enhancement:
 - Event modification and cancellation
 - Reminder and notification settings
 - User clicks on suggested events to create calendar entries
+
+make each user have suggested friends
+- 
+
+make each use have autoform filling
 
 ### Text/SMS Integration
 - SMS/Text messaging integration (Twilio or similar)

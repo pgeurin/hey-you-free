@@ -43,9 +43,21 @@ def create_custom_date_window(start_date: str, end_date: str) -> DateWindow:
 
 def load_google_credentials() -> Optional[Any]:
     """Load Google OAuth credentials"""
-    creds_path = Path(".cursor/credentials.json")
-    if not creds_path.exists():
-        print("ERROR: credentials.json not found in .cursor/ folder")
+    # Try multiple possible locations for credentials
+    possible_paths = [
+        Path(".cursor/credentials.json"),
+        Path("credentials.json"),
+        Path("token.json")  # Use existing token.json
+    ]
+    
+    creds_path = None
+    for path in possible_paths:
+        if path.exists():
+            creds_path = path
+            break
+    
+    if not creds_path:
+        print("ERROR: No credentials file found in .cursor/ or root directory")
         return None
     
     try:
