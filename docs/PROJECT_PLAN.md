@@ -131,17 +131,28 @@ butterfly2/
 ### ✅ Milestone 6.01: Simple Web Interface (COMPLETED)
 **Minimal Frontend Approach:**
 - [x] Static HTML page with form
-- [x] Google OAuth integration (server-side) - placeholder ready
 - [x] Simple JavaScript for API calls
 - [x] Basic CSS for styling
 - [x] Server-side form handling
 - [x] Event confirmation page
 
-**Alternative: CLI Interface:**
+### 🔄 Milestone 6.02: Google Calendar OAuth Integration (IN PROGRESS)
+**Working OAuth Flow:**
+- [ ] Implement Google OAuth2 server-side flow
+- [ ] Create OAuth callback endpoints
+- [ ] Store user tokens in database
+- [ ] Update web interface with working "Connect Calendar" button
+- [ ] Add OAuth state management and security
+- [ ] Test complete OAuth flow end-to-end
+
+### Milestone: add text interface to client on webpage. A text box descrition that feeds into the AI safely.
+- []
+
+<!-- **Alternative: CLI Interface:**
 - [ ] Interactive CLI event planner
 - [ ] Command-line OAuth flow
 - [ ] Terminal-based suggestion display
-- [ ] Keyboard navigation for selections
+- [ ] Keyboard navigation for selections -->
 
 ### 📋 Milestone Calendar Event Creation (PLANNED)
 - [ ] Google Calendar API event creation
@@ -184,8 +195,6 @@ butterfly2/
 - [ ] Time preference learning (morning/evening person)
 - [ ] Activity type preferences (coffee, outdoor, dinner)
 - [ ] Historical pattern analysis
-
-
 
 ### 📋 Milestone 7: Production Readiness (PLANNED)
 - [ ] Rate limiting and security

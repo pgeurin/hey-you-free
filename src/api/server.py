@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse
 from typing import Optional, Dict, Any, List
 import sys
 import os
+import json
 
 # Add src to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
@@ -31,6 +32,7 @@ from infrastructure.environment import (
 )
 from infrastructure.database import DatabaseManager
 from api.user_management import UserManager
+from adapters.oauth_service import get_oauth_service, is_oauth_available
 
 
 # Validate environment on startup
@@ -513,6 +515,132 @@ async def get_conversation_context(user1_name: str, user2_name: str):
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# OAuth Endpoints
+@app.get("/oauth/google/start")
+async def oauth_start(user_id: Optional[str] = None):
+    """Start Google OAuth flow"""
+    try:
+        if not is_oauth_available():
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "OAuth not configured",
+                    "message": "Google OAuth is not properly configured",
+                    "help": "Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables"
+                }
+            )
+        
+        oauth_service = get_oauth_service()
+        auth_url, state = oauth_service.get_authorization_url(user_id)
+        
+        # Redirect to Google OAuth
+        from fastapi.responses import RedirectResponse
+        return RedirectResponse(url=auth_url)
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "OAuth start failed",
+                "message": str(e),
+                "help": "Check OAuth configuration"
+            }
+        )
+
+
+@app.get("/oauth/google/callback")
+async def oauth_callback(
+    code: Optional[str] = None,
+    state: Optional[str] = None,
+    error: Optional[str] = None
+):
+    """Handle Google OAuth callback"""
+    try:
+        if error:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": "OAuth authorization failed",
+                    "message": f"Google returned error: {error}",
+                    "help": "User may have denied access or there was an OAuth error"
+                }
+            )
+        
+        if not code or not state:
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": "Missing OAuth parameters",
+                    "message": "Authorization code or state parameter missing",
+                    "help": "Complete OAuth flow from the start"
+                }
+            )
+        
+        if not is_oauth_available():
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "OAuth not configured",
+                    "message": "Google OAuth is not properly configured"
+                }
+            )
+        
+        oauth_service = get_oauth_service()
+        token_data = oauth_service.exchange_code_for_tokens(code, state)
+        
+        # Test calendar access
+        if not oauth_service.test_calendar_access(token_data['credentials']):
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": "Calendar access failed",
+                    "message": "Could not access user's Google Calendar",
+                    "help": "Check OAuth scopes and permissions"
+                }
+            )
+        
+        # Store tokens in database (if user_id provided)
+        user_id = token_data.get('user_id')
+        if user_id:
+            try:
+                user_manager = get_user_manager()
+                user = user_manager.get_user_by_name(user_id)
+                if user:
+                    # Update user with OAuth tokens
+                    user_manager.update_user(user['id'], {
+                        'oauth_tokens': json.dumps(token_data['credentials'])
+                    })
+            except Exception as e:
+                print(f"Warning: Could not store tokens for user {user_id}: {e}")
+        
+        # Redirect to success page
+        from fastapi.responses import RedirectResponse
+        success_url = f"/?oauth_success=true&user_id={user_id or 'unknown'}"
+        return RedirectResponse(url=success_url)
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "OAuth callback failed",
+                "message": str(e),
+                "help": "Check OAuth configuration and try again"
+            }
+        )
+
+
+@app.get("/oauth/status")
+async def oauth_status():
+    """Check OAuth configuration status"""
+    return {
+        "available": is_oauth_available(),
+        "configured": get_oauth_service().is_configured() if is_oauth_available() else False,
+        "message": "OAuth is properly configured" if is_oauth_available() else "OAuth not available or configured"
+    }
 
 
 # Mount static files after all routes are defined

@@ -262,8 +262,21 @@
         });
         
         function connectGoogleCalendar() {
-            // For now, show a message about OAuth integration
-            alert('Google Calendar OAuth integration coming soon! For now, the system uses sample calendar data.');
+            // Redirect to OAuth start endpoint
+            window.location.href = '/oauth/google/start';
+        }
+        
+        // Check for OAuth success
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('oauth_success') === 'true') {
+            const userId = urlParams.get('user_id') || 'unknown';
+            document.getElementById('error').textContent = `✅ Google Calendar connected successfully for ${userId}!`;
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('error').style.background = '#efe';
+            document.getElementById('error').style.color = '#060';
+            
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
         
         // Check if server is running
