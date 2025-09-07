@@ -143,6 +143,17 @@ class DatabaseManager:
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
 
+        -- Suggested friends table
+        CREATE TABLE IF NOT EXISTS suggested_friends (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            suggested_user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            status VARCHAR(20) DEFAULT 'suggested',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, suggested_user_id)
+        );
+
         -- Indexes for performance
         CREATE INDEX IF NOT EXISTS idx_users_name ON users(name);
         CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone_number);
@@ -153,6 +164,8 @@ class DatabaseManager:
         CREATE INDEX IF NOT EXISTS idx_conversations_users ON conversations(user1_id, user2_id);
         CREATE INDEX IF NOT EXISTS idx_conversation_contexts_users ON conversation_contexts(user1_id, user2_id);
         CREATE INDEX IF NOT EXISTS idx_meeting_suggestions_conversation ON meeting_suggestions(conversation_id);
+        CREATE INDEX IF NOT EXISTS idx_suggested_friends_user ON suggested_friends(user_id);
+        CREATE INDEX IF NOT EXISTS idx_suggested_friends_suggested ON suggested_friends(suggested_user_id);
         """
         
         cursor = self.connection.cursor()
@@ -380,6 +393,102 @@ class DatabaseManager:
             results.append(result)
         
         return results
+    
+    # Suggested friends operations
+    def add_suggested_friend(self, user_id: int, suggested_user_id: int) -> int:
+        """Add a suggested friend relationship"""
+        if not self.connection:
+            self.connect()
+        
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            INSERT INTO suggested_friends (user_id, suggested_user_id, status)
+            VALUES (?, ?, 'suggested')
+        """, (user_id, suggested_user_id))
+        
+        self.connection.commit()
+        return cursor.lastrowid
+    
+    def get_suggested_friend(self, user_id: int, suggested_user_id: int) -> Optional[Dict[str, Any]]:
+        """Get a specific suggested friend relationship"""
+        if not self.connection:
+            self.connect()
+        
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            SELECT sf.*, u.name, u.email, u.phone_number
+            FROM suggested_friends sf
+            JOIN users u ON sf.suggested_user_id = u.id
+            WHERE sf.user_id = ? AND sf.suggested_user_id = ?
+        """, (user_id, suggested_user_id))
+        
+        row = cursor.fetchone()
+        if row:
+            return dict(row)
+        return None
+    
+    def get_suggested_friends(self, user_id: int) -> List[Dict[str, Any]]:
+        """Get all suggested friends for a user"""
+        if not self.connection:
+            self.connect()
+        
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            SELECT sf.*, u.name, u.email, u.phone_number
+            FROM suggested_friends sf
+            JOIN users u ON sf.suggested_user_id = u.id
+            WHERE sf.user_id = ? AND sf.status = 'suggested'
+            ORDER BY sf.created_at DESC
+        """, (user_id,))
+        
+        rows = cursor.fetchall()
+        return [dict(row) for row in rows]
+    
+    def get_accepted_friends(self, user_id: int) -> List[Dict[str, Any]]:
+        """Get all accepted friends for a user"""
+        if not self.connection:
+            self.connect()
+        
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            SELECT sf.*, u.name, u.email, u.phone_number
+            FROM suggested_friends sf
+            JOIN users u ON sf.suggested_user_id = u.id
+            WHERE sf.user_id = ? AND sf.status = 'accepted'
+            ORDER BY sf.updated_at DESC
+        """, (user_id,))
+        
+        rows = cursor.fetchall()
+        return [dict(row) for row in rows]
+    
+    def update_suggested_friend_status(self, user_id: int, suggested_user_id: int, status: str) -> bool:
+        """Update the status of a suggested friend relationship"""
+        if not self.connection:
+            self.connect()
+        
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            UPDATE suggested_friends 
+            SET status = ?, updated_at = CURRENT_TIMESTAMP
+            WHERE user_id = ? AND suggested_user_id = ?
+        """, (status, user_id, suggested_user_id))
+        
+        self.connection.commit()
+        return cursor.rowcount > 0
+    
+    def remove_suggested_friend(self, user_id: int, suggested_user_id: int) -> bool:
+        """Remove a suggested friend relationship"""
+        if not self.connection:
+            self.connect()
+        
+        cursor = self.connection.cursor()
+        cursor.execute("""
+            DELETE FROM suggested_friends 
+            WHERE user_id = ? AND suggested_user_id = ?
+        """, (user_id, suggested_user_id))
+        
+        self.connection.commit()
+        return cursor.rowcount > 0
 
 
 # Data model classes for type hints

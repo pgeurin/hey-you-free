@@ -205,3 +205,98 @@ class UserManager:
             'active_users': len(active_users),
             'inactive_users': len(all_users) - len(active_users)
         }
+    
+    def add_suggested_friend(self, user_name: str, suggested_friend_name: str) -> Dict[str, Any]:
+        """Add a suggested friend for a user"""
+        try:
+            # Get user IDs
+            user = self.db_manager.get_user_by_name(user_name)
+            if not user:
+                return {"success": False, "message": f"User '{user_name}' not found"}
+            
+            suggested_user = self.db_manager.get_user_by_name(suggested_friend_name)
+            if not suggested_user:
+                return {"success": False, "message": f"User '{suggested_friend_name}' not found"}
+            
+            if user['id'] == suggested_user['id']:
+                return {"success": False, "message": "Cannot suggest yourself as a friend"}
+            
+            # Check if suggestion already exists
+            existing = self.db_manager.get_suggested_friend(user['id'], suggested_user['id'])
+            if existing:
+                return {"success": False, "message": f"Friend suggestion already exists for {suggested_friend_name}"}
+            
+            # Add suggestion (bidirectional)
+            self.db_manager.add_suggested_friend(user['id'], suggested_user['id'])
+            self.db_manager.add_suggested_friend(suggested_user['id'], user['id'])
+            
+            return {"success": True, "message": f"Added {suggested_friend_name} as suggested friend"}
+            
+        except Exception as e:
+            return {"success": False, "message": f"Error adding suggested friend: {str(e)}"}
+    
+    def get_suggested_friends(self, user_name: str) -> List[Dict[str, Any]]:
+        """Get suggested friends for a user"""
+        try:
+            user = self.db_manager.get_user_by_name(user_name)
+            if not user:
+                return []
+            
+            suggestions = self.db_manager.get_suggested_friends(user['id'])
+            return suggestions
+            
+        except Exception as e:
+            return []
+    
+    def accept_suggested_friend(self, user_name: str, friend_name: str) -> Dict[str, Any]:
+        """Accept a suggested friend"""
+        try:
+            user = self.db_manager.get_user_by_name(user_name)
+            if not user:
+                return {"success": False, "message": f"User '{user_name}' not found"}
+            
+            friend = self.db_manager.get_user_by_name(friend_name)
+            if not friend:
+                return {"success": False, "message": f"User '{friend_name}' not found"}
+            
+            # Update both directions to accepted
+            self.db_manager.update_suggested_friend_status(user['id'], friend['id'], 'accepted')
+            self.db_manager.update_suggested_friend_status(friend['id'], user['id'], 'accepted')
+            
+            return {"success": True, "message": f"Accepted {friend_name} as friend"}
+            
+        except Exception as e:
+            return {"success": False, "message": f"Error accepting friend: {str(e)}"}
+    
+    def remove_suggested_friend(self, user_name: str, friend_name: str) -> Dict[str, Any]:
+        """Remove a suggested friend"""
+        try:
+            user = self.db_manager.get_user_by_name(user_name)
+            if not user:
+                return {"success": False, "message": f"User '{user_name}' not found"}
+            
+            friend = self.db_manager.get_user_by_name(friend_name)
+            if not friend:
+                return {"success": False, "message": f"User '{friend_name}' not found"}
+            
+            # Remove both directions
+            self.db_manager.remove_suggested_friend(user['id'], friend['id'])
+            self.db_manager.remove_suggested_friend(friend['id'], user['id'])
+            
+            return {"success": True, "message": f"Removed {friend_name} from suggestions"}
+            
+        except Exception as e:
+            return {"success": False, "message": f"Error removing friend: {str(e)}"}
+    
+    def get_friends(self, user_name: str) -> List[Dict[str, Any]]:
+        """Get accepted friends for a user"""
+        try:
+            user = self.db_manager.get_user_by_name(user_name)
+            if not user:
+                return []
+            
+            friends = self.db_manager.get_accepted_friends(user['id'])
+            return friends
+            
+        except Exception as e:
+            return []

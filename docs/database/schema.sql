@@ -88,6 +88,17 @@ CREATE TABLE script_templates (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Suggested friends table
+CREATE TABLE suggested_friends (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    suggested_user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    status VARCHAR(20) DEFAULT 'suggested', -- suggested, accepted, declined, removed
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, suggested_user_id)
+);
+
 -- Indexes for performance
 CREATE INDEX idx_users_name ON users(name);
 CREATE INDEX idx_users_phone ON users(phone_number);
@@ -98,3 +109,5 @@ CREATE INDEX idx_messages_created_at ON messages(created_at);
 CREATE INDEX idx_conversations_users ON conversations(user1_id, user2_id);
 CREATE INDEX idx_conversation_contexts_users ON conversation_contexts(user1_id, user2_id);
 CREATE INDEX idx_meeting_suggestions_conversation ON meeting_suggestions(conversation_id);
+CREATE INDEX idx_suggested_friends_user ON suggested_friends(user_id);
+CREATE INDEX idx_suggested_friends_suggested ON suggested_friends(suggested_user_id);
