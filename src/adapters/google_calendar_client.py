@@ -260,6 +260,111 @@ def get_calendar_events_with_window(
     return events
 
 
+def create_calendar_event(
+    summary: str,
+    start_time: str,
+    end_time: str,
+    description: Optional[str] = None,
+    location: Optional[str] = None,
+    attendees: Optional[List[str]] = None,
+    calendar_id: str = 'primary'
+) -> Optional[Dict[str, Any]]:
+    """Create a calendar event"""
+    
+    # Load credentials
+    creds = load_google_credentials()
+    if not creds:
+        print("ERROR: No Google credentials available")
+        return None
+    
+    try:
+        from googleapiclient.discovery import build
+        
+        # Build service
+        service = build('calendar', 'v3', credentials=creds)
+        
+        # Create event object
+        event = {
+            'summary': summary,
+            'start': {
+                'dateTime': start_time,
+                'timeZone': 'UTC'
+            },
+            'end': {
+                'dateTime': end_time,
+                'timeZone': 'UTC'
+            }
+        }
+        
+        # Add optional fields
+        if description:
+            event['description'] = description
+        
+        if location:
+            event['location'] = location
+        
+        if attendees:
+            event['attendees'] = [{'email': email} for email in attendees]
+        
+        # Create the event
+        print(f"📅 Creating calendar event: {summary}")
+        created_event = service.events().insert(
+            calendarId=calendar_id,
+            body=event
+        ).execute()
+        
+        print(f"✅ Event created successfully: {created_event.get('id')}")
+        return created_event
+        
+    except ImportError:
+        print("ERROR: google-api-python-client not installed")
+        return None
+    except Exception as e:
+        print(f"ERROR creating event: {e}")
+        return None
+
+
+def check_calendar_conflicts(
+    start_time: str,
+    end_time: str,
+    calendar_id: str = 'primary'
+) -> List[Dict[str, Any]]:
+    """Check for calendar conflicts in the specified time range"""
+    
+    # Load credentials
+    creds = load_google_credentials()
+    if not creds:
+        print("ERROR: No Google credentials available")
+        return []
+    
+    try:
+        from googleapiclient.discovery import build
+        
+        # Build service
+        service = build('calendar', 'v3', credentials=creds)
+        
+        # Get events in the time range
+        events_result = service.events().list(
+            calendarId=calendar_id,
+            timeMin=start_time,
+            timeMax=end_time,
+            singleEvents=True,
+            orderBy='startTime'
+        ).execute()
+        
+        events = events_result.get('items', [])
+        print(f"🔍 Found {len(events)} potential conflicts")
+        
+        return events
+        
+    except ImportError:
+        print("ERROR: google-api-python-client not installed")
+        return []
+    except Exception as e:
+        print(f"ERROR checking conflicts: {e}")
+        return []
+
+
 def get_calendar_events_custom_window(
     start_date: str,
     end_date: str,

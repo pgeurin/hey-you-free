@@ -19,7 +19,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from api.models import (
     MeetingSuggestionsResponse, ErrorResponse, UserCreate, UserUpdate, 
     UserResponse, MeetingSuggestionsRequest, TextChatRequest, TextChatResponse,
-    ConversationContextResponse
+    ConversationContextResponse, CalendarEventRequest, CalendarEventFromSuggestionRequest,
+    CalendarEventResponse, CalendarConflictRequest, CalendarConflictResponse
 )
 from adapters.cli import get_meeting_suggestions_with_gemini
 from core.meeting_scheduler import validate_meeting_suggestions, create_ai_prompt, format_events_for_ai
@@ -716,6 +717,156 @@ async def dev_oauth_start(user_id: Optional[str] = None):
 # Mount static files after all routes are defined
 static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "static"))
 app.mount("/static", StaticFiles(directory=static_path), name="static")
+
+# Calendar Event Creation Endpoints
+@app.post("/calendar/events", response_model=CalendarEventResponse)
+async def create_calendar_event(request: CalendarEventRequest):
+    """Create a calendar event"""
+    try:
+        from adapters.google_calendar_client import create_calendar_event, check_calendar_conflicts
+        
+        # Check for conflicts first
+        conflicts = check_calendar_conflicts(request.start, request.end, request.calendar_id)
+        
+        # Create the event
+        created_event = create_calendar_event(
+            summary=request.summary,
+            start_time=request.start,
+            end_time=request.end,
+            description=request.description,
+            location=request.location,
+            attendees=request.attendees,
+            calendar_id=request.calendar_id
+        )
+        
+        if created_event:
+            return CalendarEventResponse(
+                success=True,
+                event_id=created_event.get('id'),
+                event_url=created_event.get('htmlLink'),
+                message="Event created successfully",
+                conflicts=conflicts if conflicts else None
+            )
+        else:
+            return CalendarEventResponse(
+                success=False,
+                message="Failed to create event - check OAuth configuration",
+                conflicts=conflicts if conflicts else None
+            )
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/calendar/events/from-suggestion", response_model=CalendarEventResponse)
+async def create_calendar_event_from_suggestion(request: CalendarEventFromSuggestionRequest):
+    """Create a calendar event from a meeting suggestion"""
+    try:
+        from adapters.google_calendar_client import create_calendar_event, check_calendar_conflicts
+        from datetime import datetime, timedelta
+        
+        # Parse date and time
+        date_obj = datetime.strptime(request.date, "%Y-%m-%d")
+        time_obj = datetime.strptime(request.time, "%H:%M")
+        
+        # Combine date and time
+        start_datetime = date_obj.replace(
+            hour=time_obj.hour,
+            minute=time_obj.minute,
+            second=0,
+            microsecond=0
+        )
+        
+        # Parse duration (handle formats like "1 hour", "90 minutes", "1.5 hours")
+        duration_str = request.duration.lower()
+        if "hour" in duration_str:
+            hours = float(duration_str.split()[0])
+            duration_minutes = int(hours * 60)
+        elif "minute" in duration_str:
+            duration_minutes = int(duration_str.split()[0])
+        else:
+            duration_minutes = 60  # Default to 1 hour
+        
+        end_datetime = start_datetime + timedelta(minutes=duration_minutes)
+        
+        # Format for Google Calendar API
+        start_iso = start_datetime.isoformat() + "Z"
+        end_iso = end_datetime.isoformat() + "Z"
+        
+        # Check for conflicts
+        conflicts = check_calendar_conflicts(start_iso, end_iso)
+        
+        # Create the event
+        created_event = create_calendar_event(
+            summary=request.summary,
+            start_time=start_iso,
+            end_time=end_iso,
+            description=request.description,
+            location=request.location,
+            attendees=request.attendees
+        )
+        
+        if created_event:
+            return CalendarEventResponse(
+                success=True,
+                event_id=created_event.get('id'),
+                event_url=created_event.get('htmlLink'),
+                message="Event created successfully from suggestion",
+                conflicts=conflicts if conflicts else None
+            )
+        else:
+            return CalendarEventResponse(
+                success=False,
+                message="Failed to create event from suggestion - check OAuth configuration",
+                conflicts=conflicts if conflicts else None
+            )
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/calendar/conflicts", response_model=CalendarConflictResponse)
+async def check_calendar_conflicts_endpoint(
+    date: str = Query(..., description="Date in YYYY-MM-DD format"),
+    time: str = Query(..., description="Time in HH:MM format"),
+    duration: int = Query(..., description="Duration in minutes"),
+    calendar_id: str = Query("primary", description="Calendar ID")
+):
+    """Check for calendar conflicts"""
+    try:
+        from adapters.google_calendar_client import check_calendar_conflicts
+        from datetime import datetime, timedelta
+        
+        # Parse date and time
+        date_obj = datetime.strptime(date, "%Y-%m-%d")
+        time_obj = datetime.strptime(time, "%H:%M")
+        
+        # Combine date and time
+        start_datetime = date_obj.replace(
+            hour=time_obj.hour,
+            minute=time_obj.minute,
+            second=0,
+            microsecond=0
+        )
+        
+        end_datetime = start_datetime + timedelta(minutes=duration)
+        
+        # Format for Google Calendar API
+        start_iso = start_datetime.isoformat() + "Z"
+        end_iso = end_datetime.isoformat() + "Z"
+        
+        # Check for conflicts
+        conflicts = check_calendar_conflicts(start_iso, end_iso, calendar_id)
+        
+        return CalendarConflictResponse(
+            has_conflicts=len(conflicts) > 0,
+            conflicts=conflicts,
+            message=f"Found {len(conflicts)} potential conflicts" if conflicts else "No conflicts found"
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 if __name__ == "__main__":
     import uvicorn

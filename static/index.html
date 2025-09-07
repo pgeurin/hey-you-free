@@ -136,6 +136,27 @@
             margin-bottom: 5px;
         }
         
+        .suggestion .create-event-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        .suggestion .create-event-btn:hover {
+            background: #218838;
+        }
+        
+        .suggestion .create-event-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
         .loading {
             text-align: center;
             color: #666;
@@ -247,15 +268,21 @@
                 const data = await response.json();
                 
                 if (data.suggestions && data.suggestions.length > 0) {
-                    suggestionsList.innerHTML = data.suggestions.map(suggestion => `
+                    suggestionsList.innerHTML = data.suggestions.map((suggestion, index) => `
                         <div class="suggestion">
                             <h4>📅 ${suggestion.date} at ${suggestion.time}</h4>
-                            <p><strong>Duration:</strong> ${suggestion.duration} minutes</p>
+                            <p><strong>Duration:</strong> ${suggestion.duration}</p>
                             <p><strong>Type:</strong> ${suggestion.meeting_type}</p>
                             <p><strong>Reasoning:</strong> ${suggestion.reasoning}</p>
                             <p><strong>Energy Levels:</strong> ${suggestion.user_energies}</p>
+                            <button class="create-event-btn" onclick="createCalendarEvent(${index})">
+                                📅 Create Calendar Event
+                            </button>
                         </div>
                     `).join('');
+                    
+                    // Store suggestions for event creation
+                    window.currentSuggestions = data.suggestions;
                 } else {
                     suggestionsList.innerHTML = '<div class="loading">No suggestions available. Try different users or check your calendar data.</div>';
                 }
@@ -302,6 +329,84 @@
             
             // Clean up URL
             window.history.replaceState({}, document.title, window.location.pathname);
+        }
+        
+        // Function to create calendar event from suggestion
+        async function createCalendarEvent(suggestionIndex) {
+            const suggestion = window.currentSuggestions[suggestionIndex];
+            if (!suggestion) {
+                console.error('No suggestion found at index:', suggestionIndex);
+                return;
+            }
+            
+            const button = document.querySelectorAll('.create-event-btn')[suggestionIndex];
+            const originalText = button.textContent;
+            
+            try {
+                // Disable button and show loading
+                button.disabled = true;
+                button.textContent = '⏳ Creating...';
+                
+                // Prepare event data
+                const eventData = {
+                    date: suggestion.date,
+                    time: suggestion.time,
+                    duration: suggestion.duration,
+                    summary: suggestion.meeting_type || 'Meeting',
+                    description: suggestion.reasoning || '',
+                    location: suggestion.location || '',
+                    attendees: [user1, user2].map(name => `${name.toLowerCase()}@example.com`),
+                    meeting_type: suggestion.meeting_type
+                };
+                
+                // Create the event
+                const response = await fetch(`${API_BASE}/calendar/events/from-suggestion`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(eventData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    button.textContent = '✅ Created!';
+                    button.style.background = '#28a745';
+                    
+                    // Show success message
+                    const errorDiv = document.getElementById('error');
+                    errorDiv.textContent = `✅ Calendar event created successfully! Event ID: ${result.event_id}`;
+                    errorDiv.style.display = 'block';
+                    errorDiv.style.background = '#d4edda';
+                    errorDiv.style.color = '#155724';
+                    
+                    // If there are conflicts, show them
+                    if (result.conflicts && result.conflicts.length > 0) {
+                        errorDiv.textContent += ` ⚠️ Note: ${result.conflicts.length} potential conflicts detected.`;
+                    }
+                } else {
+                    throw new Error(result.message || 'Failed to create event');
+                }
+                
+            } catch (err) {
+                console.error('Error creating calendar event:', err);
+                button.textContent = '❌ Failed';
+                button.style.background = '#dc3545';
+                
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = `❌ Failed to create calendar event: ${err.message}`;
+                errorDiv.style.display = 'block';
+                errorDiv.style.background = '#f8d7da';
+                errorDiv.style.color = '#721c24';
+            }
+            
+            // Re-enable button after 3 seconds
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = originalText;
+                button.style.background = '#28a745';
+            }, 3000);
         }
         
         // Check if server is running

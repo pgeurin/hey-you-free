@@ -120,3 +120,51 @@ class ConversationContextResponse(BaseModel):
     context_type: str = Field(..., description="Type of context")
     created_at: str = Field(..., description="Creation timestamp")
     expires_at: Optional[str] = Field(None, description="Expiration timestamp")
+
+
+# Calendar Event Models
+class CalendarEventRequest(BaseModel):
+    """Request model for creating calendar events"""
+    summary: str
+    start: str  # ISO datetime string
+    end: str    # ISO datetime string
+    description: Optional[str] = None
+    location: Optional[str] = None
+    attendees: Optional[List[str]] = None
+    calendar_id: str = "primary"
+
+
+class CalendarEventFromSuggestionRequest(BaseModel):
+    """Request model for creating calendar events from meeting suggestions"""
+    date: str
+    time: str
+    duration: str
+    summary: str
+    description: Optional[str] = None
+    location: Optional[str] = None
+    attendees: Optional[List[str]] = None
+    meeting_type: Optional[str] = None
+
+
+class CalendarEventResponse(BaseModel):
+    """Response model for calendar event creation"""
+    success: bool
+    event_id: Optional[str] = None
+    event_url: Optional[str] = None
+    message: str
+    conflicts: Optional[List[Dict[str, Any]]] = None
+
+
+class CalendarConflictRequest(BaseModel):
+    """Request model for checking calendar conflicts"""
+    date: str
+    time: str
+    duration: int  # minutes
+    calendar_id: str = "primary"
+
+
+class CalendarConflictResponse(BaseModel):
+    """Response model for calendar conflict check"""
+    has_conflicts: bool
+    conflicts: List[Dict[str, Any]]
+    message: str
