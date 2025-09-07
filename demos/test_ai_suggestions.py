@@ -10,9 +10,9 @@ from datetime import datetime, timedelta
 # Add src to path for imports
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from infrastructure.calendar_loader import load_calendar_data
-from core.meeting_scheduler import create_ai_prompt
-from adapters.gemini_client import get_deterministic_meeting_suggestions, parse_gemini_response
+from src.infrastructure.calendar_loader import load_calendar_data
+from src.core.meeting_scheduler import create_ai_prompt
+from src.adapters.gemini_client import get_deterministic_meeting_suggestions, parse_gemini_response
 
 
 def test_ai_suggestions():

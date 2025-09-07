@@ -4,7 +4,7 @@
 FastAPI server implementation
 Clean Architecture: API layer delegates to core business logic
 """
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -35,6 +35,7 @@ from infrastructure.database import DatabaseManager
 from api.user_management import UserManager
 from adapters.oauth_service import get_oauth_service, is_oauth_available
 from adapters.oauth_dev_service import get_dev_oauth_service, is_dev_oauth_available
+from adapters.sms_service import get_sms_service, is_sms_available
 
 
 # Validate environment on startup
@@ -866,6 +867,130 @@ async def check_calendar_conflicts_endpoint(
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# SMS Webhook Endpoints
+@app.post("/webhooks/sms")
+async def handle_sms_webhook(request: Request):
+    """Handle incoming SMS webhook from Twilio"""
+    try:
+        # Get SMS service
+        sms_service = get_sms_service()
+        if not sms_service.is_configured():
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "SMS service not configured",
+                    "message": "Twilio credentials not available",
+                    "help": "Set TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_PHONE_NUMBER"
+                }
+            )
+        
+        # Get request data
+        form_data = await request.form()
+        webhook_data = dict(form_data)
+        
+        # Validate webhook signature (optional but recommended)
+        signature = request.headers.get('X-Twilio-Signature', '')
+        webhook_url = str(request.url)
+        
+        # Parse incoming message
+        message_data = sms_service.parse_incoming_message(webhook_data)
+        
+        # Log incoming message to backend_errors.txt
+        with open('backend_errors.txt', 'a') as f:
+            f.write(f"SMS received: {message_data}\n")
+        
+        # TODO: Process message with AI and generate response
+        # For now, just acknowledge receipt
+        response_message = "Message received! AI processing coming soon."
+        
+        # Send response back to user
+        response_result = sms_service.send_sms(
+            to_phone=message_data['from_phone'],
+            message=response_message
+        )
+        
+        return {
+            "status": "received",
+            "message_id": message_data['message_id'],
+            "response_sent": response_result['success'],
+            "response_message": response_message
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        # Log error to backend_errors.txt
+        with open('backend_errors.txt', 'a') as f:
+            f.write(f"SMS webhook error: {str(e)}\n")
+        
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "SMS webhook processing failed",
+                "message": str(e)
+            }
+        )
+
+
+@app.get("/sms/status")
+async def sms_status():
+    """Check SMS service configuration status"""
+    sms_service = get_sms_service()
+    return {
+        "available": is_sms_available(),
+        "configured": sms_service.is_configured(),
+        "phone_number": sms_service.phone_number if sms_service.is_configured() else None,
+        "message": "SMS service is properly configured" if sms_service.is_configured() else "SMS service not configured"
+    }
+
+
+@app.post("/sms/send")
+async def send_sms_message(
+    to_phone: str = Query(..., description="Phone number to send SMS to"),
+    message: str = Query(..., description="Message content to send")
+):
+    """Send SMS message manually"""
+    try:
+        sms_service = get_sms_service()
+        if not sms_service.is_configured():
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "SMS service not configured",
+                    "message": "Twilio credentials not available"
+                }
+            )
+        
+        result = sms_service.send_sms(to_phone, message)
+        
+        if result['success']:
+            return {
+                "success": True,
+                "message_id": result['message_id'],
+                "status": result['status'],
+                "message": "SMS sent successfully"
+            }
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "error": "Failed to send SMS",
+                    "message": result.get('error', 'Unknown error')
+                }
+            )
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "SMS sending failed",
+                "message": str(e)
+            }
+        )
 
 
 if __name__ == "__main__":

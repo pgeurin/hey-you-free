@@ -9,7 +9,7 @@ ARCHITECTURE
 - TDD Approach: Write tests first, commit when passing
 - Backend Focus: API service with Google Calendar integration
 
-COMPLETED FEATURES
+TO DO
 
 Calendar Import & Processing
 - Google Calendar API Integration
@@ -100,20 +100,25 @@ Calendar Event Creation
 - X Event details population (location, description, attendees)
 - X Calendar conflict detection (just notify)
 - X User clicks on suggested events to create calendar entries
+- Event modification and cancellation
+- Reminder and notification settings
 
-PLANNED FEATURES
-
-Stuff
+Testing fixes
 - calendar event types don't need to be strictly enforced for the AI. remove that from testing and code.
 - make each user have suggested friends
 - make each user have autoform filling (additional features)
 
-Calendar Event Creation (remaining)
-- Event modification and cancellation
-- Reminder and notification settings
+User Invitation System
+- Email invitation system for new users
+- "Connect your calendar" onboarding flow
+- User discovery by name/email
+- Pending invitation management
+- Calendar connection status tracking
 
 Text/SMS Integration
-- SMS/Text messaging integration (Twilio or similar)
+- X SMS/Text messaging integration (Twilio or similar)
+- X Webhook endpoints for receiving SMS
+- X Manual SMS sending functionality
 - AI chat interface for meeting coordination
 - Script-based conversation flows
 - Text-to-meeting-scheduler integration
@@ -122,13 +127,6 @@ Text/SMS Integration
 - Natural language processing for meeting requests
 - Automated meeting suggestion responses via text
 - Rate limiting for SMS (200 texts/day warning to admin)
-
-User Invitation System
-- Email invitation system for new users
-- "Connect your calendar" onboarding flow
-- User discovery by name/email
-- Pending invitation management
-- Calendar connection status tracking
 
 Multi-User Group Planning
 - Group creation and management
@@ -197,14 +195,14 @@ CURRENT STATUS
 - Event Description: Complete and tested
 - Calendar Event Creation: Complete and tested
 - Website Autofill: Complete and tested
-- Text Integration: In progress
+- Text Integration: Core SMS functionality complete
 - Production Ready: In progress
 - Advanced Features: Planned
 
 NEXT STEPS
-- Complete text/SMS integration
 - Production deployment
-- Advanced features
+- Advanced features (multi-user, AI chat interface)
+- Smart context & learning
 
 Last Updated: 2025-01-15
-Status: Website Autofill Complete - Next: SMS Integration
+Status: SMS Integration Complete - Next: Production Deployment
