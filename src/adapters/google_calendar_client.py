@@ -53,7 +53,10 @@ def load_google_credentials() -> Optional[Any]:
         from google.oauth2.credentials import Credentials
         from google_auth_oauthlib.flow import InstalledAppFlow
         
-        SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+        SCOPES = [
+            'https://www.googleapis.com/auth/calendar.readonly',
+            'https://www.googleapis.com/auth/calendar.events'
+        ]
         
         creds = None
         token_path = Path(".cursor/token.json")
@@ -389,6 +392,102 @@ def get_calendar_events_custom_window(
         print(f"ERROR: Invalid date format - {e}")
         print("Use YYYY-MM-DD format for dates")
         return None
+
+
+def create_event_from_meeting_suggestion(
+    suggestion: Dict[str, Any],
+    user1_email: str,
+    user2_email: str,
+    calendar_id: str = 'primary'
+) -> Optional[Dict[str, Any]]:
+    """Create a calendar event from a meeting suggestion"""
+    
+    try:
+        # Parse date and time
+        date_str = suggestion['date']  # YYYY-MM-DD
+        time_str = suggestion['time']  # HH:MM
+        
+        # Create datetime objects
+        start_datetime = datetime.fromisoformat(f"{date_str}T{time_str}:00")
+        
+        # Parse duration
+        duration_str = suggestion.get('duration', '1 hour')
+        duration_hours = parse_duration_to_hours(duration_str)
+        end_datetime = start_datetime + timedelta(hours=duration_hours)
+        
+        # Format for API
+        start_time_iso = start_datetime.isoformat() + 'Z'
+        end_time_iso = end_datetime.isoformat() + 'Z'
+        
+        # Create event
+        return create_calendar_event(
+            summary=suggestion.get('meeting_type', 'Meeting'),
+            start_time=start_time_iso,
+            end_time=end_time_iso,
+            description=suggestion.get('reasoning', ''),
+            location=suggestion.get('location', ''),
+            attendees=[user1_email, user2_email],
+            calendar_id=calendar_id
+        )
+        
+    except (KeyError, ValueError) as e:
+        print(f"ERROR creating event from suggestion: {e}")
+        return None
+
+
+def parse_duration_to_hours(duration_str: str) -> float:
+    """Parse duration string to hours (e.g., '1.5 hours' -> 1.5)"""
+    import re
+    
+    # Extract number from duration string
+    match = re.search(r'(\d+(?:\.\d+)?)', duration_str)
+    if match:
+        return float(match.group(1))
+    
+    # Default to 1 hour if parsing fails
+    return 1.0
+
+
+def create_events_for_both_users(
+    suggestion: Dict[str, Any],
+    user1_email: str,
+    user2_email: str,
+    user1_calendar_id: str = 'primary',
+    user2_calendar_id: str = 'primary'
+) -> Dict[str, Any]:
+    """Create calendar events for both users from a meeting suggestion"""
+    
+    results = {
+        'user1_event': None,
+        'user2_event': None,
+        'success': False,
+        'errors': []
+    }
+    
+    try:
+        # Create event for user 1
+        user1_event = create_event_from_meeting_suggestion(
+            suggestion, user1_email, user2_email, user1_calendar_id
+        )
+        results['user1_event'] = user1_event
+        
+        # Create event for user 2
+        user2_event = create_event_from_meeting_suggestion(
+            suggestion, user1_email, user2_email, user2_calendar_id
+        )
+        results['user2_event'] = user2_event
+        
+        # Check if both events were created successfully
+        if user1_event and user2_event:
+            results['success'] = True
+            print(f"✅ Created events for both users: {suggestion.get('meeting_type', 'Meeting')}")
+        else:
+            results['errors'].append("Failed to create events for one or both users")
+            
+    except Exception as e:
+        results['errors'].append(f"Error creating events: {e}")
+    
+    return results
 
 
 if __name__ == "__main__":
