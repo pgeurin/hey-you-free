@@ -48,8 +48,6 @@ An AI-powered backend service that analyzes two Google calendars and suggests op
    - API integration tests ✅
    - Environment setup tests ✅
 
-
-
 ## Technical Stack
 - **Language**: Python 3.11+ ✅
 - **Framework**: FastAPI ✅
@@ -73,100 +71,7 @@ butterfly2/
 └── data/              # Sample calendar data ✅
 ```
 
-## Technical Requirements
-
-### Database Schema
-See [docs/database/schema.sql](docs/database/schema.sql) for complete schema definition.
-
-#### Key Tables
-- **users** - User accounts with phone numbers and calendar info
-- **conversations** - Message threads between users
-- **messages** - Individual SMS/text messages
-- **meeting_suggestions** - AI-generated meeting proposals
-- **conversation_contexts** - AI context for better responses
-- **script_templates** - Structured conversation flows
-
-#### Messaging Integration
-See [docs/database/MESSAGING_PLAN.md](docs/database/MESSAGING_PLAN.md) for detailed messaging implementation plan.
-
-See [docs/database/schema.sql](docs/database/schema.sql) for complete schema definition.
-
-#### Key Tables
-
-### API Endpoint Updates
-- `POST /meeting-suggestions` - Accept user names, optional time range, and conversation context
-  - Parameters:
-    - `user1_name`: string (required)
-    - `user2_name`: string (required) 
-    - `time_range_days`: integer (optional, default: 14)
-    - `start_date`: string (optional, ISO format YYYY-MM-DD)
-    - `end_date`: string (optional, ISO format YYYY-MM-DD)
-    - `conversation_context`: string (optional, additional context for AI)
-- `GET /users` - List all users
-- `POST /users` - Create new user
-- `PUT /users/{user_id}` - Update user calendar/oauth info
-- `DELETE /users/{user_id}` - Remove user
-- `POST /text-chat` - Text integration endpoint for AI chat
-- `GET /conversation-context/{user1}/{user2}` - Get conversation history
-
-### Function Signature Updates
-```python
-def format_events_for_ai(events: List[Dict[str, Any]], user_name: str) -> str:
-    """Format calendar events for AI analysis with dynamic user names"""
-
-def create_ai_prompt(user1_name: str, user1_events: List[Dict], 
-                    user2_name: str, user2_events: List[Dict],
-                    time_range_days: int = 14,
-                    start_date: Optional[str] = None,
-                    end_date: Optional[str] = None,
-                    conversation_context: Optional[str] = None) -> str:
-    """Create AI prompt with dynamic user names, configurable time range, and conversation context"""
-
-def get_meeting_suggestions(user1_name: str, user2_name: str,
-                           time_range_days: int = 14,
-                           start_date: Optional[str] = None,
-                           end_date: Optional[str] = None,
-                           conversation_context: Optional[str] = None) -> Dict[str, Any]:
-    """Main API function with flexible time range parameters and conversation context"""
-
-def handle_text_chat(user1_name: str, user2_name: str, 
-                    message: str, script_context: Optional[str] = None) -> str:
-    """Handle text-based AI chat between users with optional script following"""
-```
-
-### Request/Response Examples
-```json
-// POST /meeting-suggestions
-{
-  "user1_name": "phil",
-  "user2_name": "chris",
-  "time_range_days": 21,
-  "start_date": "2025-01-20",
-  "end_date": "2025-02-10",
-  "conversation_context": "We discussed meeting for coffee last week and both mentioned being interested in trying the new cafe downtown"
-}
-
-// Response
-{
-  "suggestions": [...],
-  "metadata": {
-    "time_range_analyzed": "2025-01-20 to 2025-02-10",
-    "user1": "phil",
-    "user2": "chris",
-    "conversation_context_used": true
-  }
-}
-
-// POST /text-chat
-{
-  "user1_name": "phil",
-  "user2_name": "chris",
-  "message": "Hey, want to grab coffee sometime this week?",
-  "script_context": "casual_coffee_invitation"
-}
-```
-
-## Milestones
+## Task Tracking & Milestones
 
 ### ✅ Milestone 1: Single Calendar Import (COMPLETED)
 - [x] Set up Google Calendar API credentials
@@ -197,17 +102,53 @@ def handle_text_chat(user1_name: str, user2_name: str,
 - [x] Create environment setup tests
 - [x] Test validation and error handling
 
-### �� Milestone 5: User Management & Database (IN PROGRESS)
-- [ ] Update format_events_for_ai() to accept user names
-- [ ] Database integration (SQLite/PostgreSQL)
-- [ ] User table with name, calendar_id, oauth_tokens
-- [ ] Database lookup for calendar names and OAuth credentials
-- [ ] User authentication system
-- [ ] API endpoints for user management
-- [ ] Optional time range parameters for meeting suggestions
-- [ ] Conversation context storage and retrieval
+### 🔄 Milestone 5: User Management & Database (IN PROGRESS)
+**Current Tasks:**
+- [🔄] Update format_events_for_ai() to accept user names
+- [ ] Update create_ai_prompt() to accept user names and optional time range parameters
+- [ ] Update get_meeting_suggestions() to use database lookup for user calendar data
+- [ ] Add conversation context storage and retrieval functionality
+- [ ] Update API endpoints to use new user management system
+- [ ] Test complete database integration with user management
 
-### 📋 Milestone 6: Text Integration (PLANNED)
+**Infrastructure (Completed):**
+- [x] Database integration (SQLite/PostgreSQL)
+- [x] User table with name, calendar_id, oauth_tokens
+- [x] Database lookup for calendar names and OAuth credentials
+- [x] User authentication system
+- [x] API endpoints for user management
+
+### 📋 Milestone 6: Simple Web Interface (PLANNED)
+**Minimal Frontend Approach:**
+- [ ] Static HTML page with form
+- [ ] Google OAuth integration (server-side)
+- [ ] Simple JavaScript for API calls
+- [ ] Basic CSS for styling
+- [ ] Server-side form handling
+- [ ] Event confirmation page
+
+**Alternative: CLI Interface:**
+- [ ] Interactive CLI event planner
+- [ ] Command-line OAuth flow
+- [ ] Terminal-based suggestion display
+- [ ] Keyboard navigation for selections
+
+### 📋 Milestone 6.1: User Invitation System (PLANNED)
+- [ ] Email invitation system for new users
+- [ ] "Connect your calendar" onboarding flow
+- [ ] User discovery by name/email
+- [ ] Pending invitation management
+- [ ] Calendar connection status tracking
+
+### 📋 Milestone 6.2: Multi-User Group Planning (PLANNED)
+- [ ] Group creation and management
+- [ ] Multi-user calendar analysis (3+ people)
+- [ ] Group preference settings
+- [ ] Group event suggestion algorithms
+- [ ] Group confirmation workflow
+- [ ] Group member management interface
+
+### 📋 Milestone 6.3: Text/SMS Integration (PLANNED)
 - [ ] SMS/Text messaging integration (Twilio or similar)
 - [ ] AI chat interface for meeting coordination
 - [ ] Script-based conversation flows
@@ -216,6 +157,23 @@ def handle_text_chat(user1_name: str, user2_name: str,
 - [ ] Multi-user text chat capabilities
 - [ ] Natural language processing for meeting requests
 - [ ] Automated meeting suggestion responses via text
+- [ ] Rate limiting for SMS (200 texts/day warning to admin)
+
+### 📋 Milestone 6.4: Smart Context & Learning (PLANNED)
+- [ ] User preference learning from past events
+- [ ] Context-aware suggestion algorithms
+- [ ] Personalized activity recommendations
+- [ ] Time preference learning (morning/evening person)
+- [ ] Activity type preferences (coffee, outdoor, dinner)
+- [ ] Historical pattern analysis
+
+### 📋 Milestone 6.5: Calendar Event Creation (PLANNED)
+- [ ] Google Calendar API event creation
+- [ ] Automatic event addition to both users' calendars
+- [ ] Event details population (location, description, attendees)
+- [ ] Calendar conflict detection
+- [ ] Event modification and cancellation
+- [ ] Reminder and notification settings
 
 ### 📋 Milestone 7: Production Readiness (PLANNED)
 - [ ] Rate limiting and security
@@ -230,13 +188,14 @@ def handle_text_chat(user1_name: str, user2_name: str,
 - [ ] Email notifications
 - [ ] Mobile app integration
 
-
-
-
 ## Current Status
 - **Core Functionality**: ✅ Complete and tested
 - **API Backend**: ✅ Complete and tested  
 - **Testing Coverage**: ✅ Comprehensive (80+ tests)
+- **Database Infrastructure**: ✅ Complete
+- **User Management**: 🔄 In progress
+- **Web Interface**: 📋 Planned (Milestone 6)
+- **Text Integration**: 📋 Planned (Milestone 6.3)
 - **Production Ready**: 🔄 In progress
 - **Advanced Features**: 📋 Planned
 
@@ -245,12 +204,14 @@ def handle_text_chat(user1_name: str, user2_name: str,
 2. ✅ AI-powered suggestions with Gemini
 3. ✅ FastAPI backend with endpoints
 4. ✅ Comprehensive test suite
-5. 🔄 Database integration
-6. 📋 Text integration and chat capabilities
-7. 📋 Production deployment
-8. 📋 Advanced features
+5. 🔄 Complete user management integration
+6. 📋 Build simple web interface with OAuth (Milestone 6)
+7. 📋 Add text/SMS integration (Milestone 6.3)
+8. 📋 Implement calendar event creation (Milestone 6.5)
+9. 📋 Production deployment
+10. 📋 Advanced features
 
 ---
 
 *Last Updated: 2025-01-15*
-*Status: Core Complete, Production Ready in Progress*
+*Status: Core Complete, User Management in Progress*

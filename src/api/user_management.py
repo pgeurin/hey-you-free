@@ -5,7 +5,7 @@ User management functionality for the Meeting Scheduler application
 """
 import re
 from typing import Dict, List, Optional, Any
-from src.infrastructure.database import DatabaseManager
+from infrastructure.database import DatabaseManager
 
 
 class UserValidationError(Exception):

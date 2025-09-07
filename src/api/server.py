@@ -19,8 +19,9 @@ from api.models import (
     ConversationContextResponse
 )
 from adapters.cli import get_meeting_suggestions_with_gemini
-from core.meeting_scheduler import validate_meeting_suggestions
-from adapters.gemini_client import parse_gemini_response
+from core.meeting_scheduler import validate_meeting_suggestions, create_ai_prompt, format_events_for_ai
+from adapters.gemini_client import parse_gemini_response, get_deterministic_meeting_suggestions
+from infrastructure.calendar_loader import load_calendar_data
 from infrastructure.environment import (
     validate_environment,
     get_api_key_status,
@@ -296,6 +297,88 @@ async def delete_user(name: str):
 
 
 # Enhanced Meeting Suggestions Endpoints
+@app.post("/meeting-suggestions-db", response_model=MeetingSuggestionsResponse)
+async def get_meeting_suggestions_with_database(request: MeetingSuggestionsRequest):
+    """Get meeting suggestions using database integration"""
+    try:
+        # Check API key availability first
+        api_status = get_api_key_status()
+        if not api_status['available']:
+            raise HTTPException(
+                status_code=503,
+                detail={
+                    "error": "API key not configured",
+                    "message": api_status['message'],
+                    "help": "Run 'python setup_environment.py' to configure your API key"
+                }
+            )
+        
+        # Get user information from database
+        user1 = get_user_manager().get_user_by_name(request.user1_name)
+        user2 = get_user_manager().get_user_by_name(request.user2_name)
+        
+        if not user1:
+            raise HTTPException(status_code=404, detail=f"User '{request.user1_name}' not found")
+        if not user2:
+            raise HTTPException(status_code=404, detail=f"User '{request.user2_name}' not found")
+        
+        # Load calendar data (in production, this would use OAuth tokens)
+        try:
+            user1_events = load_calendar_data(f"data/{request.user1_name}_calendar_events_raw.json")
+        except FileNotFoundError:
+            user1_events = load_calendar_data("data/calendar_events_raw.json")
+        
+        try:
+            user2_events = load_calendar_data(f"data/{request.user2_name}_calendar_events_raw.json")
+        except FileNotFoundError:
+            user2_events = load_calendar_data("data/chris_calendar_events_raw.json")
+        
+        # Create AI prompt with user names
+        prompt = create_ai_prompt(user1_events, user2_events, request.user1_name, request.user2_name)
+        
+        # Store conversation context if provided
+        if hasattr(request, 'conversation_context') and request.conversation_context:
+            get_db_manager().store_conversation_context(
+                user1['id'], user2['id'], request.conversation_context, "meeting_discussion"
+            )
+        
+        # Get AI response
+        ai_response = get_deterministic_meeting_suggestions(prompt, seed=request.seed)
+        if not ai_response:
+            raise HTTPException(status_code=500, detail="Failed to get AI response")
+        
+        # Parse response
+        suggestions = parse_gemini_response(ai_response, request.user1_name, request.user2_name)
+        if not suggestions:
+            raise HTTPException(status_code=500, detail="Failed to parse AI response")
+        
+        # Store meeting suggestions in database
+        # Check if conversation already exists
+        existing_conversation = get_db_manager().get_conversation(user1['id'], user2['id'])
+        if existing_conversation:
+            conversation_id = existing_conversation['id']
+        else:
+            conversation_id = get_db_manager().create_conversation(user1['id'], user2['id'])
+        
+        get_db_manager().store_meeting_suggestion(
+            conversation_id, user1['id'], user2['id'], suggestions
+        )
+        
+        return MeetingSuggestionsResponse(**suggestions)
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "error": "Internal server error",
+                "message": str(e),
+                "help": "Check server logs for more details"
+            }
+        )
+
+
 @app.post("/meeting-suggestions", response_model=MeetingSuggestionsResponse)
 async def get_meeting_suggestions_with_users(request: MeetingSuggestionsRequest):
     """Get meeting suggestions with user names and flexible parameters"""

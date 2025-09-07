@@ -528,5 +528,149 @@ def test_temperature_parameter_validation():
         assert "GOOGLE_API_KEY" in str(e) or "api_key" in str(e).lower()
 
 
+# Chat Processing Tests
+def test_parse_chat_message():
+    """Test parsing and validation of chat messages"""
+    from src.core.chat_processor import parse_chat_message
+    
+    # Valid message
+    result = parse_chat_message("Hey, want to grab coffee this week?")
+    assert result['is_valid'] == True
+    assert result['message_type'] == 'meeting_request'
+    assert 'coffee' in result['keywords']
+    
+    # Empty message
+    result = parse_chat_message("")
+    assert result['is_valid'] == False
+    assert 'empty' in result['error'].lower()
+    
+    # Very long message
+    long_message = "x" * 1001
+    result = parse_chat_message(long_message)
+    assert result['is_valid'] == False
+    assert 'too long' in result['error'].lower()
+
+
+def test_detect_meeting_intent():
+    """Test detection of meeting-related intents in messages"""
+    from src.core.chat_processor import detect_meeting_intent
+    
+    # Meeting request
+    result = detect_meeting_intent("Can we meet tomorrow?")
+    assert result['has_meeting_intent'] == True
+    assert result['intent_type'] == 'meeting_request'
+    
+    # Time suggestion
+    result = detect_meeting_intent("How about 2pm on Tuesday?")
+    assert result['has_meeting_intent'] == True
+    assert result['intent_type'] == 'time_suggestion'
+    
+    # Casual conversation
+    result = detect_meeting_intent("How was your weekend?")
+    assert result['has_meeting_intent'] == False
+    assert result['intent_type'] == 'casual'
+
+
+def test_generate_chat_response():
+    """Test AI response generation for chat messages"""
+    from src.core.chat_processor import generate_chat_response
+    
+    # Meeting request response
+    result = generate_chat_response(
+        "Hey, want to grab coffee this week?",
+        "phil", "chris",
+        conversation_context="Previous discussion about project"
+    )
+    
+    assert 'response' in result
+    assert result['suggestions_generated'] == True
+    assert 'conversation_id' in result
+    assert len(result['response']) > 0
+
+
+def test_manage_conversation_context():
+    """Test conversation context management"""
+    from src.core.chat_processor import manage_conversation_context
+    
+    # New conversation
+    context = manage_conversation_context(
+        "phil", "chris", 
+        "Hey, want to meet?", 
+        None
+    )
+    
+    assert context['conversation_id'] is not None
+    assert context['context_updated'] == True
+    assert 'meeting' in context['context_summary'].lower()
+    
+    # Continuing conversation
+    context = manage_conversation_context(
+        "phil", "chris",
+        "How about Tuesday 2pm?",
+        context['conversation_id']
+    )
+    
+    assert context['conversation_id'] is not None
+    assert context['context_updated'] == True
+
+
+def test_apply_script_template():
+    """Test script-based response templates"""
+    from src.core.chat_processor import apply_script_template
+    
+    # Coffee invitation script
+    result = apply_script_template(
+        "coffee_invitation",
+        "phil", "chris",
+        {"message": "Want to grab coffee?"}
+    )
+    
+    assert 'response' in result
+    assert result['template_applied'] == True
+    assert 'coffee' in result['response'].lower()
+
+
+def test_validate_chat_message():
+    """Test chat message validation"""
+    from src.core.chat_processor import validate_chat_message
+    
+    # Valid message
+    result = validate_chat_message("Hello, how are you?")
+    assert result['is_valid'] == True
+    assert result['sanitized_message'] == "Hello, how are you?"
+    
+    # Message with potential issues
+    result = validate_chat_message("Hello! <script>alert('xss')</script>")
+    assert result['is_valid'] == True  # Should sanitize, not reject
+    assert '<script>' not in result['sanitized_message']
+
+
+def test_extract_meeting_keywords():
+    """Test extraction of meeting-related keywords"""
+    from src.core.chat_processor import extract_meeting_keywords
+    
+    result = extract_meeting_keywords("Can we meet for coffee tomorrow at 2pm?")
+    
+    assert 'meet' in result['keywords']
+    assert 'coffee' in result['keywords']
+    assert 'tomorrow' in result['keywords']
+    assert '2pm' in result['time_mentions']
+
+
+def test_generate_meeting_suggestions_from_chat():
+    """Test generating meeting suggestions from chat context"""
+    from src.core.chat_processor import generate_meeting_suggestions_from_chat
+    
+    result = generate_meeting_suggestions_from_chat(
+        "phil", "chris",
+        "Want to grab coffee this week?",
+        conversation_context="Previous discussion about project updates"
+    )
+    
+    assert 'suggestions' in result
+    assert result['suggestions_generated'] == True
+    assert len(result['suggestions']) > 0
+
+
 if __name__ == "__main__":
     pytest.main([__file__])
