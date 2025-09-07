@@ -517,3 +517,128 @@ if __name__ == "__main__":
         print(f"✅ Successfully fetched {len(events)} events")
     else:
         print("❌ Failed to fetch events")
+
+
+def update_event(
+    calendar_id: str,
+    event_id: str,
+    event_data: Dict[str, Any]
+) -> Optional[Dict[str, Any]]:
+    """Update an existing calendar event"""
+    try:
+        service = get_google_calendar_service()
+        if not service:
+            print("❌ Failed to get Google Calendar service")
+            return None
+        
+        # Get the existing event first
+        existing_event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
+        
+        # Update the event with new data
+        for key, value in event_data.items():
+            existing_event[key] = value
+        
+        # Update the event
+        updated_event = service.events().update(
+            calendarId=calendar_id,
+            eventId=event_id,
+            body=existing_event
+        ).execute()
+        
+        print(f"✅ Successfully updated event: {updated_event.get('summary', 'Untitled')}")
+        return updated_event
+        
+    except Exception as e:
+        print(f"❌ Error updating event: {e}")
+        return None
+
+
+def cancel_event(
+    calendar_id: str,
+    event_id: str,
+    cancellation_reason: str = "Event cancelled"
+) -> bool:
+    """Cancel an existing calendar event"""
+    try:
+        service = get_google_calendar_service()
+        if not service:
+            print("❌ Failed to get Google Calendar service")
+            return False
+        
+        # Get the existing event
+        existing_event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
+        
+        # Update event status to cancelled
+        existing_event['status'] = 'cancelled'
+        existing_event['description'] = f"{existing_event.get('description', '')}\n\nCancelled: {cancellation_reason}"
+        
+        # Update the event
+        service.events().update(
+            calendarId=calendar_id,
+            eventId=event_id,
+            body=existing_event
+        ).execute()
+        
+        print(f"✅ Successfully cancelled event: {existing_event.get('summary', 'Untitled')}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error cancelling event: {e}")
+        return False
+
+
+def modify_event_time(
+    calendar_id: str,
+    event_id: str,
+    new_start_time: str,
+    new_end_time: str
+) -> Optional[Dict[str, Any]]:
+    """Modify the time of an existing calendar event"""
+    try:
+        service = get_google_calendar_service()
+        if not service:
+            print("❌ Failed to get Google Calendar service")
+            return None
+        
+        # Get the existing event
+        existing_event = service.events().get(calendarId=calendar_id, eventId=event_id).execute()
+        
+        # Update the time
+        existing_event['start'] = {'dateTime': new_start_time}
+        existing_event['end'] = {'dateTime': new_end_time}
+        
+        # Update the event
+        updated_event = service.events().update(
+            calendarId=calendar_id,
+            eventId=event_id,
+            body=existing_event
+        ).execute()
+        
+        print(f"✅ Successfully updated event time: {updated_event.get('summary', 'Untitled')}")
+        return updated_event
+        
+    except Exception as e:
+        print(f"❌ Error modifying event time: {e}")
+        return None
+
+
+def delete_event(
+    calendar_id: str,
+    event_id: str
+) -> bool:
+    """Permanently delete a calendar event"""
+    try:
+        service = get_google_calendar_service()
+        if not service:
+            print("❌ Failed to get Google Calendar service")
+            return False
+        
+        # Delete the event
+        service.events().delete(calendarId=calendar_id, eventId=event_id).execute()
+        
+        print(f"✅ Successfully deleted event: {event_id}")
+        return True
+        
+    except Exception as e:
+        print(f"❌ Error deleting event: {e}")
+        return False
