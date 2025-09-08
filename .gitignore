@@ -1,5 +1,7 @@
 .cursor/
-*.json
 __pycache__/
 *.pyc
 *.pyo
+# Ignore specific JSON files but allow data files
+!data/*.json
+!output/*.json

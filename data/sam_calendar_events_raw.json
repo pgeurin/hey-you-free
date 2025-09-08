@@ -1,0 +1,324 @@
+[
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031001\"",
+    "id": "sam_event_001",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=sam_event_001",
+    "created": "2025-01-10T10:00:00.000Z",
+    "updated": "2025-01-10T10:00:00.000Z",
+    "summary": "Morning Standup Meeting",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-16T08:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-16T08:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Conference Room A",
+    "description": "Daily team sync - status updates and blockers"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031002\"",
+    "id": "sam_event_002",
+    "status": "confirmed",
+    "summary": "Deep Work Block",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-16T09:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-16T11:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Office - Focus Room",
+    "description": "Uninterrupted coding time - no meetings"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031003\"",
+    "id": "sam_event_003",
+    "status": "confirmed",
+    "summary": "Client Presentation",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-16T14:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-16T15:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Conference Room B",
+    "description": "Q4 results presentation to key client"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031004\"",
+    "id": "sam_event_004",
+    "status": "confirmed",
+    "summary": "Gym Session",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-16T17:30:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-16T18:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Corporate Fitness Center",
+    "description": "Strength training - upper body focus"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031005\"",
+    "id": "sam_event_005",
+    "status": "confirmed",
+    "summary": "Code Review Session",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-17T08:30:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-17T10:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Office - Meeting Room 3",
+    "description": "Reviewing pull requests with junior developers"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031006\"",
+    "id": "sam_event_006",
+    "status": "confirmed",
+    "summary": "Sprint Planning",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-17T10:30:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-17T12:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Conference Room A",
+    "description": "Planning next sprint goals and task assignments"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031007\"",
+    "id": "sam_event_007",
+    "status": "confirmed",
+    "summary": "Lunch with Mentor",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-17T12:30:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-17T13:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Business District Restaurant",
+    "description": "Monthly career development discussion"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031008\"",
+    "id": "sam_event_008",
+    "status": "confirmed",
+    "summary": "Architecture Review",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-17T14:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-17T15:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Office - Tech Conference Room",
+    "description": "Reviewing system architecture for scalability"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031009\"",
+    "id": "sam_event_009",
+    "status": "confirmed",
+    "summary": "Early Morning Run",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-18T06:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-18T07:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Central Park",
+    "description": "5K morning run - training for marathon"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031010\"",
+    "id": "sam_event_010",
+    "status": "confirmed",
+    "summary": "Weekend Work Session",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-18T09:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-18T12:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Home Office",
+    "description": "Catching up on side project - mobile app development"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031011\"",
+    "id": "sam_event_011",
+    "status": "confirmed",
+    "summary": "Team Building Event",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-18T14:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-18T17:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Escape Room Downtown",
+    "description": "Quarterly team building - problem solving challenge"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031012\"",
+    "id": "sam_event_012",
+    "status": "confirmed",
+    "summary": "Performance Review Prep",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-19T10:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-19T11:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Office - Private Meeting Room",
+    "description": "Preparing for annual performance review"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031013\"",
+    "id": "sam_event_013",
+    "status": "confirmed",
+    "summary": "Technical Interview",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-20T09:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-20T10:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Office - Interview Room",
+    "description": "Interviewing senior developer candidate"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031014\"",
+    "id": "sam_event_014",
+    "status": "confirmed",
+    "summary": "Product Strategy Meeting",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-20T11:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-20T12:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Executive Conference Room",
+    "description": "Q1 product roadmap planning with leadership"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098031015\"",
+    "id": "sam_event_015",
+    "status": "confirmed",
+    "summary": "Professional Development",
+    "creator": {
+      "email": "sam@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-21T16:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-21T18:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Online - Zoom",
+    "description": "Advanced React patterns course - continuing education"
+  }
+]

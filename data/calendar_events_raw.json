@@ -1,0 +1,1273 @@
+[
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030000\"",
+    "id": "l286q900ite6najdcis9i3tce4_20250901",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bDI4NnE5MDBpdGU2bmFqZGNpczlpM3RjZTRfMjAyNTA5MDEgcGhpbGlwLmdldXJpbkBt",
+    "created": "2019-08-31T20:49:08.000Z",
+    "updated": "2019-08-31T20:49:09.015Z",
+    "summary": "Goat olympics?",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "date": "2025-09-01"
+    },
+    "end": {
+      "date": "2025-09-02"
+    },
+    "recurringEventId": "l286q900ite6najdcis9i3tce4",
+    "originalStartTime": {
+      "date": "2025-09-01"
+    },
+    "transparency": "transparent",
+    "iCalUID": "l286q900ite6najdcis9i3tce4@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": false
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513904196530846\"",
+    "id": "2f1rh6u7nmced3hu196m95cl5t_20250902T150000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MmYxcmg2dTdubWNlZDNodTE5Nm05NWNsNXRfMjAyNTA5MDJUMTUwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2024-07-16T16:59:15.000Z",
+    "updated": "2025-09-04T02:14:58.265Z",
+    "summary": "lift with friends",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-02T08:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-02T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "2f1rh6u7nmced3hu196m95cl5t",
+    "originalStartTime": {
+      "dateTime": "2025-09-02T08:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "2f1rh6u7nmced3hu196m95cl5t@google.com",
+    "sequence": 8,
+    "attendees": [
+      {
+        "email": "alex.benjamin.engelberg@gmail.com",
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "hangoutLink": "https://meet.google.com/urd-qsyz-ngp",
+    "conferenceData": {
+      "createRequest": {
+        "requestId": "es201dk897t9uauqqtsjupu4kg",
+        "conferenceSolutionKey": {
+          "type": "hangoutsMeet"
+        },
+        "status": {
+          "statusCode": "pending"
+        }
+      },
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/urd-qsyz-ngp",
+          "label": "meet.google.com/urd-qsyz-ngp"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "urd-qsyz-ngp"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513587242545214\"",
+    "id": "mlnlevmatrgpaece4b8eqkakko",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bWxubGV2bWF0cmdwYWVjZTRiOGVxa2Fra28gcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-09-02T06:13:41.000Z",
+    "updated": "2025-09-02T06:13:41.272Z",
+    "summary": "Olivia blackberry",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-02T12:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-02T12:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "mlnlevmatrgpaece4b8eqkakko@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3511931081575806\"",
+    "id": "nomcria152lb2s47h00o3l7a9g_20250903T010000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bm9tY3JpYTE1MmxiMnM0N2gwMG8zbDdhOWdfMjAyNTA5MDNUMDEwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2025-08-23T16:12:20.000Z",
+    "updated": "2025-08-23T16:12:20.787Z",
+    "summary": "Dnd with Thomas!!!",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-02T18:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-02T20:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "nomcria152lb2s47h00o3l7a9g",
+    "originalStartTime": {
+      "dateTime": "2025-09-02T18:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "nomcria152lb2s47h00o3l7a9g@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3508499803250878\"",
+    "id": "i8m3mn5h8rngtfno9mjohalu40_20250903T040000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=aThtM21uNWg4cm5ndGZubzltam9oYWx1NDBfMjAyNTA5MDNUMDQwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2025-08-02T01:37:20.000Z",
+    "updated": "2025-08-03T19:38:21.625Z",
+    "summary": "Haley",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-02T21:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-02T23:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "i8m3mn5h8rngtfno9mjohalu40",
+    "originalStartTime": {
+      "dateTime": "2025-09-02T21:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "i8m3mn5h8rngtfno9mjohalu40@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513319563664990\"",
+    "id": "uc1rpvcrphc0b9k6hrvqn60fck",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dWMxcnB2Y3JwaGMwYjlrNmhydnFuNjBmY2sgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-08-31T17:03:01.000Z",
+    "updated": "2025-08-31T17:03:01.832Z",
+    "summary": "Stay at The Paramount Hotel Portland",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DPYbSAt0yCzq98M4PQCWC1kOUULy4KVlAE\n",
+    "location": "The Paramount Hotel Portland, Portland",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "date": "2025-09-03"
+    },
+    "end": {
+      "date": "2025-09-05"
+    },
+    "transparency": "transparent",
+    "iCalUID": "uc1rpvcrphc0b9k6hrvqn60fck@google.com",
+    "sequence": 0,
+    "attendees": [
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "guestsCanInviteOthers": false,
+    "reminders": {
+      "useDefault": false
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DPYbSAt0yCzq98M4PQCWC1kOUULy4KVlAE",
+      "title": ""
+    },
+    "eventType": "fromGmail"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3494310983777150\"",
+    "id": "80dnoj1b6javovts7qj64u2284_20250903T160000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=ODBkbm9qMWI2amF2b3Z0czdxajY0dTIyODRfMjAyNTA5MDNUMTYwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2025-04-23T16:55:20.000Z",
+    "updated": "2025-05-13T16:58:11.888Z",
+    "summary": "Lift at fitness",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T10:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "80dnoj1b6javovts7qj64u2284",
+    "originalStartTime": {
+      "dateTime": "2025-09-03T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "80dnoj1b6javovts7qj64u2284@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3495556847112702\"",
+    "id": "gaodhbe9fdkrqgdcuoa1poccsk",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Z2FvZGhiZTlmZGtycWdkY3VvYTFwb2Njc2sgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-05-20T22:00:23.000Z",
+    "updated": "2025-05-20T22:00:23.556Z",
+    "summary": "MCAT IN PORTLAND",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-04T19:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "gaodhbe9fdkrqgdcuoa1poccsk@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513699240860478\"",
+    "id": "og1n3vpsvddoiik83q533ba890",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=b2cxbjN2cHN2ZGRvaWlrODNxNTMzYmE4OTAgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-09-02T21:46:46.000Z",
+    "updated": "2025-09-02T21:47:00.430Z",
+    "summary": "Chris cowork",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T10:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T11:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "og1n3vpsvddoiik83q533ba890@google.com",
+    "sequence": 1,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513830267034974\"",
+    "id": "tbpp8a7evtg22glln8c3n98a54",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dGJwcDhhN2V2dGcyMmdsbG44YzNuOThhNTQgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-09-02T21:49:43.000Z",
+    "updated": "2025-09-03T15:58:53.517Z",
+    "summary": "\u2615\ufe0f Co-working with Phil",
+    "creator": {
+      "email": "ckesurf@gmail.com"
+    },
+    "organizer": {
+      "email": "ckesurf@gmail.com"
+    },
+    "start": {
+      "dateTime": "2025-09-03T10:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T11:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "tbpp8a7evtg22glln8c3n98a54@google.com",
+    "sequence": 0,
+    "attendees": [
+      {
+        "email": "ckesurf@gmail.com",
+        "organizer": true,
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3512727593877982\"",
+    "id": "r0155tr4n043e1lg5fabqbpg30",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=cjAxNTV0cjRuMDQzZTFsZzVmYWJxYnBnMzAgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-08-28T06:49:56.000Z",
+    "updated": "2025-08-28T06:49:56.938Z",
+    "summary": "Lily Feeld",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T12:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T13:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "r0155tr4n043e1lg5fabqbpg30@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3512493214473054\"",
+    "id": "t05lld3aoua8v52neqiabbl4do",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dDA1bGxkM2FvdWE4djUybmVxaWFiYmw0ZG8gcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-08-26T22:16:29.000Z",
+    "updated": "2025-08-26T22:16:47.236Z",
+    "summary": "Drive to portland",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T17:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T19:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "t05lld3aoua8v52neqiabbl4do@google.com",
+    "sequence": 1,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3506055530832062\"",
+    "id": "7tcenp6j5hkfe13gc7nj3uan48_20250904T013000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=N3RjZW5wNmo1aGtmZTEzZ2M3bmozdWFuNDhfMjAyNTA5MDRUMDEzMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2025-07-19T17:17:05.000Z",
+    "updated": "2025-07-20T16:09:25.416Z",
+    "summary": "Bachata in the park",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T18:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T19:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "7tcenp6j5hkfe13gc7nj3uan48",
+    "originalStartTime": {
+      "dateTime": "2025-09-03T18:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "7tcenp6j5hkfe13gc7nj3uan48@google.com",
+    "sequence": 2,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3465208967670000\"",
+    "id": "n9ashic44qi3gep08r4bvbj5b4_20250904T020000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=bjlhc2hpYzQ0cWkzZ2VwMDhyNGJ2Ymo1YjRfMjAyNTA5MDRUMDIwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2024-11-26T07:01:23.000Z",
+    "updated": "2024-11-26T07:01:23.835Z",
+    "summary": "Swing at little red hen",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-03T19:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-03T21:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "n9ashic44qi3gep08r4bvbj5b4",
+    "originalStartTime": {
+      "dateTime": "2025-09-03T19:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "n9ashic44qi3gep08r4bvbj5b4@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513904196530846\"",
+    "id": "2f1rh6u7nmced3hu196m95cl5t_20250904T150000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MmYxcmg2dTdubWNlZDNodTE5Nm05NWNsNXRfMjAyNTA5MDRUMTUwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2024-07-16T16:59:15.000Z",
+    "updated": "2025-09-04T02:14:58.265Z",
+    "summary": "lift with friends",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-04T08:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-04T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "2f1rh6u7nmced3hu196m95cl5t",
+    "originalStartTime": {
+      "dateTime": "2025-09-04T08:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "2f1rh6u7nmced3hu196m95cl5t@google.com",
+    "sequence": 8,
+    "attendees": [
+      {
+        "email": "alex.benjamin.engelberg@gmail.com",
+        "responseStatus": "declined"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "hangoutLink": "https://meet.google.com/urd-qsyz-ngp",
+    "conferenceData": {
+      "createRequest": {
+        "requestId": "es201dk897t9uauqqtsjupu4kg",
+        "conferenceSolutionKey": {
+          "type": "hangoutsMeet"
+        },
+        "status": {
+          "statusCode": "pending"
+        }
+      },
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/urd-qsyz-ngp",
+          "label": "meet.google.com/urd-qsyz-ngp"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "urd-qsyz-ngp"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3512493145222878\"",
+    "id": "3cr4qofn69dlbs4jrko4va7knc",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=M2NyNHFvZm42OWRsYnM0anJrbzR2YTdrbmMgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-08-26T22:16:12.000Z",
+    "updated": "2025-08-26T22:16:12.611Z",
+    "summary": "Mcat",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-04T08:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-04T16:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "3cr4qofn69dlbs4jrko4va7knc@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3511404437114206\"",
+    "id": "af7caneavrc630p8366salhd2o",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=YWY3Y2FuZWF2cmM2MzBwODM2NnNhbGhkMm8gcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-05-20T22:01:46.000Z",
+    "updated": "2025-08-20T15:03:38.557Z",
+    "summary": "MCAT - Medical College Admission Test - English (ENU)",
+    "description": "To see detailed information for automatically created events like this one, use the official Google Calendar app. https://g.co/calendar\n\nThis event was created from an email you received in Gmail. https://mail.google.com/mail?extsrc=cal&plid=ACUX6DPRQb2Z7jOF4DP2ZtKa9A-8OSNlOeyHJhU\n",
+    "location": "PEARSON PROFESSIONAL CENTERS-PORTLAND OR, 805 SW BROADWAY, SUITE 420, FOX TOWER, PORTLAND, OREGON 97205, UNITED STATES",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-04T08:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-04T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "endTimeUnspecified": true,
+    "iCalUID": "af7caneavrc630p8366salhd2o@google.com",
+    "sequence": 0,
+    "attendees": [
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "guestsCanInviteOthers": false,
+    "reminders": {
+      "useDefault": true
+    },
+    "source": {
+      "url": "https://mail.google.com/mail?extsrc=cal&plid=ACUX6DPRQb2Z7jOF4DP2ZtKa9A-8OSNlOeyHJhU",
+      "title": ""
+    },
+    "eventType": "fromGmail"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3512492241949886\"",
+    "id": "pi8ngshs8qbedkt7i1fcljpfks_20250905T040000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=cGk4bmdzaHM4cWJlZGt0N2kxZmNsanBma3NfMjAyNTA5MDVUMDQwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2025-02-27T21:57:19.000Z",
+    "updated": "2025-08-26T22:08:40.974Z",
+    "summary": "Swing at little red hen!!!",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-04T21:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-04T23:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "pi8ngshs8qbedkt7i1fcljpfks",
+    "originalStartTime": {
+      "dateTime": "2025-09-04T21:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "pi8ngshs8qbedkt7i1fcljpfks@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3512011541759198\"",
+    "id": "bg1puu0hln9h9obnlftsutidn0_20250905T153000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=YmcxcHV1MGhsbjloOW9ibmxmdHN1dGlkbjBfMjAyNTA5MDVUMTUzMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2025-02-26T18:14:32.000Z",
+    "updated": "2025-08-24T03:22:50.879Z",
+    "summary": "breaking fast with j and p",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-05T08:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-05T09:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "bg1puu0hln9h9obnlftsutidn0",
+    "originalStartTime": {
+      "dateTime": "2025-09-05T08:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "bg1puu0hln9h9obnlftsutidn0@google.com",
+    "sequence": 0,
+    "attendees": [
+      {
+        "email": "jeffrey@overthinkgroup.com",
+        "responseStatus": "declined"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "hangoutLink": "https://meet.google.com/xqt-zjmy-fgy",
+    "conferenceData": {
+      "createRequest": {
+        "requestId": "bg3hlc7d9ntohkd4ub6gvi9r1k",
+        "conferenceSolutionKey": {
+          "type": "hangoutsMeet"
+        },
+        "status": {
+          "statusCode": "success"
+        }
+      },
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/xqt-zjmy-fgy",
+          "label": "meet.google.com/xqt-zjmy-fgy"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "xqt-zjmy-fgy"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3512494344874398\"",
+    "id": "sk49rp6onlanf3tv28ipmcah0c",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=c2s0OXJwNm9ubGFuZjN0djI4aXBtY2FoMGMgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-08-26T22:26:12.000Z",
+    "updated": "2025-08-26T22:26:12.437Z",
+    "summary": "Vera?",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-05T18:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-05T18:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "sk49rp6onlanf3tv28ipmcah0c@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3514102260100702\"",
+    "id": "44vnd11hofbtc9bniga5i8hu3o",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NDR2bmQxMWhvZmJ0YzlibmlnYTVpOGh1M28gcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-09-05T05:45:14.000Z",
+    "updated": "2025-09-05T05:45:30.050Z",
+    "summary": "Olivia big faris wheel!",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-05T19:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-05T19:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "44vnd11hofbtc9bniga5i8hu3o@google.com",
+    "sequence": 1,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3292525713506000\"",
+    "id": "t9etk752590pvolgl4pe23v1jo_20250906T030000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=dDlldGs3NTI1OTBwdm9sZ2w0cGUyM3Yxam9fMjAyNTA5MDZUMDMwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2022-02-18T22:12:56.000Z",
+    "updated": "2022-03-02T23:14:16.753Z",
+    "summary": "Fresh meet CSPC",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-05T20:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-05T23:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "t9etk752590pvolgl4pe23v1jo",
+    "originalStartTime": {
+      "dateTime": "2025-09-05T20:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "t9etk752590pvolgl4pe23v1jo@google.com",
+    "sequence": 2,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513008063833886\"",
+    "id": "okgscqaltbhv5do433u8n0fths",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=b2tnc2NxYWx0Ymh2NWRvNDMzdThuMGZ0aHMgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-08-29T21:46:54.000Z",
+    "updated": "2025-08-29T21:47:11.916Z",
+    "summary": "Fan friction rehearsal",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-06T10:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-06T11:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "okgscqaltbhv5do433u8n0fths@google.com",
+    "sequence": 0,
+    "attendees": [
+      {
+        "email": "ckesurf@gmail.com",
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "hangoutLink": "https://meet.google.com/hkh-cjqy-neh",
+    "conferenceData": {
+      "createRequest": {
+        "requestId": "hn30rlo1nlsbu5ci0chhoc1g8o",
+        "conferenceSolutionKey": {
+          "type": "hangoutsMeet"
+        },
+        "status": {
+          "statusCode": "success"
+        }
+      },
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/hkh-cjqy-neh",
+          "label": "meet.google.com/hkh-cjqy-neh"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "hkh-cjqy-neh"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513692001244894\"",
+    "id": "45415pnv2db64eoqtslei7nqgc",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=NDU0MTVwbnYyZGI2NGVvcXRzbGVpN25xZ2MgcGhpbGlwLmdldXJpbkBt",
+    "created": "2025-09-02T20:46:27.000Z",
+    "updated": "2025-09-02T20:46:40.622Z",
+    "summary": "Picnic w Olivia",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-06T12:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-06T13:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "45415pnv2db64eoqtslei7nqgc@google.com",
+    "sequence": 0,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3502432815930846\"",
+    "id": "04g63clck1e7d7qbhm558f3bfm_20250907T160000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MDRnNjNjbGNrMWU3ZDdxYmhtNTU4ZjNiZm1fMjAyNTA5MDdUMTYwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2021-12-27T17:16:57.000Z",
+    "updated": "2025-06-29T17:00:07.965Z",
+    "summary": "Lift with friends",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-07T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-07T10:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "04g63clck1e7d7qbhm558f3bfm",
+    "originalStartTime": {
+      "dateTime": "2025-09-07T09:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "04g63clck1e7d7qbhm558f3bfm@google.com",
+    "sequence": 2,
+    "attendees": [
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "jsc@demigods.org",
+        "responseStatus": "tentative"
+      }
+    ],
+    "hangoutLink": "https://meet.google.com/pef-oetb-mmg",
+    "conferenceData": {
+      "createRequest": {
+        "requestId": "64bn36vasuqduvic9hfc6imquc",
+        "conferenceSolutionKey": {
+          "type": "hangoutsMeet"
+        },
+        "status": {
+          "statusCode": "pending"
+        }
+      },
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/pef-oetb-mmg",
+          "label": "meet.google.com/pef-oetb-mmg"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "pef-oetb-mmg"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3510943405608574\"",
+    "id": "1jle2pmvqncv5caostp57cl36n_20250907T180000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=MWpsZTJwbXZxbmN2NWNhb3N0cDU3Y2wzNm5fMjAyNTA5MDdUMTgwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2021-03-19T02:27:58.000Z",
+    "updated": "2025-08-17T23:01:42.804Z",
+    "summary": "Level 13",
+    "description": "https://zoom.us/j/95047571786?pwd=WUgzODNOUUtiZHMxclI4UTFXV202QT09\n\n\nhttps://docs.google.com/document/d/1B7Wss5NxU4ebaKcLZ4S-dWj3TNuaimgGlQpLEuA_EaM/edit",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-07T11:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-07T12:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "1jle2pmvqncv5caostp57cl36n",
+    "originalStartTime": {
+      "dateTime": "2025-09-07T11:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "1jle2pmvqncv5caostp57cl36n@google.com",
+    "sequence": 4,
+    "attendees": [
+      {
+        "email": "zhhsegall@gmail.com",
+        "responseStatus": "needsAction"
+      },
+      {
+        "email": "jworthington0313@gmail.com",
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "ckesurf@gmail.com",
+        "responseStatus": "accepted"
+      },
+      {
+        "email": "margalit.monroe@gmail.com",
+        "responseStatus": "needsAction"
+      },
+      {
+        "email": "jacqueline.legazcue@gmail.com",
+        "responseStatus": "needsAction"
+      },
+      {
+        "email": "jillpsydoc@gmail.com",
+        "responseStatus": "needsAction"
+      },
+      {
+        "email": "jsschlags@gmail.com",
+        "responseStatus": "needsAction"
+      }
+    ],
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3410536589374000\"",
+    "id": "bk8hepnkrf0h32h75jshkrssfc_20250907T200000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=Yms4aGVwbmtyZjBoMzJoNzVqc2hrcnNzZmNfMjAyNTA5MDdUMjAwMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2024-01-11T20:22:18.000Z",
+    "updated": "2024-01-14T21:38:14.687Z",
+    "summary": "Contact improv at exit space",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-07T13:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-07T14:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "bk8hepnkrf0h32h75jshkrssfc",
+    "originalStartTime": {
+      "dateTime": "2025-09-07T13:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "bk8hepnkrf0h32h75jshkrssfc@google.com",
+    "sequence": 1,
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3513321087173822\"",
+    "id": "9802dr6kmmdndimokklcmqgdkf_20250907T203000Z",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=OTgwMmRyNmttbWRuZGltb2trbGNtcWdka2ZfMjAyNTA5MDdUMjAzMDAwWiBwaGlsaXAuZ2V1cmluQG0",
+    "created": "2022-06-09T06:38:42.000Z",
+    "updated": "2025-08-31T17:15:43.586Z",
+    "summary": "Phil and Anthony: cowork/ loop music",
+    "creator": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "philip.geurin@gmail.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-09-07T13:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "end": {
+      "dateTime": "2025-09-07T16:00:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "recurringEventId": "9802dr6kmmdndimokklcmqgdkf",
+    "originalStartTime": {
+      "dateTime": "2025-09-07T13:30:00-07:00",
+      "timeZone": "America/Los_Angeles"
+    },
+    "iCalUID": "9802dr6kmmdndimokklcmqgdkf@google.com",
+    "sequence": 8,
+    "attendees": [
+      {
+        "email": "anthony.adam.westbrook@gmail.com",
+        "responseStatus": "needsAction"
+      },
+      {
+        "email": "philip.geurin@gmail.com",
+        "organizer": true,
+        "self": true,
+        "responseStatus": "accepted"
+      }
+    ],
+    "hangoutLink": "https://meet.google.com/vko-jire-xeh",
+    "conferenceData": {
+      "entryPoints": [
+        {
+          "entryPointType": "video",
+          "uri": "https://meet.google.com/vko-jire-xeh",
+          "label": "meet.google.com/vko-jire-xeh"
+        }
+      ],
+      "conferenceSolution": {
+        "key": {
+          "type": "hangoutsMeet"
+        },
+        "name": "Google Meet",
+        "iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+      },
+      "conferenceId": "vko-jire-xeh"
+    },
+    "reminders": {
+      "useDefault": true
+    },
+    "eventType": "default"
+  }
+]

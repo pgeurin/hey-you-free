@@ -1,0 +1,55 @@
+{
+  "suggestions": [
+    {
+      "date": "2025-09-08",
+      "time": "11:00",
+      "duration": "1 hour",
+      "reasoning": "This time slot falls after Chris's Project Planning session and before Phil's Level 13 Zoom meeting.  It's a Monday, so it's likely a less busy day for both, allowing for a quick coffee catch-up before the work week fully ramps up.  It avoids the late morning/early afternoon rush for both.",
+      "user_energies": {
+        "phil": "Medium",
+        "chris": "Medium"
+      },
+      "meeting_type": "Coffee",
+      "location": "Coffee shop near Chris's office (if applicable)",
+      "confidence": 0.8,
+      "conflicts": [],
+      "preparation_time": "5 minutes"
+    },
+    {
+      "date": "2025-09-10",
+      "time": "14:00",
+      "duration": "1 hour",
+      "reasoning": "This Wednesday afternoon slot is after Chris's Book Club meeting and before Phil's Contact Improv session.  It's a mid-afternoon time, allowing for a quick coffee catch-up before the end of the day.  It's likely a less busy time for both, allowing for a relaxed meeting.",
+      "user_energies": {
+        "phil": "Medium",
+        "chris": "Medium"
+      },
+      "meeting_type": "Coffee",
+      "location": "Coffee shop near a park (to accommodate Chris's preference for outdoor activities)",
+      "confidence": 0.75,
+      "conflicts": [],
+      "preparation_time": "5 minutes"
+    },
+    {
+      "date": "2025-09-12",
+      "time": "11:00",
+      "duration": "1 hour",
+      "reasoning": "This Friday morning slot is after Chris's Meditation session and before Phil's breaking fast. It's a Friday, so it's likely a less busy day for both, allowing for a quick coffee catch-up before the weekend. It's a time when both are likely to be more relaxed and open to a quick social interaction.",
+      "user_energies": {
+        "phil": "Medium",
+        "chris": "Medium"
+      },
+      "meeting_type": "Coffee",
+      "location": "Coffee shop near Phil's usual Friday morning routine",
+      "confidence": 0.7,
+      "conflicts": [],
+      "preparation_time": "5 minutes"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2024-10-27T12:00:00Z",
+    "total_suggestions": 3,
+    "analysis_quality": "high",
+    "time_range_analyzed": "2025-09-08 to 2025-09-22"
+  }
+}

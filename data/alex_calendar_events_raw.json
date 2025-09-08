@@ -1,0 +1,219 @@
+[
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030001\"",
+    "id": "alex_event_001",
+    "status": "confirmed",
+    "htmlLink": "https://www.google.com/calendar/event?eid=alex_event_001",
+    "created": "2025-01-10T10:00:00.000Z",
+    "updated": "2025-01-10T10:00:00.000Z",
+    "summary": "Creative Writing Workshop",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "organizer": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-16T14:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-16T16:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Downtown Arts Center",
+    "description": "Weekly creative writing group - bring your latest story"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030002\"",
+    "id": "alex_event_002",
+    "status": "confirmed",
+    "summary": "Late Night Coding Session",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-17T22:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-18T02:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Home Office",
+    "description": "Working on new app feature - night owl hours"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030003\"",
+    "id": "alex_event_003",
+    "status": "confirmed",
+    "summary": "Brunch with Friends",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-18T16:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-18T18:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "The Garden Cafe",
+    "description": "Sunday brunch with college friends - casual catch-up"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030004\"",
+    "id": "alex_event_004",
+    "status": "confirmed",
+    "summary": "Art Gallery Opening",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-19T19:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-19T21:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Modern Art Gallery",
+    "description": "New photography exhibit opening - networking event"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030005\"",
+    "id": "alex_event_005",
+    "status": "confirmed",
+    "summary": "Freelance Client Meeting",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-20T11:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-20T12:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Coffee Shop Downtown",
+    "description": "Discussing new website design project"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030006\"",
+    "id": "alex_event_006",
+    "status": "confirmed",
+    "summary": "Yoga Class",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-21T09:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-21T10:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Zen Studio",
+    "description": "Morning yoga to start the day right"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030007\"",
+    "id": "alex_event_007",
+    "status": "confirmed",
+    "summary": "Music Jam Session",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-22T20:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-22T23:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Friend's Basement Studio",
+    "description": "Playing guitar with local musicians - very casual"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030008\"",
+    "id": "alex_event_008",
+    "status": "confirmed",
+    "summary": "Flexible Work Time",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-23T13:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-23T17:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Home Office",
+    "description": "Open time for creative projects and admin work"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030009\"",
+    "id": "alex_event_009",
+    "status": "confirmed",
+    "summary": "Book Club Meeting",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-24T19:30:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-24T21:30:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Local Bookstore",
+    "description": "Discussing this month's book - 'The Creative Habit'"
+  },
+  {
+    "kind": "calendar#event",
+    "etag": "\"3134569098030010\"",
+    "id": "alex_event_010",
+    "status": "confirmed",
+    "summary": "Weekend Hiking Trip",
+    "creator": {
+      "email": "alex@example.com",
+      "self": true
+    },
+    "start": {
+      "dateTime": "2025-01-25T08:00:00Z",
+      "timeZone": "UTC"
+    },
+    "end": {
+      "dateTime": "2025-01-25T16:00:00Z",
+      "timeZone": "UTC"
+    },
+    "location": "Mountain Trail Park",
+    "description": "Day hike with nature photography - bring camera"
+  }
+]
