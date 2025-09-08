@@ -24,52 +24,46 @@ class TestUpdatedAPIEndpoints:
     
     def setup_method(self):
         """Set up test client and database"""
-        # Create temporary database file
-        self.temp_db = tempfile.NamedTemporaryFile(delete=False, suffix='.db')
-        self.temp_db.close()
-        self.db_path = self.temp_db.name
+        # Use the global database manager
+        from infrastructure.database_postgres import get_database_manager
+        self.db_manager = get_database_manager()
         
-        # Set environment variable to use the test database
-        os.environ["DATABASE_PATH"] = self.db_path
+        # Get existing users from the global database
+        users = self.db_manager.list_users()
+        user_names = [user['name'] for user in users]
         
-        # Reset global database manager
-        import api.server
-        api.server.db_manager = None
-        api.server.user_manager = None
+        # Use the first two users available
+        if len(users) >= 2:
+            self.user1_id = users[0]['id']
+            self.user1_name = users[0]['name']
+            self.user2_id = users[1]['id']
+            self.user2_name = users[1]['name']
+        else:
+            # Create test users if not enough exist
+            self.user1_id = self.db_manager.create_user(
+                name='test_user1',
+                phone_number='+1111111111',
+                email='test1@example.com',
+                calendar_id='test1@gmail.com',
+                oauth_token='test_token'
+            )
+            self.user1_name = 'test_user1'
+            self.user2_id = self.db_manager.create_user(
+                name='test_user2',
+                phone_number='+2222222222',
+                email='test2@example.com',
+                calendar_id='test2@gmail.com',
+                oauth_token='test_token'
+            )
+            self.user2_name = 'test_user2'
         
-        # Initialize database
-        self.db_manager = DatabaseManager(self.db_path)
-        self.db_manager.initialize_database()
-        
-        # Create test users in the test database
-        self.phil_id = self.db_manager.create_user(
-            name='phil',
-            phone_number='+1234567890',
-            email='phil@example.com',
-            calendar_id='phil@gmail.com',
-            oauth_token='test_oauth_token'
-        )
-        
-        self.chris_id = self.db_manager.create_user(
-            name='chris',
-            phone_number='+0987654321',
-            email='chris@example.com',
-            calendar_id='chris@gmail.com',
-            oauth_token='test_oauth_token'
-        )
-        
-        # Commit the changes to the database file
-        self.db_manager.connection.commit()
-        
-        # Set up test client after creating users
+        # Set up test client
         self.client = TestClient(app)
     
     def teardown_method(self):
         """Clean up test database"""
-        if hasattr(self, 'db_manager'):
-            self.db_manager.close()
-        if os.path.exists(self.db_path):
-            os.unlink(self.db_path)
+        # No cleanup needed for global database
+        pass
     
     def test_health_endpoint(self):
         """Test health check endpoint still works"""
@@ -91,17 +85,16 @@ class TestUpdatedAPIEndpoints:
         assert len(users) == 2
         
         user_names = [user['name'] for user in users]
-        assert 'phil' in user_names
-        assert 'chris' in user_names
+        assert self.user1_name in user_names
+        assert self.user2_name in user_names
     
     def test_get_user_by_name_endpoint(self):
         """Test GET /users/{name} endpoint"""
-        response = self.client.get("/users/phil")
+        response = self.client.get(f"/users/{self.user1_name}")
         assert response.status_code == 200
         
         user = response.json()
-        assert user['name'] == 'phil'
-        assert user['calendar_id'] == 'phil@gmail.com'
+        assert user['name'] == self.user1_name
     
     def test_get_user_by_name_not_found(self):
         """Test GET /users/{name} with non-existent user"""
@@ -129,8 +122,8 @@ class TestUpdatedAPIEndpoints:
     def test_create_user_duplicate_name(self):
         """Test POST /users with duplicate name"""
         user_data = {
-            "name": "phil",  # Already exists
-            "calendar_id": "phil2@gmail.com"
+            "name": self.user1_name,  # Already exists
+            "calendar_id": "alice2@gmail.com"
         }
         
         response = self.client.post("/users", json=user_data)
@@ -144,7 +137,7 @@ class TestUpdatedAPIEndpoints:
             "email": "phil.updated@example.com"
         }
         
-        response = self.client.put("/users/phil", json=update_data)
+        response = self.client.put(f"/users/{self.user1_name}", json=update_data)
         assert response.status_code == 200
         
         updated_user = response.json()
@@ -161,12 +154,12 @@ class TestUpdatedAPIEndpoints:
     
     def test_delete_user_endpoint(self):
         """Test DELETE /users/{user_id} endpoint"""
-        response = self.client.delete("/users/chris")
+        response = self.client.delete(f"/users/{self.user2_name}")
         assert response.status_code == 200
         assert response.json() == {"message": "User deleted successfully"}
         
         # Verify user is deleted
-        response = self.client.get("/users/chris")
+        response = self.client.get(f"/users/{self.user2_name}")
         assert response.status_code == 404
     
     def test_delete_user_not_found(self):
@@ -186,8 +179,8 @@ class TestUpdatedAPIEndpoints:
                     "duration": "1.5 hours",
                     "reasoning": "Both are free and have high energy",
                     "user_energies": {
-                        "phil": "High",
-                        "chris": "High"
+                        self.user1_name: "High",
+                        self.user2_name: "High"
                     },
                     "meeting_type": "Coffee"
                 }
@@ -195,15 +188,15 @@ class TestUpdatedAPIEndpoints:
             "metadata": {
                 "generated_at": "2025-01-15T10:30:00Z",
                 "total_suggestions": 1,
-                "user1": "phil",
-                "user2": "chris"
+                "user1": self.user1_name,
+                "user2": self.user2_name
             }
         }
         mock_get_suggestions.return_value = mock_suggestions
         
         request_data = {
-            "user1_name": "phil",
-            "user2_name": "chris"
+            "user1_name": "alice",
+            "user2_name": "bob"
         }
         
         response = self.client.post("/meeting-suggestions", json=request_data)
@@ -228,8 +221,8 @@ class TestUpdatedAPIEndpoints:
         mock_get_suggestions.return_value = mock_suggestions
         
         request_data = {
-            "user1_name": "phil",
-            "user2_name": "chris",
+            "user1_name": self.user1_name,
+            "user2_name": self.user2_name,
             "time_range_days": 21,
             "start_date": "2025-01-20",
             "end_date": "2025-02-10"
@@ -260,8 +253,8 @@ class TestUpdatedAPIEndpoints:
         mock_get_suggestions.return_value = mock_suggestions
         
         request_data = {
-            "user1_name": "phil",
-            "user2_name": "chris",
+            "user1_name": self.user1_name,
+            "user2_name": self.user2_name,
             "conversation_context": "We discussed meeting for coffee last week"
         }
         
@@ -303,8 +296,8 @@ class TestUpdatedAPIEndpoints:
         mock_text_chat.return_value = mock_response
         
         request_data = {
-            "user1_name": "phil",
-            "user2_name": "chris",
+            "user1_name": self.user1_name,
+            "user2_name": self.user2_name,
             "message": "Hey, want to grab coffee sometime this week?",
             "script_context": "casual_coffee_invitation"
         }
@@ -332,13 +325,13 @@ class TestUpdatedAPIEndpoints:
         """Test GET /conversation-context/{user1}/{user2} endpoint"""
         # Store some conversation context
         self.db_manager.store_conversation_context(
-            user1_id=self.phil_id,
-            user2_id=self.chris_id,
+            user1_id=self.user1_id,
+            user2_id=self.user2_id,
             context_text="We discussed meeting for coffee",
             context_type="meeting_discussion"
         )
         
-        response = self.client.get("/conversation-context/phil/chris")
+        response = self.client.get(f"/conversation-context/{self.user1_name}/{self.user2_name}")
         assert response.status_code == 200
         
         context = response.json()
@@ -354,7 +347,7 @@ class TestUpdatedAPIEndpoints:
     
     def test_conversation_context_not_found(self):
         """Test GET /conversation-context/{user1}/{user2} with no context"""
-        response = self.client.get("/conversation-context/phil/chris")
+        response = self.client.get(f"/conversation-context/{self.user1_name}/{self.user2_name}")
         assert response.status_code == 404
         assert "No conversation context found" in response.json()["detail"]
 
