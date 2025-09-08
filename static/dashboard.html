@@ -18,33 +18,70 @@
             padding: 20px;
         }
         
-        .chat-container {
-            max-width: 600px;
+        .dashboard {
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
-            min-height: 80vh;
             display: flex;
-            flex-direction: column;
+            min-height: 80vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #f8f9fa;
+            padding: 30px 20px;
+            border-right: 1px solid #e9ecef;
+        }
+        
+        .sidebar h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+        
+        .quick-action {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quick-action:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            position: relative;
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-bottom: 40px;
             position: relative;
         }
         
         .toggle-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: none;
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 12px;
@@ -53,118 +90,92 @@
         }
         
         .toggle-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
         
         .header h1 {
+            color: #333;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
         
         .header p {
-            opacity: 0.9;
+            color: #666;
             font-size: 1.1em;
         }
         
-        .chat-area {
-            flex: 1;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .meeting-builder {
+            max-width: 500px;
+            margin: 0 auto;
         }
         
-        .chat-bubble {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 20px;
-            border-bottom-left-radius: 5px;
-            max-width: 80%;
-            animation: slideIn 0.3s ease-out;
+        .form-group {
+            margin-bottom: 25px;
         }
         
-        .chat-bubble.user {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            margin-left: auto;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 5px;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
         }
         
-        .chat-bubble p {
-            margin: 0;
-            line-height: 1.5;
-        }
-        
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .input-group input {
-            flex: 1;
-            padding: 15px 20px;
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
             border: 2px solid #e1e5e9;
-            border-radius: 25px;
+            border-radius: 12px;
             font-size: 16px;
             transition: border-color 0.3s ease;
         }
         
-        .input-group input:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #667eea;
         }
         
-        .input-group button {
-            padding: 15px 25px;
+        .btn {
+            width: 100%;
+            padding: 16px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: transform 0.2s ease;
         }
         
-        .input-group button:hover {
+        .btn:hover {
             transform: translateY(-2px);
         }
         
-        .input-group button:disabled {
+        .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
         
-        .quick-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+        .oauth-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e1e5e9;
         }
         
-        .quick-option {
-            padding: 10px 20px;
-            background: white;
-            border: 2px solid #e1e5e9;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
+        .oauth-btn {
+            background: #4285f4;
+            margin-bottom: 15px;
         }
         
-        .quick-option:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        .oauth-btn:hover {
+            background: #3367d6;
         }
         
         .results {
-            margin-top: 20px;
-            padding: 20px;
+            margin-top: 30px;
+            padding: 25px;
             background: #f8f9fa;
             border-radius: 15px;
             display: none;
@@ -172,33 +183,33 @@
         
         .suggestion {
             background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
             border-left: 4px solid #667eea;
         }
         
         .suggestion h4 {
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .suggestion p {
             color: #666;
             font-size: 14px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         
         .suggestion .create-event-btn {
             background: #28a745;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
             cursor: pointer;
-            margin-top: 8px;
-            margin-right: 8px;
+            margin-top: 12px;
+            margin-right: 10px;
             transition: background 0.3s ease;
         }
         
@@ -206,16 +217,21 @@
             background: #218838;
         }
         
+        .suggestion .create-event-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
         .suggestion .copy-link-btn {
             background: #6c757d;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
             cursor: pointer;
-            margin-top: 8px;
-            margin-right: 8px;
+            margin-top: 12px;
+            margin-right: 10px;
             transition: background 0.3s ease;
         }
         
@@ -227,16 +243,41 @@
             background: #17a2b8;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 12px;
             transition: background 0.3s ease;
         }
         
         .suggestion .share-event-btn:hover {
             background: #138496;
+        }
+        
+        .suggestion .event-links {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .suggestion .event-links h5 {
+            margin-bottom: 8px;
+            color: #495057;
+            font-size: 13px;
+        }
+        
+        .suggestion .event-links a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 12px;
+            margin-right: 15px;
+        }
+        
+        .suggestion .event-links a:hover {
+            text-decoration: underline;
         }
         
         .loading {
@@ -255,89 +296,113 @@
             display: none;
         }
         
-        .oauth-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #e1e5e9;
-            text-align: center;
-        }
-        
-        .oauth-btn {
-            background: #4285f4;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .oauth-btn:hover {
-            background: #3367d6;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
             }
-        }
-        
-        .hidden {
-            display: none;
+            
+            .main-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="header">
-            <button class="toggle-btn" onclick="switchToDashboard()">📊 Dashboard View</button>
-            <h1>heyyoufree</h1>
-            <p>Find the perfect time to meet with AI-powered suggestions</p>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h3>Quick Actions</h3>
+            <button class="quick-action" onclick="fillForm('phil', 'chris', 'coffee', 'Coffee chat')">
+                📅 Phil & Chris
+            </button>
+            <button class="quick-action" onclick="fillForm('alex', 'sam', 'lunch', 'Lunch meeting')">
+                📅 Alex & Sam
+            </button>
+            <button class="quick-action" onclick="fillForm('user1', 'user2', 'work', 'Work sync')">
+                📅 Generic
+            </button>
+            <button class="quick-action" onclick="clearForm()">
+                🆕 New Meeting
+            </button>
         </div>
         
-        <div class="chat-area" id="chatArea">
-            <div class="chat-bubble">
-                <p>👋 Hi! I'm heyyoufree. Who would you like to schedule a meeting with?</p>
+        <div class="main-content">
+            <div class="header">
+                <button class="toggle-btn" onclick="switchToChat()">💬 Chat View</button>
+                <h1>heyyoufree</h1>
+                <p>Find the perfect time to meet with AI-powered suggestions</p>
+            </div>
+            
+            <div class="meeting-builder">
+                <form id="meetingForm">
+                    <div class="form-group">
+                        <label for="user1">First Person:</label>
+                        <input type="text" id="user1" name="user1" placeholder="Enter name (e.g., Phil)" value="Phil" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="user2">Second Person:</label>
+                        <input type="text" id="user2" name="user2" placeholder="Enter name (e.g., Chris)" value="Chris" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="meetingType">Meeting Type:</label>
+                        <select id="meetingType" name="meetingType">
+                            <option value="coffee" selected>☕ Coffee Chat</option>
+                            <option value="lunch">🍽️ Lunch</option>
+                            <option value="dinner">🍽️ Dinner</option>
+                            <option value="walk">🚶 Walk & Talk</option>
+                            <option value="work">💼 Work Meeting</option>
+                            <option value="social">🎉 Social Hangout</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description (Optional):</label>
+                        <input type="text" id="description" name="description" placeholder="e.g., Weekly sync, Project discussion, etc." value="Quick coffee catch-up">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="use12HourFormat" style="margin-right: 8px;">
+                            Use 12-hour time format (AM/PM)
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="submitBtn">
+                        🎯 Get AI Suggestions
+                    </button>
+                </form>
+                
+                <div class="results" id="results">
+                    <h3>🎯 AI Meeting Suggestions</h3>
+                    <div id="suggestionsList"></div>
+                </div>
+                
+                <div class="oauth-section">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Connect Your Calendar</h3>
+                    <button class="btn oauth-btn" onclick="connectGoogleCalendar()">
+                        📅 Connect Google Calendar
+                    </button>
+                    <p style="text-align: center; color: #666; font-size: 14px; margin-top: 10px;">
+                        Connect your calendar for personalized suggestions
+                    </p>
+                </div>
+                
+                <div class="error" id="error"></div>
             </div>
         </div>
-        
-        <div class="input-group">
-            <input type="text" id="userInput" placeholder="Type names here..." autocomplete="off">
-            <button id="sendBtn" onclick="sendMessage()">→</button>
-        </div>
-        
-        <div class="results" id="results">
-            <h3>🎯 AI Meeting Suggestions</h3>
-            <div id="suggestionsList"></div>
-        </div>
-        
-        <div class="oauth-section">
-            <button class="oauth-btn" onclick="connectGoogleCalendar()">
-                📅 Connect Google Calendar
-            </button>
-            <p style="color: #666; font-size: 12px; margin-top: 8px;">
-                Connect your calendar for personalized suggestions
-            </p>
-        </div>
-        
-        <div class="error" id="error"></div>
     </div>
 
     <script>
         const API_BASE = window.location.origin;
-        let chatState = 'names'; // 'names', 'meetingType', 'complete'
-        let user1 = '';
-        let user2 = '';
-        let meetingType = '';
-        let description = '';
         
-        // Utility functions
+        // Utility functions for date/time formatting
         function formatDateWithDay(dateStr) {
             const date = new Date(dateStr + 'T00:00:00');
             const options = { weekday: 'long', month: 'short', day: 'numeric' };
@@ -365,100 +430,45 @@
             return reasoning.substring(0, maxLength).trim() + '...';
         }
         
-        function addChatBubble(message, isUser = false) {
-            const chatArea = document.getElementById('chatArea');
-            const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${isUser ? 'user' : ''}`;
-            bubble.innerHTML = `<p>${message}</p>`;
-            chatArea.appendChild(bubble);
-            chatArea.scrollTop = chatArea.scrollHeight;
+        // Clear form function
+        function clearForm() {
+            document.getElementById('user1').value = '';
+            document.getElementById('user2').value = '';
+            document.getElementById('meetingType').value = 'coffee';
+            document.getElementById('description').value = '';
         }
         
-        function addQuickOptions(options) {
-            const chatArea = document.getElementById('chatArea');
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'quick-options';
-            
-            options.forEach(option => {
-                const button = document.createElement('div');
-                button.className = 'quick-option';
-                button.textContent = option.text;
-                button.onclick = () => selectOption(option.value, option.text);
-                optionsDiv.appendChild(button);
-            });
-            
-            chatArea.appendChild(optionsDiv);
-            chatArea.scrollTop = chatArea.scrollHeight;
+        // Quick fill function for testing
+        function fillForm(user1, user2, meetingType, description) {
+            document.getElementById('user1').value = user1;
+            document.getElementById('user2').value = user2;
+            document.getElementById('meetingType').value = meetingType;
+            document.getElementById('description').value = description;
         }
         
-        function selectOption(value, text) {
-            const input = document.getElementById('userInput');
-            input.value = text;
-            sendMessage();
+        // Function to switch to chat view
+        function switchToChat() {
+            window.location.href = '/static/index.html';
         }
         
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
+        document.getElementById('meetingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            if (!message) return;
+            const user1 = document.getElementById('user1').value;
+            const user2 = document.getElementById('user2').value;
+            const meetingType = document.getElementById('meetingType').value;
+            const description = document.getElementById('description').value;
             
-            // Add user message to chat
-            addChatBubble(message, true);
-            
-            if (chatState === 'names') {
-                // Parse names from input
-                const names = message.split(/[,\s]+/).filter(name => name.length > 0);
-                if (names.length >= 2) {
-                    user1 = names[0];
-                    user2 = names[1];
-                    addChatBubble(`Great! I'll help ${user1} and ${user2} find a meeting time. What kind of meeting is this?`);
-                    addQuickOptions([
-                        { value: 'coffee', text: '☕ Coffee Chat' },
-                        { value: 'lunch', text: '🍽️ Lunch' },
-                        { value: 'walk', text: '🚶 Walk & Talk' },
-                        { value: 'work', text: '💼 Work Meeting' },
-                        { value: 'social', text: '🎉 Social Hangout' }
-                    ]);
-                    chatState = 'meetingType';
-                } else {
-                    addChatBubble('Please enter at least two names (e.g., "Phil and Chris" or "Alex, Sam")');
-                }
-            } else if (chatState === 'meetingType') {
-                // Determine meeting type from input
-                const lowerMessage = message.toLowerCase();
-                if (lowerMessage.includes('coffee') || lowerMessage.includes('☕')) {
-                    meetingType = 'coffee';
-                } else if (lowerMessage.includes('lunch') || lowerMessage.includes('🍽️')) {
-                    meetingType = 'lunch';
-                } else if (lowerMessage.includes('walk') || lowerMessage.includes('🚶')) {
-                    meetingType = 'walk';
-                } else if (lowerMessage.includes('work') || lowerMessage.includes('💼')) {
-                    meetingType = 'work';
-                } else if (lowerMessage.includes('social') || lowerMessage.includes('🎉')) {
-                    meetingType = 'social';
-                } else {
-                    meetingType = 'coffee'; // default
-                }
-                
-                description = message;
-                addChatBubble(`Perfect! I'll find the best time for ${user1} and ${user2} to have a ${meetingType} meeting. Let me check their calendars...`);
-                
-                // Get AI suggestions
-                getAISuggestions();
-                chatState = 'complete';
-            }
-            
-            input.value = '';
-        }
-        
-        async function getAISuggestions() {
+            const submitBtn = document.getElementById('submitBtn');
             const results = document.getElementById('results');
             const suggestionsList = document.getElementById('suggestionsList');
             const error = document.getElementById('error');
             
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = '🤖 AI is thinking...';
             results.style.display = 'block';
-            suggestionsList.innerHTML = '<div class="loading">🤖 AI is analyzing calendars and finding the perfect time...</div>';
+            suggestionsList.innerHTML = '<div class="loading">Generating personalized suggestions...</div>';
             error.style.display = 'none';
             
             try {
@@ -475,9 +485,10 @@
                 const data = await response.json();
                 
                 if (data.suggestions && data.suggestions.length > 0) {
+                    const use12Hour = document.getElementById('use12HourFormat').checked;
                     suggestionsList.innerHTML = data.suggestions.map((suggestion, index) => {
                         const formattedDate = formatDateWithDay(suggestion.date);
-                        const formattedTime = formatTime(suggestion.time);
+                        const formattedTime = formatTime(suggestion.time, use12Hour);
                         const shortReasoning = shortenReasoning(suggestion.reasoning);
                         
                         return `
@@ -498,6 +509,12 @@
                                 <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}', ${index})">
                                     📤 Share
                                 </button>
+                                
+                                <div class="event-links">
+                                    <h5>🔗 Direct Links:</h5>
+                                    <a href="${API_BASE}${suggestion.share_link}" target="_blank">View Event</a>
+                                    <span style="color: #666; font-size: 11px;">(Create Event uses original data)</span>
+                                </div>
                             ` : `
                                 <button class="create-event-btn" onclick="createCalendarEvent(${index})">
                                     📅 Create Calendar Event
@@ -509,12 +526,8 @@
                     
                     // Store suggestions for event creation
                     window.currentSuggestions = data.suggestions;
-                    
-                    // Add success message to chat
-                    addChatBubble(`🎉 Found ${data.suggestions.length} great meeting times! Check the suggestions below.`);
                 } else {
                     suggestionsList.innerHTML = '<div class="loading">No suggestions available. Try different users or check your calendar data.</div>';
-                    addChatBubble('Sorry, I couldn\'t find any suitable meeting times. Try different names or check if the calendar data is available.');
                 }
                 
             } catch (err) {
@@ -522,22 +535,28 @@
                 error.textContent = `Error: ${err.message}. Make sure the server is running on ${API_BASE}`;
                 error.style.display = 'block';
                 suggestionsList.innerHTML = '';
-                addChatBubble('Sorry, I encountered an error. Please make sure the server is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🎯 Get AI Suggestions';
             }
-        }
+        });
         
         function connectGoogleCalendar() {
+            // Check OAuth status first
             fetch('/oauth/status')
                 .then(response => response.json())
                 .then(data => {
                     if (data.available && data.configured) {
+                        // Use real OAuth
                         window.location.href = '/oauth/google/start';
                     } else {
+                        // Use development OAuth
                         window.location.href = '/oauth/dev/start';
                     }
                 })
                 .catch(err => {
                     console.warn('OAuth status check failed, using dev mode:', err);
+                    // Fallback to dev OAuth
                     window.location.href = '/oauth/dev/start';
                 });
         }
@@ -550,17 +569,12 @@
             document.getElementById('error').style.display = 'block';
             document.getElementById('error').style.background = '#efe';
             document.getElementById('error').style.color = '#060';
+            
+            // Clean up URL
             window.history.replaceState({}, document.title, window.location.pathname);
         }
         
-        // Event listeners
-        document.getElementById('userInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-        
-        // Function to create calendar event from suggestion
+        // Function to create calendar event from suggestion (legacy)
         async function createCalendarEvent(suggestionIndex) {
             const suggestion = window.currentSuggestions[suggestionIndex];
             if (!suggestion) {
@@ -572,9 +586,11 @@
             const originalText = button.textContent;
             
             try {
+                // Disable button and show loading
                 button.disabled = true;
                 button.textContent = '⏳ Creating...';
                 
+                // Prepare event data
                 const eventData = {
                     date: suggestion.date,
                     time: suggestion.time,
@@ -586,6 +602,7 @@
                     meeting_type: suggestion.meeting_type
                 };
                 
+                // Create the event
                 const response = await fetch(`${API_BASE}/calendar/events/from-suggestion`, {
                     method: 'POST',
                     headers: {
@@ -600,12 +617,14 @@
                     button.textContent = '✅ Created!';
                     button.style.background = '#28a745';
                     
+                    // Show success message
                     const errorDiv = document.getElementById('error');
                     errorDiv.textContent = `✅ Calendar event created successfully! Event ID: ${result.event_id}`;
                     errorDiv.style.display = 'block';
                     errorDiv.style.background = '#d4edda';
                     errorDiv.style.color = '#155724';
                     
+                    // If there are conflicts, show them
                     if (result.conflicts && result.conflicts.length > 0) {
                         errorDiv.textContent += ` ⚠️ Note: ${result.conflicts.length} potential conflicts detected.`;
                     }
@@ -625,6 +644,7 @@
                 errorDiv.style.color = '#721c24';
             }
             
+            // Re-enable button after 3 seconds
             setTimeout(() => {
                 button.disabled = false;
                 button.textContent = originalText;
@@ -636,8 +656,11 @@
         async function copyEventLink(shareLink, suggestionIndex = null) {
             try {
                 const fullUrl = `${window.location.origin}${shareLink}`;
+                
+                // Copy just the URL to clipboard
                 await navigator.clipboard.writeText(fullUrl);
                 
+                // Show success message
                 const errorDiv = document.getElementById('error');
                 errorDiv.textContent = `📋 Event link copied to clipboard!`;
                 errorDiv.style.display = 'block';
@@ -659,6 +682,7 @@
             try {
                 let eventDetails;
                 
+                // If we have a suggestion index, use the current suggestion data
                 if (suggestionIndex !== null && window.currentSuggestions && window.currentSuggestions[suggestionIndex]) {
                     const suggestion = window.currentSuggestions[suggestionIndex];
                     eventDetails = {
@@ -671,12 +695,14 @@
                         user_energies: suggestion.user_energies
                     };
                 } else {
+                    // Fallback: try to fetch from server
                     const response = await fetch(`${API_BASE}${shareLink}`);
                     const result = await response.json();
                     eventDetails = result.event_details;
                 }
                 
                 if (eventDetails) {
+                    // Create shareable text
                     const shareText = `📅 Meeting Suggestion\n\n` +
                         `Date: ${eventDetails.date} at ${eventDetails.time}\n` +
                         `Duration: ${eventDetails.duration}\n` +
@@ -687,6 +713,7 @@
                     
                     const shareUrl = `${window.location.origin}${shareLink}`;
                     
+                    // Try Web Share API first (mobile/modern browsers)
                     if (navigator.share) {
                         await navigator.share({
                             title: 'Meeting Suggestion',
@@ -694,14 +721,17 @@
                             url: shareUrl
                         });
                         
+                        // Show success message
                         const errorDiv = document.getElementById('error');
                         errorDiv.textContent = `📤 Event shared successfully!`;
                         errorDiv.style.display = 'block';
                         errorDiv.style.background = '#d1ecf1';
                         errorDiv.style.color = '#0c5460';
                     } else {
+                        // Fallback: copy to clipboard
                         await navigator.clipboard.writeText(shareText);
                         
+                        // Show success message
                         const errorDiv = document.getElementById('error');
                         errorDiv.textContent = `📤 Event details copied to clipboard! (Web Share not available)`;
                         errorDiv.style.display = 'block';
@@ -722,11 +752,6 @@
             }
         }
         
-        // Function to switch to dashboard view
-        function switchToDashboard() {
-            window.location.href = '/static/dashboard.html';
-        }
-        
         // Check if server is running
         fetch(`${API_BASE}/health`)
             .then(response => response.json())
@@ -738,6 +763,53 @@
                 document.getElementById('error').textContent = '⚠️ Server not running. Please start the server with: python -m src.api.server';
                 document.getElementById('error').style.display = 'block';
             });
+        
+        // Add event listener for time format toggle
+        document.getElementById('use12HourFormat').addEventListener('change', function() {
+            // Refresh the display if we have suggestions
+            if (window.currentSuggestions && window.currentSuggestions.length > 0) {
+                const use12Hour = this.checked;
+                const suggestionsList = document.getElementById('suggestionsList');
+                
+                suggestionsList.innerHTML = window.currentSuggestions.map((suggestion, index) => {
+                    const formattedDate = formatDateWithDay(suggestion.date);
+                    const formattedTime = formatTime(suggestion.time, use12Hour);
+                    const shortReasoning = shortenReasoning(suggestion.reasoning);
+                    
+                    return `
+                    <div class="suggestion">
+                        <h4>📅 ${formattedDate} at ${formattedTime}</h4>
+                        <p><strong>Duration:</strong> ${suggestion.duration}</p>
+                        <p><strong>Type:</strong> ${suggestion.meeting_type}</p>
+                        <p><strong>Reasoning:</strong> ${shortReasoning}</p>
+                        <p><strong>Energy Levels:</strong> ${Object.entries(suggestion.user_energies).map(([name, energy]) => `${name}: ${energy}`).join(', ')}</p>
+                        
+                        ${suggestion.event_link ? `
+                            <button class="create-event-btn" onclick="createCalendarEvent(${index})">
+                                📅 Create Calendar Event
+                            </button>
+                            <button class="copy-link-btn" onclick="copyEventLink('${suggestion.share_link}', ${index})">
+                                📋 Copy Link
+                            </button>
+                            <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}', ${index})">
+                                📤 Share
+                            </button>
+                            
+                            <div class="event-links">
+                                <h5>🔗 Direct Links:</h5>
+                                <a href="${API_BASE}${suggestion.share_link}" target="_blank">View Event</a>
+                                <span style="color: #666; font-size: 11px;">(Create Event uses original data)</span>
+                            </div>
+                        ` : `
+                            <button class="create-event-btn" onclick="createCalendarEvent(${index})">
+                                📅 Create Calendar Event
+                            </button>
+                        `}
+                    </div>
+                    `;
+                }).join('');
+            }
+        });
     </script>
 </body>
 </html>
