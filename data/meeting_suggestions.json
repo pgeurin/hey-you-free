@@ -2,52 +2,52 @@
   "suggestions": [
     {
       "date": "2025-09-08",
-      "time": "11:00",
-      "duration": "1 hour",
-      "reasoning": "This time slot falls after Chris's Project Planning session and before Phil's Level 13 Zoom meeting.  It's a Monday, so it's likely a less busy day for both, allowing for a quick coffee catch-up before the work week fully ramps up.  It avoids the late morning/early afternoon rush for both.",
+      "time": "18:00",
+      "duration": "2 hours",
+      "reasoning": "This Monday evening allows for a relaxed \ud83c\udf89 Social Hangout after the work week for Chris, who seems to have a structured schedule with many weekday commitments.  With has a less busy evening, and this time slot falls after his 'Fresh meet CSPC' event, suggesting he's likely free and potentially in a social mood.  It avoids conflicting with Chris's Project Planning session earlier in the day. The later time allows for a more casual and relaxed atmosphere.",
       "user_energies": {
-        "phil": "Medium",
+        "with": "Medium",
         "chris": "Medium"
       },
-      "meeting_type": "Coffee",
-      "location": "Coffee shop near Chris's office (if applicable)",
+      "meeting_type": "Evening drinks",
+      "location": "A relaxed bar or pub",
       "confidence": 0.8,
       "conflicts": [],
-      "preparation_time": "5 minutes"
+      "preparation_time": "15 minutes"
     },
     {
-      "date": "2025-09-10",
-      "time": "14:00",
-      "duration": "1 hour",
-      "reasoning": "This Wednesday afternoon slot is after Chris's Book Club meeting and before Phil's Contact Improv session.  It's a mid-afternoon time, allowing for a quick coffee catch-up before the end of the day.  It's likely a less busy time for both, allowing for a relaxed meeting.",
+      "date": "2025-09-13",
+      "time": "11:00",
+      "duration": "1.5 hours",
+      "reasoning": "This Saturday morning offers a convenient time for a \ud83c\udf89 Social Hangout.  It's after Chris's likely busy Friday and before any scheduled events on Sunday. With has a less packed Saturday, making this a good window for a casual get-together.  The time is early enough to avoid potential evening fatigue for both.",
       "user_energies": {
-        "phil": "Medium",
+        "with": "High",
         "chris": "Medium"
       },
-      "meeting_type": "Coffee",
-      "location": "Coffee shop near a park (to accommodate Chris's preference for outdoor activities)",
+      "meeting_type": "Casual lunch",
+      "location": "A cafe or brunch spot",
       "confidence": 0.75,
       "conflicts": [],
-      "preparation_time": "5 minutes"
+      "preparation_time": "10 minutes"
     },
     {
-      "date": "2025-09-12",
-      "time": "11:00",
+      "date": "2025-09-19",
+      "time": "19:00",
       "duration": "1 hour",
-      "reasoning": "This Friday morning slot is after Chris's Meditation session and before Phil's breaking fast. It's a Friday, so it's likely a less busy day for both, allowing for a quick coffee catch-up before the weekend. It's a time when both are likely to be more relaxed and open to a quick social interaction.",
+      "reasoning": "Friday evening provides another opportunity for a \ud83c\udf89 Social Hangout.  With has an event ending at 20:00, so this allows for a shorter, more focused get-together. Chris's schedule appears less busy on Fridays, making this a potentially good time for a quick social interaction.  The shorter duration accommodates potential time constraints.",
       "user_energies": {
-        "phil": "Medium",
-        "chris": "Medium"
+        "with": "Medium",
+        "chris": "Low"
       },
       "meeting_type": "Coffee",
-      "location": "Coffee shop near Phil's usual Friday morning routine",
+      "location": "A coffee shop near With's Friday evening event",
       "confidence": 0.7,
       "conflicts": [],
       "preparation_time": "5 minutes"
     }
   ],
   "metadata": {
-    "generated_at": "2024-10-27T12:00:00Z",
+    "generated_at": "2024-01-15T10:30:00Z",
     "total_suggestions": 3,
     "analysis_quality": "high",
     "time_range_analyzed": "2025-09-08 to 2025-09-22"
