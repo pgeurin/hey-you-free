@@ -311,7 +311,7 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:8000';
+        const API_BASE = window.location.origin;
         
         document.getElementById('meetingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
