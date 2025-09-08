@@ -1,0 +1,60 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Documentation
+README.md
+docs/
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Demo files
+demo_*.py
+*_demo.py
+
+# Output files
+output/
+*.log
+
+# Database files (will use Cloud SQL in production)
+*.db
+*.db-journal
+
+# Temporary files
+tmp/
+temp/

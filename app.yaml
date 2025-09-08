@@ -1,0 +1,23 @@
+runtime: python311
+service: heyyoufree
+
+env_variables:
+  GOOGLE_API_KEY: "your_gemini_api_key_here"
+  SERVER_HOST: "0.0.0.0"
+  SERVER_PORT: "8080"
+  DEBUG: "false"
+  LOG_LEVEL: "INFO"
+  LOG_FORMAT: "json"
+  RATE_LIMIT_PER_MINUTE: "60"
+  SECRET_KEY: "your_production_secret_key_here"
+  ALLOWED_ORIGINS: "https://heyyoufree.appspot.com,https://heyyoufree.com"
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 0.6
+
+handlers:
+- url: /.*
+  script: auto
+  secure: always

@@ -1,0 +1,35 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/heyyoufree:$COMMIT_SHA', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/heyyoufree:$COMMIT_SHA']
+  
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+    - 'run'
+    - 'deploy'
+    - 'heyyoufree'
+    - '--image'
+    - 'gcr.io/$PROJECT_ID/heyyoufree:$COMMIT_SHA'
+    - '--region'
+    - 'us-central1'
+    - '--platform'
+    - 'managed'
+    - '--allow-unauthenticated'
+    - '--port'
+    - '8000'
+    - '--memory'
+    - '1Gi'
+    - '--cpu'
+    - '1'
+    - '--max-instances'
+    - '10'
+    - '--set-env-vars'
+    - 'GOOGLE_API_KEY=$$GOOGLE_API_KEY,SERVER_HOST=0.0.0.0,SERVER_PORT=8000,DEBUG=false,LOG_LEVEL=INFO,LOG_FORMAT=json,RATE_LIMIT_PER_MINUTE=60'
+
+images:
+  - 'gcr.io/$PROJECT_ID/heyyoufree:$COMMIT_SHA'
