@@ -277,6 +277,13 @@
                 <input type="text" id="description" name="description" placeholder="e.g., Weekly sync, Project discussion, etc." value="Quick coffee catch-up">
             </div>
             
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="use12HourFormat" style="margin-right: 8px;">
+                    Use 12-hour time format (AM/PM)
+                </label>
+            </div>
+            
             <!-- Quick Fill Buttons for Testing -->
             <div class="form-group">
                 <label>Quick Fill (Testing):</label>
@@ -292,6 +299,11 @@
             </button>
         </form>
         
+        <div class="results" id="results">
+            <h3>🎯 AI Meeting Suggestions</h3>
+            <div id="suggestionsList"></div>
+        </div>
+        
         <div class="oauth-section">
             <h3 style="text-align: center; margin-bottom: 20px; color: #333;">Connect Your Calendar</h3>
             <button class="btn oauth-btn" onclick="connectGoogleCalendar()">
@@ -302,16 +314,39 @@
             </p>
         </div>
         
-        <div class="results" id="results">
-            <h3>🎯 AI Meeting Suggestions</h3>
-            <div id="suggestionsList"></div>
-        </div>
-        
         <div class="error" id="error"></div>
     </div>
 
     <script>
         const API_BASE = window.location.origin;
+        
+        // Utility functions for date/time formatting
+        function formatDateWithDay(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00');
+            const options = { weekday: 'long', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        function formatTime(timeStr, use12Hour = false) {
+            const [hours, minutes] = timeStr.split(':');
+            const date = new Date();
+            date.setHours(parseInt(hours), parseInt(minutes));
+            
+            if (use12Hour) {
+                return date.toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+            } else {
+                return timeStr;
+            }
+        }
+        
+        function shortenReasoning(reasoning, maxLength = 100) {
+            if (reasoning.length <= maxLength) return reasoning;
+            return reasoning.substring(0, maxLength).trim() + '...';
+        }
         
         document.getElementById('meetingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -347,12 +382,18 @@
                 const data = await response.json();
                 
                 if (data.suggestions && data.suggestions.length > 0) {
-                    suggestionsList.innerHTML = data.suggestions.map((suggestion, index) => `
+                    const use12Hour = document.getElementById('use12HourFormat').checked;
+                    suggestionsList.innerHTML = data.suggestions.map((suggestion, index) => {
+                        const formattedDate = formatDateWithDay(suggestion.date);
+                        const formattedTime = formatTime(suggestion.time, use12Hour);
+                        const shortReasoning = shortenReasoning(suggestion.reasoning);
+                        
+                        return `
                         <div class="suggestion">
-                            <h4>📅 ${suggestion.date} at ${suggestion.time}</h4>
+                            <h4>📅 ${formattedDate} at ${formattedTime}</h4>
                             <p><strong>Duration:</strong> ${suggestion.duration}</p>
                             <p><strong>Type:</strong> ${suggestion.meeting_type}</p>
-                            <p><strong>Reasoning:</strong> ${suggestion.reasoning}</p>
+                            <p><strong>Reasoning:</strong> ${shortReasoning}</p>
                             <p><strong>Energy Levels:</strong> ${Object.entries(suggestion.user_energies).map(([name, energy]) => `${name}: ${energy}`).join(', ')}</p>
                             
                             ${suggestion.event_link ? `
@@ -377,7 +418,8 @@
                                 </button>
                             `}
                         </div>
-                    `).join('');
+                        `;
+                    }).join('');
                     
                     // Store suggestions for event creation
                     window.currentSuggestions = data.suggestions;
@@ -661,6 +703,53 @@
             document.getElementById('meetingType').value = meetingType;
             document.getElementById('description').value = description;
         }
+        
+        // Add event listener for time format toggle
+        document.getElementById('use12HourFormat').addEventListener('change', function() {
+            // Refresh the display if we have suggestions
+            if (window.currentSuggestions && window.currentSuggestions.length > 0) {
+                const use12Hour = this.checked;
+                const suggestionsList = document.getElementById('suggestionsList');
+                
+                suggestionsList.innerHTML = window.currentSuggestions.map((suggestion, index) => {
+                    const formattedDate = formatDateWithDay(suggestion.date);
+                    const formattedTime = formatTime(suggestion.time, use12Hour);
+                    const shortReasoning = shortenReasoning(suggestion.reasoning);
+                    
+                    return `
+                    <div class="suggestion">
+                        <h4>📅 ${formattedDate} at ${formattedTime}</h4>
+                        <p><strong>Duration:</strong> ${suggestion.duration}</p>
+                        <p><strong>Type:</strong> ${suggestion.meeting_type}</p>
+                        <p><strong>Reasoning:</strong> ${shortReasoning}</p>
+                        <p><strong>Energy Levels:</strong> ${Object.entries(suggestion.user_energies).map(([name, energy]) => `${name}: ${energy}`).join(', ')}</p>
+                        
+                        ${suggestion.event_link ? `
+                            <button class="create-event-btn" onclick="createCalendarEvent(${index})">
+                                📅 Create Calendar Event
+                            </button>
+                            <button class="copy-link-btn" onclick="copyEventLink('${suggestion.share_link}', ${index})">
+                                📋 Copy Link
+                            </button>
+                            <button class="share-event-btn" onclick="shareEvent('${suggestion.share_link}', ${index})">
+                                📤 Share
+                            </button>
+                            
+                            <div class="event-links">
+                                <h5>🔗 Direct Links:</h5>
+                                <a href="${API_BASE}${suggestion.share_link}" target="_blank">View Event</a>
+                                <span style="color: #666; font-size: 11px;">(Create Event uses original data)</span>
+                            </div>
+                        ` : `
+                            <button class="create-event-btn" onclick="createCalendarEvent(${index})">
+                                📅 Create Calendar Event
+                            </button>
+                        `}
+                    </div>
+                    `;
+                }).join('');
+            }
+        });
     </script>
 </body>
 </html>
