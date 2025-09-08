@@ -157,16 +157,29 @@ def handle_text_chat_from_core(user1_name: str, user2_name: str, message: str, s
 
 
 @app.get("/")
-async def serve_web_interface():
-    """Serve the web interface"""
+async def serve_landing_page():
+    """Serve the landing page"""
     try:
         static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "static"))
-        html_path = os.path.join(static_path, "index.html")
-        print(f"Looking for HTML file at: {html_path}")
+        html_path = os.path.join(static_path, "landing.html")
+        print(f"Looking for landing page at: {html_path}")
         print(f"File exists: {os.path.exists(html_path)}")
         return FileResponse(html_path)
     except Exception as e:
-        print(f"Error serving web interface: {e}")
+        print(f"Error serving landing page: {e}")
+        return {"error": str(e)}
+
+@app.get("/scheduler")
+async def serve_scheduler_interface():
+    """Serve the scheduler interface"""
+    try:
+        static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "static"))
+        html_path = os.path.join(static_path, "index.html")
+        print(f"Looking for scheduler HTML file at: {html_path}")
+        print(f"File exists: {os.path.exists(html_path)}")
+        return FileResponse(html_path)
+    except Exception as e:
+        print(f"Error serving scheduler interface: {e}")
         return {"error": str(e)}
 
 @app.get("/health")
