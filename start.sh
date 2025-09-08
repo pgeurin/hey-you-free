@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Railway startup script
-echo "Starting heyyoufree application..."
+echo "Starting heyyoufree application... (v2.0)"
 
 # Check if required environment variables are set
 if [ -z "$GOOGLE_API_KEY" ]; then
