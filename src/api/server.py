@@ -8,10 +8,16 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 from typing import Optional, Dict, Any, List
 import sys
 import os
 import json
+import logging
+import time
+from datetime import datetime
 
 # Add src to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
@@ -95,10 +101,139 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Setup rate limiting and logging
+config = load_environment_config()
+rate_limit = config.get('RATE_LIMIT_PER_MINUTE', 60)
+limiter = Limiter(key_func=get_remote_address, default_limits=[f"{rate_limit}/minute"])
+
+# Configure logging
+log_level = getattr(logging, config.get('LOG_LEVEL', 'INFO').upper())
+log_format = config.get('LOG_FORMAT', 'text')
+
+if log_format == 'json':
+    # JSON logging for production
+    logging.basicConfig(
+        level=log_level,
+        format='%(message)s',
+        handlers=[logging.StreamHandler()]
+    )
+    logger = logging.getLogger(__name__)
+    
+    class JSONFormatter(logging.Formatter):
+        def format(self, record):
+            log_entry = {
+                'timestamp': datetime.utcnow().isoformat() + 'Z',
+                'level': record.levelname,
+                'logger': record.name,
+                'message': record.getMessage(),
+                'module': record.module,
+                'function': record.funcName,
+                'line': record.lineno
+            }
+            if hasattr(record, 'request_id'):
+                log_entry['request_id'] = record.request_id
+            if hasattr(record, 'user_id'):
+                log_entry['user_id'] = record.user_id
+            if hasattr(record, 'duration'):
+                log_entry['duration'] = record.duration
+            return json.dumps(log_entry)
+    
+    # Apply JSON formatter to all handlers
+    for handler in logging.root.handlers:
+        handler.setFormatter(JSONFormatter())
+else:
+    # Text logging for development
+    logging.basicConfig(
+        level=log_level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    logger = logging.getLogger(__name__)
+
+# Add rate limiting to app
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Add global exception handler
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    """Global exception handler for unhandled errors"""
+    request_id = request.headers.get("X-Request-ID", "unknown")
+    
+    logger.error(f"Unhandled exception: {str(exc)}", extra={
+        'request_id': request_id,
+        'method': request.method,
+        'url': str(request.url),
+        'exception_type': type(exc).__name__,
+        'exception_message': str(exc)
+    }, exc_info=True)
+    
+    return {
+        "error": "Internal server error",
+        "message": "An unexpected error occurred",
+        "request_id": request_id,
+        "timestamp": datetime.utcnow().isoformat() + 'Z'
+    }
+
+# Add request logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Log all requests with timing and status"""
+    start_time = time.time()
+    request_id = f"req_{int(start_time * 1000)}"
+    
+    # Log request start
+    logger.info(f"Request started", extra={
+        'request_id': request_id,
+        'method': request.method,
+        'url': str(request.url),
+        'client_ip': get_remote_address(request),
+        'user_agent': request.headers.get('user-agent', 'unknown')
+    })
+    
+    # Process request
+    response = await call_next(request)
+    
+    # Calculate duration
+    duration = time.time() - start_time
+    
+    # Log request completion
+    logger.info(f"Request completed", extra={
+        'request_id': request_id,
+        'method': request.method,
+        'url': str(request.url),
+        'status_code': response.status_code,
+        'duration': round(duration, 3),
+        'client_ip': get_remote_address(request)
+    })
+    
+    # Add request ID to response headers
+    response.headers["X-Request-ID"] = request_id
+    
+    return response
+
+# Add startup event
+@app.on_event("startup")
+async def startup_event():
+    """Log server startup"""
+    logger.info("Server starting up", extra={
+        'version': '1.0.0',
+        'environment': 'production' if config.get('DEBUG') == False else 'development',
+        'rate_limit': rate_limit,
+        'log_level': config.get('LOG_LEVEL'),
+        'log_format': config.get('LOG_FORMAT')
+    })
+
+# Add shutdown event
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Log server shutdown"""
+    logger.info("Server shutting down")
+
 # Add CORS middleware
+allowed_origins = config.get('ALLOWED_ORIGINS', 'http://localhost:3000,http://localhost:8080').split(',')
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -184,12 +319,65 @@ async def serve_scheduler_interface():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy"}
+    """Health check endpoint with system metrics"""
+    import psutil
+    import platform
+    
+    # Get system metrics
+    cpu_percent = psutil.cpu_percent(interval=1)
+    memory = psutil.virtual_memory()
+    disk = psutil.disk_usage('/')
+    
+    # Check API key status
+    api_status = get_api_key_status()
+    
+    # Check database connectivity
+    try:
+        db_manager = get_db_manager()
+        db_status = "healthy"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+    
+    health_data = {
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat() + 'Z',
+        "version": "1.0.0",
+        "system": {
+            "platform": platform.system(),
+            "python_version": platform.python_version(),
+            "cpu_percent": cpu_percent,
+            "memory": {
+                "total": memory.total,
+                "available": memory.available,
+                "percent": memory.percent
+            },
+            "disk": {
+                "total": disk.total,
+                "free": disk.free,
+                "percent": (disk.used / disk.total) * 100
+            }
+        },
+        "services": {
+            "api_key": api_status['status'],
+            "database": db_status,
+            "rate_limiting": "enabled"
+        }
+    }
+    
+    # Log health check
+    logger.info("Health check requested", extra={
+        'cpu_percent': cpu_percent,
+        'memory_percent': memory.percent,
+        'api_status': api_status['status']
+    })
+    
+    return health_data
 
 
 @app.get("/meeting-suggestions", response_model=MeetingSuggestionsResponse)
+@limiter.limit("10/minute")
 async def get_meeting_suggestions(
+    request: Request,
     seed: int = 42,
     user1: str = Query("phil", description="First user name"),
     user2: str = Query("chris", description="Second user name"),
@@ -198,9 +386,19 @@ async def get_meeting_suggestions(
 ):
     """Get AI-generated meeting suggestions with query parameters"""
     try:
+        # Log request details
+        logger.info(f"Meeting suggestions request", extra={
+            'user1': user1,
+            'user2': user2,
+            'meeting_type': meeting_type,
+            'seed': seed,
+            'has_description': bool(description)
+        })
+        
         # Check API key availability first
         api_status = get_api_key_status()
         if not api_status['available']:
+            logger.error(f"API key not available: {api_status['message']}")
             raise HTTPException(
                 status_code=503,
                 detail={
@@ -502,24 +700,25 @@ async def get_meeting_suggestions_with_users(request: MeetingSuggestionsRequest)
 
 # Text Chat Endpoints
 @app.post("/text-chat", response_model=TextChatResponse)
-async def handle_text_chat(request: TextChatRequest):
+@limiter.limit("20/minute")
+async def handle_text_chat(request: Request, chat_request: TextChatRequest):
     """Handle text chat between users"""
     try:
         # Get user information
-        user1 = get_user_manager().get_user_by_name(request.user1_name)
-        user2 = get_user_manager().get_user_by_name(request.user2_name)
+        user1 = get_user_manager().get_user_by_name(chat_request.user1_name)
+        user2 = get_user_manager().get_user_by_name(chat_request.user2_name)
         
         if not user1:
-            raise HTTPException(status_code=404, detail=f"User '{request.user1_name}' not found")
+            raise HTTPException(status_code=404, detail=f"User '{chat_request.user1_name}' not found")
         if not user2:
-            raise HTTPException(status_code=404, detail=f"User '{request.user2_name}' not found")
+            raise HTTPException(status_code=404, detail=f"User '{chat_request.user2_name}' not found")
         
         # Use core business logic
         result = handle_text_chat_from_core(
-            request.user1_name, 
-            request.user2_name, 
-            request.message, 
-            request.script_context
+            chat_request.user1_name, 
+            chat_request.user2_name, 
+            chat_request.message, 
+            chat_request.script_context
         )
         
         return TextChatResponse(**result)
@@ -559,7 +758,8 @@ async def get_conversation_context(user1_name: str, user2_name: str):
 
 # OAuth Endpoints
 @app.get("/oauth/google/start")
-async def oauth_start(user_id: Optional[str] = None):
+@limiter.limit("5/minute")
+async def oauth_start(request: Request, user_id: Optional[str] = None):
     """Start Google OAuth flow"""
     try:
         if not is_oauth_available():

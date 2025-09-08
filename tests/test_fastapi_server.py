@@ -28,7 +28,12 @@ class TestFastAPIServer:
         """Test health check endpoint"""
         response = self.client.get("/health")
         assert response.status_code == 200
-        assert response.json() == {"status": "healthy"}
+        data = response.json()
+        assert data["status"] == "healthy"
+        assert "timestamp" in data
+        assert "version" in data
+        assert "system" in data
+        assert "services" in data
     
     @patch('api.server.get_meeting_suggestions_from_core')
     def test_get_meeting_suggestions_success(self, mock_get_suggestions):

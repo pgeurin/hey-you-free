@@ -24,3 +24,7 @@ google-api-python-client==2.108.0
 
 # SMS/Text messaging
 twilio==8.10.0
+
+# Production dependencies
+slowapi==0.1.9
+psutil==7.0.0
