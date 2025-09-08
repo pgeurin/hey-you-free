@@ -1547,5 +1547,6 @@ async def share_event_suggestion(suggestion_id: str):
 if __name__ == "__main__":
     import uvicorn
     import os
-    port = int(os.environ.get("PORT", 8000))
+    # Railway uses SERVER_PORT, fallback to PORT, then 8000
+    port = int(os.environ.get("SERVER_PORT", os.environ.get("PORT", 8000)))
     uvicorn.run(app, host="0.0.0.0", port=port)
