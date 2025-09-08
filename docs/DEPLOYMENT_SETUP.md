@@ -12,7 +12,7 @@
 ### ✅ **Database Migration**
 - **From**: Google Cloud SQL ($900/month)
 - **To**: Neon PostgreSQL (Free tier)
-- **Connection String**: `postgresql://neondb_owner:your_database_password_here@ep-cool-violet-afuk0k2w-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require`
+- **Connection String**: `postgresql://username:password@host:port/database?sslmode=require`
 
 ### ✅ **Hosting Migration**
 - **From**: Google Cloud Platform
@@ -41,7 +41,7 @@ DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require&c
 
 ### **2. Railway Environment Variables**
 ```bash
-DATABASE_URL=postgresql://neondb_owner:your_database_password_here@ep-cool-violet-afuk0k2w-pooler.c-2.us-west-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require
 GOOGLE_API_KEY=your_google_api_key_here
 SECRET_KEY=your_secret_key_here
 SERVER_HOST=0.0.0.0

@@ -5,3 +5,14 @@ __pycache__/
 # Ignore specific JSON files but allow data files
 !data/*.json
 !output/*.json
+
+# Security - API keys and credentials
+token.json
+credentials.json
+*.env
+.env
+.env.local
+.env.production
+.env.development
+secrets.json
+config.json
