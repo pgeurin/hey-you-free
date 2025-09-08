@@ -6,6 +6,17 @@ __pycache__/
 !data/*.json
 !output/*.json
 
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database files
+*.db
+*.db-journal
+meeting_scheduler.db
+
 # Security - API keys and credentials
 token.json
 credentials.json
