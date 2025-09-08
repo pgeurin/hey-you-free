@@ -134,7 +134,7 @@ class TestOAuthEndToEnd:
     
     def test_web_interface_oauth_integration(self):
         """Test web interface OAuth integration"""
-        response = self.client.get("/")
+        response = self.client.get("/scheduler")
         assert response.status_code == 200
         
         html_content = response.text

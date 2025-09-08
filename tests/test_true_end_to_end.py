@@ -561,7 +561,10 @@ class TestTrueEndToEnd:
         health_response = client.get("/health")
         health_time = time.time() - health_start
         assert health_response.status_code == 200
-        assert health_response.json() == {"status": "healthy"}
+        health_data = health_response.json()
+        assert health_data["status"] == "healthy"
+        assert "timestamp" in health_data
+        assert "version" in health_data
         print(f"   Health endpoint: {health_time:.3f}s")
         
         # Test meeting suggestions with mock data (since we may not have API key)

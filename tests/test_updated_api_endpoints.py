@@ -75,7 +75,12 @@ class TestUpdatedAPIEndpoints:
         """Test health check endpoint still works"""
         response = self.client.get("/health")
         assert response.status_code == 200
-        assert response.json() == {"status": "healthy"}
+        data = response.json()
+        assert data["status"] == "healthy"
+        assert "timestamp" in data
+        assert "version" in data
+        assert "system" in data
+        assert "services" in data
     
     def test_get_users_endpoint(self):
         """Test GET /users endpoint"""

@@ -39,7 +39,7 @@ from infrastructure.environment import (
     get_api_key_status,
     load_environment_config
 )
-from infrastructure.database import DatabaseManager
+from infrastructure.database_postgres import get_database_manager
 from api.user_management import UserManager
 from adapters.oauth_service import get_oauth_service, is_oauth_available
 from adapters.oauth_dev_service import get_dev_oauth_service, is_dev_oauth_available
@@ -81,9 +81,8 @@ user_manager = None
 def get_db_manager():
     """Get database manager instance, initializing if needed"""
     global db_manager
-    db_path = os.getenv("DATABASE_PATH", "meeting_scheduler.db")
-    if db_manager is None or db_manager.db_path != db_path:
-        db_manager = DatabaseManager(db_path)
+    if db_manager is None:
+        db_manager = get_database_manager()
         db_manager.initialize_database()
     return db_manager
 
@@ -1536,6 +1535,8 @@ async def share_event_suggestion(suggestion_id: str):
             
         except ValueError:
             raise HTTPException(status_code=400, detail="Invalid suggestion ID format")
+        except HTTPException:
+            raise  # Re-raise HTTP exceptions as-is
             
     except HTTPException:
         raise

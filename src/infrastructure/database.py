@@ -21,7 +21,10 @@ class DatabaseManager:
     
     def connect(self):
         """Establish database connection"""
-        self.connection = sqlite3.connect(self.db_path)
+        # Close existing connection if any
+        if self.connection:
+            self.close()
+        self.connection = sqlite3.connect(self.db_path, check_same_thread=False)
         self.connection.row_factory = sqlite3.Row  # Enable dict-like access
         return self.connection
     

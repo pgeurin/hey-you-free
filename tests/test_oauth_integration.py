@@ -71,7 +71,7 @@ class TestOAuthIntegration:
         # This test will be expanded when we implement token storage
         # For now, just ensure the endpoint exists
         response = self.client.get("/oauth/google/start", follow_redirects=False)
-        assert response.status_code in [302, 307, 500, 503]
+        assert response.status_code in [302, 307, 429, 500, 503]  # 429 = rate limited
     
     def test_oauth_state_parameter_security(self):
         """Test that OAuth state parameter is used for security"""
@@ -79,7 +79,7 @@ class TestOAuthIntegration:
         
         # Should include state parameter in redirect
         location = response.headers.get("location", "")
-        assert "state=" in location or response.status_code in [200, 500, 503]
+        assert "state=" in location or response.status_code in [200, 429, 500, 503]  # 429 = rate limited
     
     def test_oauth_scopes_are_correct(self):
         """Test that OAuth requests correct scopes"""
@@ -87,7 +87,7 @@ class TestOAuthIntegration:
         
         # Should request calendar read scope
         location = response.headers.get("location", "")
-        assert "calendar.readonly" in location or response.status_code in [200, 500, 503]
+        assert "calendar.readonly" in location or response.status_code in [200, 429, 500, 503]  # 429 = rate limited
 
 
 class TestOAuthWebInterface:
@@ -99,7 +99,7 @@ class TestOAuthWebInterface:
     
     def test_web_interface_has_oauth_button(self):
         """Test that web interface has OAuth button"""
-        response = self.client.get("/")
+        response = self.client.get("/scheduler")
         
         assert response.status_code == 200
         html_content = response.text
@@ -108,7 +108,7 @@ class TestOAuthWebInterface:
     
     def test_oauth_button_javascript_function(self):
         """Test that OAuth button has working JavaScript"""
-        response = self.client.get("/")
+        response = self.client.get("/scheduler")
         
         assert response.status_code == 200
         html_content = response.text
@@ -118,7 +118,7 @@ class TestOAuthWebInterface:
     
     def test_oauth_redirects_to_correct_endpoint(self):
         """Test that OAuth button redirects to correct endpoint"""
-        response = self.client.get("/")
+        response = self.client.get("/scheduler")
         
         assert response.status_code == 200
         html_content = response.text

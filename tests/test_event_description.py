@@ -58,7 +58,7 @@ class TestEventDescription:
     
     def test_web_interface_has_description_field(self):
         """Test that web interface has description input field"""
-        response = self.client.get("/")
+        response = self.client.get("/scheduler")
         
         assert response.status_code == 200
         html_content = response.text
