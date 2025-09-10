@@ -99,6 +99,14 @@ CREATE TABLE suggested_friends (
     UNIQUE(user_id, suggested_user_id)
 );
 
+-- OAuth states table (for secure OAuth flow)
+CREATE TABLE oauth_states (
+    state_key VARCHAR(255) PRIMARY KEY,
+    state_data TEXT NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indexes for performance
 CREATE INDEX idx_users_name ON users(name);
 CREATE INDEX idx_users_phone ON users(phone_number);
@@ -111,3 +119,4 @@ CREATE INDEX idx_conversation_contexts_users ON conversation_contexts(user1_id, 
 CREATE INDEX idx_meeting_suggestions_conversation ON meeting_suggestions(conversation_id);
 CREATE INDEX idx_suggested_friends_user ON suggested_friends(user_id);
 CREATE INDEX idx_suggested_friends_suggested ON suggested_friends(suggested_user_id);
+CREATE INDEX idx_oauth_states_expires ON oauth_states(expires_at);

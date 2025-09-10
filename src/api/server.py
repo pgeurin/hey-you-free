@@ -817,16 +817,12 @@ async def oauth_callback(
                 }
             )
         
-        if not is_oauth_available():
-            raise HTTPException(
-                status_code=503,
-                detail={
-                    "error": "OAuth not configured",
-                    "message": "Google OAuth is not properly configured"
-                }
-            )
+        # Use dev OAuth service if production OAuth is not available
+        if is_oauth_available():
+            oauth_service = get_oauth_service()
+        else:
+            oauth_service = get_dev_oauth_service()
         
-        oauth_service = get_oauth_service()
         token_data = oauth_service.exchange_code_for_tokens(code, state)
         
         # Test calendar access
